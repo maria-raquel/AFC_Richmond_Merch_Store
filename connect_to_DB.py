@@ -14,4 +14,4 @@ def connect():
         return connection
     except mysql.connector.Error as error:
         print(f'Error: {error}')
-        return 0
+        return None
