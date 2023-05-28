@@ -25,7 +25,8 @@ class Table_Produto:
                 INSERT INTO Produto (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
                 VALUES ('{nome}', {preco}, {estoque}, '{categoria}', '{local_de_fabricacao}', {disponibilidade});
             ''')
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
             return 0
         
@@ -36,7 +37,7 @@ class Table_Produto:
             ''')
             return self.cursor.fetchone()
         except:
-            return None
+            return 0
 
     def read_by_name(self, name):
         try:
@@ -45,7 +46,7 @@ class Table_Produto:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
         
     def read_all_available(self):
         try:
@@ -54,7 +55,7 @@ class Table_Produto:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
         
     def read_all(self):
         try:
@@ -63,7 +64,7 @@ class Table_Produto:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
 
     def update(self, id, coluna, valor):
         try:
@@ -77,15 +78,17 @@ class Table_Produto:
                 UPDATE Produto SET {coluna} = {valor} WHERE id = {id};
                 '''
                 )
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
-            return None
+            return 0
         
     def delete(self, id):
         try: 
             self.cursor.execute(f'''
             UPDATE Produto SET disponibilidade = 0 WHERE id = {id};
             ''')
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
-            return None
+            return 0
