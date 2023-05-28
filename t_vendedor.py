@@ -1,55 +1,55 @@
 import mysql as ms
 
-class Table_Produto:
+class Table_Vendedor:
     def __init__(self, connection):
         self.connection = connection
         self.cursor = connection.cursor()
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS Produto (
-                id INT NOT NULL AUTO_INCREMENT,
-                nome VARCHAR(255) NOT NULL,
-                preco FLOAT NOT NULL,
-                estoque INT NOT NULL DEFAULT 0,
-                categoria SET ('Vestuario', 'Outros'),
-                local_de_fabricacao VARCHAR(255),
-                disponibilidade BOOLEAN DEFAULT TRUE,
+            CREATE TABLE IF NOT EXISTS Vendedor(
+            id INT NOT NULL AUTO_INCREMENT,
+            cpf VARCHAR(255) NOT NULL UNIQUE,
+            nome VARCHAR(255) NOT NULL,
+            sexo SET ('M' , 'F', 'NB'),
+            situacao SET ('ativo', 'de ferias', 'afastado', 'ex-colaborador') DEFAULT 'ativo',
 
-                PRIMARY KEY (id)
+            PRIMARY KEY (id)
             )
         ''')
-        
-    def create(self, nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade):
+        self.cursor.commit()
+
+    def create(self, cpf, nome, sexo, situacao):
         try:
             self.cursor.execute(f'''
-                INSERT INTO Produto (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
-                VALUES ('{nome}', {preco}, {estoque}, '{categoria}', '{local_de_fabricacao}', {disponibilidade});
-            ''')
+                INSERT INTO Vendedor (cpf, nome, sexo, situacao) 
+                VALUES ({cpf}, {nome}, {sexo}, {situacao})
+            '''
+            )
             return self.connection.commit()
         except:
-            return 0
-        
+            return None
+    
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE id = {id};
+            SELECT * FROM Vendedor WHERE id = {id};
             ''')
             return self.cursor.fetchone()
         except:
             return None
-
+    
     def read_by_name(self, name):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE nome LIKE '%{name}%';
+            SELECT * FROM Vendedor WHERE nome LIKE '%{name}%';
             ''')
             return self.cursor.fetchall()
         except:
             return None
         
-    def read_all_available(self):
+    def read_all_active(self):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE disponibilidade = 1;
+            SELECT * FROM Vendedor WHERE situacao = 'ativo';
             ''')
             return self.cursor.fetchall()
         except:
@@ -58,7 +58,7 @@ class Table_Produto:
     def read_all(self):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto;
+            SELECT * FROM Vendedor;
             ''')
             return self.cursor.fetchall()
         except:
@@ -68,22 +68,22 @@ class Table_Produto:
         try:
             if type(valor) == str:
                 self.cursor.execute(f'''
-                UPDATE Produto SET {coluna} = "{valor}" WHERE id = {id};
+                UPDATE Vendedor SET {coluna} = "{valor}" WHERE id = {id};
                 '''
                 )
             else:
                 self.cursor.execute(f'''
-                UPDATE Produto SET {coluna} = {valor} WHERE id = {id};
+                UPDATE Vendedor SET {coluna} = {valor} WHERE id = {id};
                 '''
                 )
             return self.connection.commit()
         except:
             return None
-        
+
     def delete(self, id):
         try: 
             self.cursor.execute(f'''
-            UPDATE Produto SET disponibilidade = 0 WHERE id = {id};
+            UPDATE Vendedor SET situacao = 'ex-colaborador' WHERE id = {id};
             ''')
             return self.connection.commit()
         except:
