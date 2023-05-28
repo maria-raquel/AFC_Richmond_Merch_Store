@@ -15,18 +15,19 @@ class Table_Vendedor:
             PRIMARY KEY (id)
             )
         ''')
-        self.cursor.commit()
+        self.connection.commit()
 
     def create(self, cpf, nome, sexo, situacao):
         try:
             self.cursor.execute(f'''
                 INSERT INTO Vendedor (cpf, nome, sexo, situacao) 
-                VALUES ({cpf}, {nome}, {sexo}, {situacao})
+                VALUES ('{cpf}', '{nome}', '{sexo}', '{situacao}')
             '''
             )
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
-            return None
+            return 0
     
     def read_by_id(self, id):
         try:
@@ -35,7 +36,7 @@ class Table_Vendedor:
             ''')
             return self.cursor.fetchone()
         except:
-            return None
+            return 0
     
     def read_by_name(self, name):
         try:
@@ -44,7 +45,7 @@ class Table_Vendedor:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
         
     def read_all_active(self):
         try:
@@ -53,7 +54,7 @@ class Table_Vendedor:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
         
     def read_all(self):
         try:
@@ -62,7 +63,7 @@ class Table_Vendedor:
             ''')
             return self.cursor.fetchall()
         except:
-            return None
+            return 0
 
     def update(self, id, coluna, valor):
         try:
@@ -76,15 +77,17 @@ class Table_Vendedor:
                 UPDATE Vendedor SET {coluna} = {valor} WHERE id = {id};
                 '''
                 )
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
-            return None
+            return 0
 
     def delete(self, id):
         try: 
             self.cursor.execute(f'''
             UPDATE Vendedor SET situacao = 'ex-colaborador' WHERE id = {id};
             ''')
-            return self.connection.commit()
+            self.connection.commit()
+            return 1
         except:
-            return None
+            return 0
