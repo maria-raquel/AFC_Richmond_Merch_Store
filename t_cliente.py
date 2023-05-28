@@ -31,3 +31,64 @@ class Table_Cliente:
             return 1
         except:
             return 0
+    
+    def read_by_id(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente WHERE id = {id};
+            ''')
+            return self.cursor.fetchone()
+        except:
+            return 0
+    
+    def read_by_name(self, name):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente WHERE nome LIKE '%{name}%';
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+        
+    def read_by_cpf(self, cpf):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente WHERE cpf = '{cpf}';
+            ''')
+            return self.cursor.fetchone()
+        except:
+            return 0
+        
+    def read_all(self):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente;
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+    
+    def update(self, id, coluna, valor):
+        try:
+            if type(valor) == str:
+                self.cursor.execute(f'''
+                UPDATE Cliente SET {coluna} = '{valor}' WHERE id = {id};
+                ''')
+            else:
+                self.cursor.execute(f'''
+                UPDATE Cliente SET {coluna} = {valor} WHERE id = {id};
+                ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+        
+    def delete(self, id):
+        try:
+            self.cursor.execute(f'''
+            DELETE FROM Cliente WHERE id = {id};
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
