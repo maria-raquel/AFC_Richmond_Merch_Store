@@ -5,7 +5,7 @@ class Table_Produto:
         self.connection = connection
         self.cursor = connection.cursor()
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS produto (
+            CREATE TABLE IF NOT EXISTS Produto (
                 id INT NOT NULL AUTO_INCREMENT,
                 nome VARCHAR(255) NOT NULL,
                 preco FLOAT NOT NULL,
@@ -17,20 +17,12 @@ class Table_Produto:
                 PRIMARY KEY (id)
             )
         ''')
-
-        self.cursor.execute('''
-        SHOW COLUMNS FROM produto
-        ''')
-        colunas_info = self.cursor.fetchall()
-        self.colunas = []
-        for coluna in colunas_info:
-            self.colunas.append(coluna[0])        
         
     def create(self, nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade):
         try:
             self.cursor.execute(f'''
-                INSERT INTO produto (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
-                VALUES ('{nome}', '{preco}', '{estoque}', '{categoria}', '{local_de_fabricacao}', '{disponibilidade}');
+                INSERT INTO Produto (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
+                VALUES ('{nome}', {preco}, {estoque}, '{categoria}', '{local_de_fabricacao}', {disponibilidade});
             ''')
             return self.connection.commit()
         except:
