@@ -18,8 +18,6 @@ CREATE TABLE Cliente (
     nome VARCHAR(255) NOT NULL,
     is_flamengo BOOLEAN DEFAULT False,
     assiste_one_piece BOOLEAN DEFAULT False,
-    data_nascimento DATE NOT NULL,
-    sexo SET ('M' , 'F', 'NB'),
     cidade_natal VARCHAR(255),
 
     PRIMARY KEY (id)
@@ -29,8 +27,7 @@ CREATE TABLE Vendedor(
     id INT NOT NULL AUTO_INCREMENT,
     cpf VARCHAR(255) NOT NULL UNIQUE,
     nome VARCHAR(255) NOT NULL,
-    sexo SET ('M' , 'F', 'NB'),
-    situacao SET ('ativo', 'de ferias', 'afastado', 'ex-colaborador') DEFAULT 'ativo',
+    situacao SET ('Ativo', 'De ferias', 'Afastado', 'Ex-colaborador') DEFAULT 'Ativo',
 
     PRIMARY KEY (id)
 );
@@ -44,7 +41,7 @@ CREATE TABLE Compra(
     desconto_aplicado FLOAT DEFAULT 0,
     total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
     forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
-                            'Cartao de Debito', 'Pix', 'Boleto', 'Fiado'),
+                            'Cartao de Debito', 'Pix', 'Boleto'),
     status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado'),
 
     PRIMARY KEY (id),
