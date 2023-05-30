@@ -6,13 +6,13 @@ class Table_Compra_Produto:
         self.cursor = connection.cursor()
         self.cursor.execute(f'''
             CREATE TABLE IF NOT EXISTS Produto_Compra(
-            id_compra INT NOT NULL,
-            id_produto INT NOT NULL,
-            quantidade INT NOT NULL,
+                id_compra INT NOT NULL,
+                id_produto INT NOT NULL,
+                quantidade INT NOT NULL,
 
-            CONSTRAINT PK_Produto_Compra PRIMARY KEY (id_compra,id_produto),
-            FOREIGN KEY (id_compra) REFERENCES Compra(id),
-            FOREIGN KEY (id_produto) REFERENCES Produto(id)
+                CONSTRAINT PK_Produto_Compra PRIMARY KEY (id_compra,id_produto),
+                FOREIGN KEY (id_compra) REFERENCES Compra(id),
+                FOREIGN KEY (id_produto) REFERENCES Produto(id)
             );
         ''')
         self.connection.commit()
