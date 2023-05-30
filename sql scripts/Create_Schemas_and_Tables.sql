@@ -42,12 +42,13 @@ CREATE TABLE Compra(
     total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
     forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
                             'Cartao de Debito', 'Pix', 'Boleto'),
-    status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado'),
+    status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
+    status_da_compra SET ('Confirmada', 'Cancelada')
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
     FOREIGN KEY (id_vendedor) REFERENCES Vendedor(id)
-    );
+);
 
 CREATE TABLE Produto_Compra(
     id_compra INT NOT NULL,
