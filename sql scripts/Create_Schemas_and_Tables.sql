@@ -32,7 +32,7 @@ CREATE TABLE Vendedor(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE Compra(
+CREATE TABLE IF NOT EXISTS Compra(
     id INT NOT NULL AUTO_INCREMENT,
     id_cliente INT NOT NULL,
     id_vendedor INT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Compra(
     forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
                             'Cartao de Debito', 'Pix', 'Boleto'),
     status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
-    status_da_compra SET ('Confirmada', 'Cancelada')
+    status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada')
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
