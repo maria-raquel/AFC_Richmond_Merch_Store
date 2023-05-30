@@ -15,7 +15,7 @@ class Table_Produto:
                 disponibilidade BOOLEAN DEFAULT TRUE,
 
                 PRIMARY KEY (id)
-            )
+            );
         ''')
         self.connection.commit()
         
