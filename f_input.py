@@ -18,6 +18,10 @@ def cliente_tem_cadastro():
     else:
         return False
 
+def cpf_cliente():
+    cpf = input("Informe o CPF do cliente: ")
+    return cpf
+
 # Retorna os dados do cliente em uma tupla
 # Na ordem (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
 def dados_cliente():
