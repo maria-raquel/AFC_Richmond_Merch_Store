@@ -83,6 +83,18 @@ class Table_Compra:
             return self.cursor.fetchall()
         except:
             return 0
+        
+    def return_id(self, id_cliente, id_vendedor, data_da_compra, status_da_compra):
+        try:
+            self.cursor.execute(f'''
+                SELECT id FROM Compra WHERE id_cliente = {id_cliente} 
+                    AND id_vendedor = {id_vendedor} 
+                    AND data_da_compra = '{data_da_compra}' 
+                    AND status_da_compra = '{status_da_compra}';
+                ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0
                 
     def update(self, id, coluna, valor):
         try:
