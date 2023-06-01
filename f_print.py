@@ -5,6 +5,16 @@ def boas_vindas():
     print("------------WE ARE RICHMOND-------------")
     print("----------------------------------------")
 
+def mensagem_erro():
+    print("----------------------------------------")
+    print("Opa, algo deu errado!")
+    print("----------------------------------------")
+
+def mensagem_sucesso():
+    print("----------------------------------------")
+    print("Operação realizada com sucesso!")
+    print("----------------------------------------")
+
 def mensagem_1():
     print("----------------------------------------")
     print("-------------FÚTBALL IS LIFE------------")
