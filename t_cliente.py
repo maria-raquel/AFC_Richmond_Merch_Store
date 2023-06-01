@@ -56,6 +56,15 @@ class Table_Cliente:
         except:
             return 0
         
+    def return_id(self, cpf):
+        try:
+            self.cursor.execute(f'''
+            SELECT id FROM Cliente WHERE cpf = '{cpf}';
+            ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0
+        
     def read_all(self):
         try:
             self.cursor.execute(f'''
