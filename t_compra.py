@@ -10,7 +10,7 @@ class Table_Compra:
                 id_cliente INT NOT NULL,
                 id_vendedor INT NOT NULL,
                 data_da_compra DATE NOT NULL,
-                status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada')
+                status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada'),
 
                 PRIMARY KEY (id),
                 FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
