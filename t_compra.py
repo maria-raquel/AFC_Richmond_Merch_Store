@@ -10,12 +10,6 @@ class Table_Compra:
                 id_cliente INT NOT NULL,
                 id_vendedor INT NOT NULL,
                 data_da_compra DATE NOT NULL,
-                total FLOAT NOT NULL,
-                desconto_aplicado FLOAT DEFAULT 0,
-                total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
-                forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
-                                        'Cartao de Debito', 'Pix', 'Boleto'),
-                status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
                 status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada')
 
                 PRIMARY KEY (id),
@@ -25,15 +19,11 @@ class Table_Compra:
         ''')
         self.connection.commit()
     
-    def create(self, id_cliente, id_vendedor, data_da_compra, total, 
-               desconto_aplicado, forma_de_pagamento, status_do_pagamento, status_da_compra):
+    def create(self, id_cliente, id_vendedor, data_da_compra, status_da_compra):
         try:
             self.cursor.execute(f'''
-                INSERT INTO Compra(id_cliente, id_vendedor, data_da_compra, total, 
-                desconto_aplicado, forma_de_pagamento, status_do_pagamento, status_da_compra)
-                VALUES ({id_cliente}, {id_vendedor}, '{data_da_compra}', {total}, 
-                {desconto_aplicado}, '{forma_de_pagamento}', '{status_do_pagamento}', 
-                '{status_da_compra}');
+                INSERT INTO Compra(id_cliente, id_vendedor, data_da_compra, status_da_compra)
+                VALUES ({id_cliente}, {id_vendedor}, '{data_da_compra}', '{status_da_compra}');
                 ''')
             self.connection.commit()
             return 1
@@ -93,16 +83,7 @@ class Table_Compra:
             return self.cursor.fetchall()
         except:
             return 0
-        
-    def read_all_pagamentos_pendentes(self):
-        try:
-            self.cursor.execute('''
-                SELECT * FROM Compra WHERE status_do_pagamento = 'Pendente';
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-        
+                
     def update(self, id, coluna, valor):
         try:
             if type(valor) == str:

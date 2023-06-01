@@ -32,17 +32,11 @@ CREATE TABLE Vendedor(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS Compra(
+CREATE TABLE Compra(
     id INT NOT NULL AUTO_INCREMENT,
     id_cliente INT NOT NULL,
     id_vendedor INT NOT NULL,
     data_da_compra DATE NOT NULL,
-    total FLOAT NOT NULL,
-    desconto_aplicado FLOAT DEFAULT 0,
-    total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
-    forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
-                            'Cartao de Debito', 'Pix', 'Boleto'),
-    status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
     status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada')
 
     PRIMARY KEY (id),
@@ -59,3 +53,16 @@ CREATE TABLE Produto_Compra(
     FOREIGN KEY (id_compra) REFERENCES Compra(id),
     FOREIGN KEY (id_produto) REFERENCES Produto(id)
 );
+
+CREATE TABLE Pagamento(
+    id_compra INT NOT NULL,
+    total FLOAT NOT NULL,
+    desconto_aplicado FLOAT DEFAULT 0,
+    total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
+    forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
+                            'Cartao de Debito', 'Pix', 'Boleto'),
+    status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
+
+    PRIMARY KEY (id_compra),
+    FOREIGN KEY (id_compra) REFERENCES Compra(id)
+)
