@@ -51,14 +51,14 @@ def dados_cliente():
 # Na ordem: (id_cliente, id_vendedor, data, 'Aguardando confirmação')
 def dados_da_compra(id_cliente):
     print("Informe os dados da compra: ")
-    id_vendedor = input("ID do vendedor: ")
+    id_vendedor = int(input("ID do vendedor: "))
     data = input("Data da compra, formato aaaa-mm-dd: ")
     return (id_cliente, id_vendedor, data, 'Aguardando confirmação')
 
 # Retorna os dados dos produtos escolhidos em uma lista de tuplas
 # Cada tupla está na ordem (id_compra, id_produdo, quantidade)
 def escolher_produtos(id_compra):
-    id = input("Id do 1° produto: ")
+    id = int(input("Id do 1° produto: "))
     qtd = int(input("Quantidade do 1° produto: "))
 
     produtos = [(id_compra, id, qtd)]
@@ -70,7 +70,7 @@ def escolher_produtos(id_compra):
         if escolha != 's': 
             escolha = input("Opção inválida! Digite s ou n: ")
         else:
-            id = input(f"Id do {i}° produto: ")
+            id = int(input(f"Id do {i}° produto: "))
             qtd = int(input(f"Quantidade do {i}° produto: "))
             produtos.append((id_compra, id, qtd))
             i = i+1
