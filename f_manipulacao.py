@@ -64,7 +64,11 @@ def nova_compra():
     if not Pagamento.update(id_compra, 'forma_de_pagamento', forma_pagamento):
         fp.mensagem_erro()
 
-    # função de confirmação de pagamento
-
-    # atualizar tabela pagamento
-    # atualizar tabela compra
+    if fi.confirmação_do_pagamento():
+        if not Pagamento.update(id_compra, 'status', 'Pago'):
+            fp.mensagem_erro()
+            # VER O Q MAIS PRECISA ATUALIZAR
+    else:
+        if not Pagamento.update(id_compra, 'status', 'Cancelado'):
+            fp.mensagem_erro()
+            # DELETE COMPRA
