@@ -60,11 +60,11 @@ class Table_Pagamento:
         try:
             if type(valor) == str:
                 self.cursor.execute(f'''
-                    UPDATE Pagamento SET {coluna} = '{valor}' WHERE id = {id};
+                    UPDATE Pagamento SET {coluna} = '{valor}' WHERE id_compra = {id};
                     ''')
             else:
-                    self.cursor.execute(f'''
-                    UPDATE Pagamento SET {coluna} = {valor} WHERE id = {id};
+                self.cursor.execute(f'''
+                    UPDATE Pagamento SET {coluna} = {valor} WHERE id_compra = {id};
                     ''')
             self.connection.commit()
             return 1
@@ -74,7 +74,7 @@ class Table_Pagamento:
     def delete(self, id):
         try:
             self.cursor.execute(f'''
-            UPDATE Compra SET status_do_pagamento = 'Cancelado' WHERE id = {id};
+            UPDATE Compra SET status_do_pagamento = 'Cancelado' WHERE id_compra = {id};
             ''')
             self.connection.commit()
             return 1
