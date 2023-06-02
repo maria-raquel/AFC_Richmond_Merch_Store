@@ -72,7 +72,7 @@ class Table_Cliente:
             ''')
             fla = self.cursor.fetchone()[0]
         except:
-            fla = 0
+            return None
         
         try:
             self.cursor.execute(f'''
@@ -80,7 +80,7 @@ class Table_Cliente:
             ''')
             op = self.cursor.fetchone()[0]
         except:
-            op = 0
+            return None
         
         try:
             self.cursor.execute(f'''
@@ -91,7 +91,7 @@ class Table_Cliente:
             else: 
                 de_sousa = 0
         except:
-            de_sousa = 0
+            return None
         
         return (fla + op + de_sousa) * 10/100
 
