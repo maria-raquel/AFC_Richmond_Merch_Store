@@ -65,6 +65,15 @@ class Table_Produto:
             return self.cursor.fetchall()
         except:
             return 0
+    
+    def return_estoque(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT estoque FROM Produto WHERE id = {id};
+            ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0
 
     def update(self, id, coluna, valor):
         try:
