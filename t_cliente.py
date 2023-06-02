@@ -65,6 +65,36 @@ class Table_Cliente:
         except:
             return 0
         
+    def return_desconto(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT is_flamengo FROM Cliente WHERE id = {id};
+            ''')
+            fla = self.cursor.fetchone()[0]
+        except:
+            fla = 0
+        
+        try:
+            self.cursor.execute(f'''
+            SELECT assiste_one_piece FROM Cliente WHERE id = {id};
+            ''')
+            op = self.cursor.fetchone()[0]
+        except:
+            op = 0
+        
+        try:
+            self.cursor.execute(f'''
+            SELECT cidade_natal FROM Cliente WHERE id = {id};
+            ''')
+            if self.cursor.fetchone()[0] == 'Sousa':
+                de_sousa = 1
+            else: 
+                de_sousa = 0
+        except:
+            de_sousa = 0
+        
+        return (fla + op + de_sousa) * 10/100
+
     def read_all(self):
         try:
             self.cursor.execute(f'''
