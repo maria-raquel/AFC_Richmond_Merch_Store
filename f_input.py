@@ -1,3 +1,9 @@
+import connect_to_DB
+import t_produto as pr
+
+connection = connect_to_DB.connect()
+Produto = pr.Table_Produto(connection)
+
 # Retorna True ou False
 def cliente_vai_dar_dado():
     escolha = input("O cliente deseja informar dados? (s/n) ")
@@ -61,24 +67,56 @@ def dados_da_compra(id_cliente):
 
 # Retorna os dados dos produtos escolhidos em uma lista de tuplas
 # Cada tupla está na ordem (id_compra, id_produdo, quantidade)
+
 def escolher_produtos(id_compra):
-    id = int(input("Id do 1° produto: "))
-    qtd = int(input("Quantidade do 1° produto: "))
-
-    produtos = [(id_compra, id, qtd)]
-
-    escolha = input("Deseja incluir mais produtos? (s/n) ")
-    i = 2
+    produtos = []
+    escolha = 's'
+    i = 1
 
     while escolha != 'n':
         if escolha != 's': 
             escolha = input("Opção inválida! Digite s ou n: ")
         else:
-            id = int(input(f"Id do {i}° produto: "))
-            qtd = int(input(f"Quantidade do {i}° produto: "))
-            produtos.append((id_compra, id, qtd))
-            i = i+1
-            escolha = input("Deseja incluir mais produtos? (s/n) ")
+            id_invalido = True
+
+            while id_invalido:
+                try:
+                    id = int(input(f"Id do {i}° produto: "))
+                except ValueError:
+                    print("Id inválido! Digite novamente. ")
+                    continue
+
+                if Produto.validate_id(id):
+                    id_invalido = False
+                
+                else:
+                    print("Id inválido! Digite novamente. ")
+
+            # imprimir info do produto aqui
+
+            quantidade_invalida = True
+
+            while quantidade_invalida:
+                try:
+                    qtd = int(input(f"Quantidade do {i}° produto: (0 para desistir dele) "))
+                except ValueError:
+                    print("Quantidade inválida! Digite novamente. ")
+                    continue
+
+                estoque = Produto.return_estoque(id)
+
+                if qtd < 0:
+                    print("Quantidade inválida! Digite novamente. ")
+                elif qtd > estoque:
+                    print("Eita! Quantidade indisponível em estoque!")
+                    print(f"Há {estoque} unidades disponíveis.")
+                else:
+                    quantidade_invalida = False
+
+            if qtd != 0:
+                produtos.append((id_compra, id, qtd))
+                i = i+1
+                escolha = input("Deseja incluir mais produtos? (s/n) ")
     
     return produtos
 
