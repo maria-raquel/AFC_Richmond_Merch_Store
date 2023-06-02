@@ -141,3 +141,13 @@ def forma_de_pagamento(id_compra):
         escolha = int(input("Opção inválida, digite novamente: "))
 
     return formas[escolha]
+
+def confirmação_do_pagamento():
+    print("Solicite o pagamento ao cliente")
+    escolha = input("O pagamento foi confirmado? (s/n) ")
+    while escolha != "s" and escolha != "n":
+        escolha = input("Opção inválida! (s/n) ")
+    if escolha == "s":
+        return True
+    else:
+        return False
