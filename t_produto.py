@@ -92,6 +92,15 @@ class Table_Produto:
         except:
             return 0
         
+    def validate_id(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT id FROM Produto WHERE id = {id};
+            ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0
+        
     def delete(self, id):
         try: 
             self.cursor.execute(f'''
