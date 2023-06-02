@@ -12,6 +12,7 @@ connection = connect_to_DB.connect()
 Cliente = cl.Cliente(connection)
 Compra = cm.Compra(connection)
 Compra_Produto = cp.Compra_Produto(connection)
+Pagamento = pg.Pagamento(connection)
 
 def nova_compra():
     if fi.cliente_vai_dar_dado():
@@ -25,7 +26,7 @@ def nova_compra():
                 id_cliente = Cliente.return_id(cpf)
         else:
             dados = fi.dados_cliente()
-            if Cliente.insert(*dados):
+            if Cliente.create(*dados):
                 fp.mensagem_sucesso()
             else:
                 fp.mensagem_erro()
@@ -34,19 +35,36 @@ def nova_compra():
     
     dados = fi.dados_da_compra(id_cliente)
 
-    if not Compra.insert(*dados):
+    if not Compra.create(*dados):
         fp.mensagem_erro()
     
     id_compra = Compra.return_id(*dados)
 
-    produtos = fi.produtos_da_compra(id_compra)
+    produtos = fi.escolher_produtos(id_compra)
 
     for produto in produtos:
-        if not Compra_Produto.insert(*produto):
+        if not Compra_Produto.create(*produto):
             fp.mensagem_erro()
     
-    # calcular total da compra
-    # inserir na tabela pagamento
-    # pedir informação de pagamento
+    total = Compra_Produto.return_total_compra(id_compra)
+    try:
+        desconto = Cliente.return_desconto(id_cliente) * total
+    except:
+        fp.mensagem_erro()
+        desconto = 0
+    
+    dados_pagamento = (id_compra, total, desconto, 'A definir', 'Pendente')
+    if not Pagamento.create(*dados_pagamento):
+        fp.mensagem_erro()
+
+    # imprimir informações de pagamento
+
+    forma_pagamento = fi.forma_de_pagamento(id_compra)
+
+    if not Pagamento.update(id_compra, 'forma_de_pagamento', forma_pagamento):
+        fp.mensagem_erro()
+
+    # função de confirmação de pagamento
+
     # atualizar tabela pagamento
     # atualizar tabela compra
