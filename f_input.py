@@ -144,10 +144,17 @@ def forma_de_pagamento(id_compra):
 
 def confirmação_do_pagamento():
     print("Solicite o pagamento ao cliente")
-    escolha = input("O pagamento foi confirmado? (s/n) ")
-    while escolha != "s" and escolha != "n":
-        escolha = input("Opção inválida! (s/n) ")
-    if escolha == "s":
-        return True
-    else:
-        return False
+
+    pagamento = 1
+    while pagamento:
+        escolha = input("O pagamento foi confirmado? (s/n) ")
+        while escolha != "s" and escolha != "n":
+            escolha = input("Opção inválida! Digite s ou n: ")
+
+        if escolha == "s":
+            return True
+        else:
+            escolha = input("Deseja tentar novamente? (s/n) ")
+            if escolha == "n":
+                pagamento = 0
+                return False
