@@ -58,9 +58,9 @@ CREATE TABLE Pagamento(
     id_compra INT NOT NULL,
     total FLOAT NOT NULL,
     desconto_aplicado FLOAT DEFAULT 0,
-    total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
+    total_pos_desconto float GENERATED ALWAYS AS (total - desconto_aplicado),
     forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
-                            'Cartao de Debito', 'Pix', 'Boleto'),
+                            'Cartao de Debito', 'Pix', 'Boleto', 'A definir'),
     status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
 
     PRIMARY KEY (id_compra),

@@ -7,7 +7,7 @@ class Table_Pagamento:
                 id_compra INT NOT NULL,
                 total FLOAT NOT NULL,
                 desconto_aplicado FLOAT DEFAULT 0,
-                total_pos_desconto float GENERATED ALWAYS AS (compra.total - compra.desconto_aplicado),
+                total_pos_desconto float GENERATED ALWAYS AS (total - desconto_aplicado),
                 forma_de_pagamento SET ('Dinheiro', 'Cartão de Crédito', 
                                         'Cartão de Débito', 'Pix', 'Boleto', 'A definir'),
                 status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
