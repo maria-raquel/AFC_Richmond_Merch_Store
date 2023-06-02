@@ -92,6 +92,26 @@ class Table_Produto:
         except:
             return 0
         
+    def remover_estoque(self, id, quantidade):
+        try:
+            self.cursor.execute(f'''
+            UPDATE Produto SET estoque = estoque - {quantidade} WHERE id = {id};
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+    
+    def add_estoque(self, id, quantidade):
+        try:
+            self.cursor.execute(f'''
+            UPDATE Produto SET estoque = estoque + {quantidade} WHERE id = {id};
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+        
     def validate_id(self, id):
         try:
             self.cursor.execute(f'''
