@@ -56,7 +56,7 @@ class Table_Pagamento:
         except:
             return 0
     
-    def update(self, coluna, valor):
+    def update(self, id, coluna, valor):
         try:
             if type(valor) == str:
                 self.cursor.execute(f'''
