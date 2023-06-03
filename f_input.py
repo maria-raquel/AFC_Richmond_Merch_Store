@@ -1,5 +1,6 @@
 import connect_to_DB
 import t_produto as pr
+import t_cliente as cl
 
 connection = connect_to_DB.connect()
 Produto = pr.Table_Produto(connection)
@@ -26,7 +27,25 @@ def cliente_tem_cadastro():
 
 def cpf_cliente():
     cpf = input("Informe o CPF do cliente: ")
+
+
     return cpf
+
+
+def cpf_nao_encontrado_tentar_novamente():
+    print("Opa! Parece que esse cpf não está cadastrado no sistema.")
+    print("Você deseja: ")
+    print("1: Tentar digitar o cpf novamente? ")
+    print("2: Cadastrar o cliente? ")
+    escolha = input("Digite 1 ou 2: ")
+
+    while escolha != "1" and escolha != "2":
+        escolha = input("Opção inválida! Digite 1 ou 2: ")
+    
+    if escolha == "1":
+        return True
+    else:
+        return False
 
 # Retorna os dados do cliente em uma tupla
 # Na ordem (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
@@ -62,7 +81,13 @@ def dados_cliente():
 def dados_da_compra(id_cliente):
     print("Informe os dados da compra: ")
     id_vendedor = int(input("ID do vendedor: "))
+
+    # validar id do vendedor aqui
+
     data = input("Data da compra, formato aaaa-mm-dd: ")
+
+    # validar data aqui
+
     return (id_cliente, id_vendedor, data, 'Aguardando confirmação')
 
 # Retorna os dados dos produtos escolhidos em uma lista de tuplas

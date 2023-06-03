@@ -1,3 +1,13 @@
+def info_pagamento(id_compra, total, desconto):
+    print("----------------------------------------")
+    print(f"Informações da compra {id_compra}:")
+    print("Total: R$ %.2f" % total)
+    if desconto:
+        print("Mas pera! Esse cliente tem direito a um desconto de R$ %.2f" % desconto)
+        print("Total com desconto: R$ %.2f" % (total - desconto))
+        print(":)")
+    print("----------------------------------------")
+    
 def boas_vindas():
     print("----------------------------------------")
     print("--Bem vindo ao controle de estoque da---")

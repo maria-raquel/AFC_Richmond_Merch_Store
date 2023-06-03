@@ -24,15 +24,29 @@ def nova_compra():
             id_cliente = Cliente.return_id(cpf)
 
             while id_cliente == 0:
-                fp.mensagem_erro()
-                cpf = fi.cpf_cliente()
-                id_cliente = Cliente.return_id(cpf)
+                if fp.cpf_nao_encontrado_tentar_novamente():
+                    cpf = fi.cpf_cliente()
+                    id_cliente = Cliente.return_id(cpf)
+                else: 
+                    dados = fi.dados_cliente()
+                    if Cliente.create(*dados):
+                        fp.mensagem_sucesso()
+                    else:
+                        fp.mensagem_erro()
+
+                    cpf = dados[0]
+                    id_cliente = Cliente.return_id(cpf)
         else:
             dados = fi.dados_cliente()
             if Cliente.create(*dados):
                 fp.mensagem_sucesso()
             else:
                 fp.mensagem_erro()
+                # COLOCAR A OPÇÃO SAIR DA COMPRA A CADA ERRO
+                # sair da compra e verifique o q aconteceu
+            
+            cpf = dados[0]
+            id_cliente = Cliente.return_id(cpf)
     else: 
         id_cliente = Cliente.return_id('0')
     
@@ -65,6 +79,8 @@ def nova_compra():
     dados_pagamento = (id_compra, total, desconto, 'A definir', 'Pendente')
     if not Pagamento.create(*dados_pagamento):
         fp.mensagem_erro()
+    
+    fp.info_pagamento(id_compra, total, desconto)
 
     # Definindo a forma de pagamento e atualizando na tabela
     forma_pagamento = fi.forma_de_pagamento(id_compra)
