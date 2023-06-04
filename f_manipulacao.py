@@ -109,3 +109,9 @@ def nova_compra():
         if not Pagamento.update(id_compra, 'status_do_pagamento', 'Cancelado'):
             fp.mensagem_erro_ao_cadastrar_pagamento()
             fi.deu_ruim_sair_da_operacao()
+    
+    if not Compra.update(id_compra, 'status_da_compra', 'Confirmada'):
+        fp.mensagem_erro_atualizar_status_compra()()
+        fi.deu_ruim_sair_da_operacao()
+    
+    fp.mensagem_sucesso_compra_nova()
