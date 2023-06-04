@@ -15,9 +15,9 @@ def boas_vindas():
     print("------------WE ARE RICHMOND-------------")
     print("----------------------------------------")
 
-def mensagem_erro():
+def mensagem_erro_ao_inserir_cliente():
     print("----------------------------------------")
-    print("Opa, algo deu errado!")
+    print("Algo deu errado ao inserir o cliente!")
     print("----------------------------------------")
 
 def mensagem_sucesso():
