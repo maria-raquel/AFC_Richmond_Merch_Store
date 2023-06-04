@@ -228,13 +228,12 @@ def opcao_menu_compras_busca():
     print("2 - Por cliente")
     print("3 - Por vendedor")
     print("4 - Por data")
-    print("5 - Com pagamento pendente")
-    print("6 - Todas")
+    print("5 - Todas")
     print("0 - Voltar")
     
     escolha = int(input("Digite: "))
 
-    while escolha not in (0,1,2,3,4,5,6):
+    while escolha not in (0,1,2,3,4,5):
         escolha = int(input("Opção inválida! Digite novamente: "))
     
     return escolha
@@ -261,4 +260,21 @@ def id_cliente():
         except ValueError:
             print("Id inválido! Digite novamente. ")
 
+    return id
+
+def id_vendedor():
+    id_invalido = True
+
+    while id_invalido:
+        try:
+            id = int(input("Digite o id do vendedor: "))
+            id_invalido = False
+        except ValueError:
+            print("Id inválido! Digite novamente. ")
+
+    return id
+
+def data():
+    id_invalido = True
+    data = input("Data da compra, formato aaaa-mm-dd: ")
     return id
