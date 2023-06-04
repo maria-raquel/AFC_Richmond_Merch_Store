@@ -30,27 +30,44 @@ def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, dispo
         print("Este produto não está disponível no momento")
     print("----------------------------------------")
 
-# imprime várias produtos a partir de uma lista de tuplas
+# imprime várias compras a partir de uma lista de tuplas
 def info_compras(compras):
     print("----------------------------------------")
-    print("id | id do cliente | id do vendedor | data | status da compra")
-    for id, id_cliente, id_vendedor, data, status in compras:
+    print("id | id do cliente | id do vendedor | data | total | status da compra")
+
+    for id, id_cliente, id_vendedor, data, status_c, total, desconto, total_pd, forma, status_p in compras:
         # formata a data para dd/mm/aaaa
         data = data.strftime("%d/%m/%Y")
-        status = str(status)[2:-2]
-        print(f"{id} | {id_cliente} | {id_vendedor} | {data} | {status}")
+        status_c = str(status_c)[2:-2]
+        print(f"{id} | {id_cliente} | {id_vendedor} | {data} | {total_pd} | {status_c}")
     print("----------------------------------------")
 
 # imprime uma compra a partir de uma tupla
-def info_compra(id, id_cliente, id_vendedor, data, status):
+def info_compra(id, id_cliente, id_vendedor, data, status_c, 
+                total, desconto, total_pos_desconto, status_do_pagamento, forma_de_pagamento):
     print("----------------------------------------")
     data = data.strftime("%d/%m/%Y")
-    status = str(status)[2:-2]
+    status_c = str(status_c)[2:-2]
     print(f"Compra {id}:")
     print(f"id do cliente: {id_cliente}, id do vendedor: {id_vendedor}")
-    print(f"data: {data}, status: {status}")
+    print(f"data: {data}, status da compra: {status_c}")
+    print("Total: R$ %.2f" % total)
+
+    if desconto:
+        print("Desconto: R$ %.2f" % desconto)
+        print("Total com desconto: R$ %.2f" % total_pos_desconto)
+
+    # transforma set em string e remove as chaves e aspas
+    status_do_pagamento = str(status_do_pagamento)[2:-2]
+    forma_de_pagamento = str(forma_de_pagamento)[2:-2]
+
+    print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
+
+def info_compra_produtos(produtos):
+    # for id, nome, preco, etc que tenha no retorno in produtos:
+        # print a info
     print("----------------------------------------")
-    
+
 def boas_vindas():
     print("----------------------------------------")
     print("--Bem vindo ao controle de estoque da---")
