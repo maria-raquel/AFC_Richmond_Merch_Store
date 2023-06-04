@@ -1,9 +1,11 @@
 import connect_to_DB
 import f_print as fp
 import t_produto as pr
+import t_compra as cm
 
 connection = connect_to_DB.connect()
 Produto = pr.Table_Produto(connection)
+Compra = cm.Table_Compra(connection)
 
 # Pede uma ação para encerrar a operação
 def deu_ruim_sair_da_operacao():
@@ -188,3 +190,75 @@ def confirmação_do_pagamento():
             if escolha == "n":
                 pagamento = 0
                 return False
+            
+def opcao_menu_principal():
+    print("Menu: ")
+    print("1 - Compras")
+    print("2 - Produtos")
+    print("3 - Clientes")
+    print("4 - Vendedores")
+    print("5 - Relatórios")
+    print("0 - Sair")
+
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4,5):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
+    return escolha
+
+def opcao_menu_compras():
+    print("Menu - Compras: ")
+    print("1 - Realizar nova compra")
+    print("2 - Buscar compra já feita")
+    print("3 - Atualizar compra já feita")
+    print("4 - Cancelar compra já feita")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
+    return escolha
+
+def opcao_menu_compras_busca():
+    print("Menu - Compras - Busca: ")
+    print("1 - Por id")
+    print("2 - Por cliente")
+    print("3 - Por vendedor")
+    print("4 - Por data")
+    print("5 - Com pagamento pendente")
+    print("6 - Todas")
+    print("0 - Voltar")
+    
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4,5,6):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
+    return escolha
+
+def id_compra():
+    id_invalido = True
+
+    while id_invalido:
+        try:
+            id = int(input("Digite o id da compra: "))
+            id_invalido = False
+        except ValueError:
+            print("Id inválido! Digite novamente. ")
+
+    return id
+
+def id_cliente():
+    id_invalido = True
+
+    while id_invalido:
+        try:
+            id = int(input("Digite o id do cliente: "))
+            id_invalido = False
+        except ValueError:
+            print("Id inválido! Digite novamente. ")
+
+    return id
