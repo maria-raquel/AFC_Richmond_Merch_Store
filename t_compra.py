@@ -84,6 +84,15 @@ class Table_Compra:
         except:
             return 0
         
+    def read_all_from_data(self, data_da_compra):
+        try:
+            self.cursor.execute(f'''
+                SELECT * FROM Compra WHERE data_da_compra LIKE '%{data_da_compra}%';
+                ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+        
     def return_id(self, id_cliente, id_vendedor, data_da_compra, status_da_compra):
         try:
             self.cursor.execute(f'''
