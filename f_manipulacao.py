@@ -23,19 +23,23 @@ def nova_compra():
             cpf = fi.cpf_cliente()
             id_cliente = Cliente.return_id(cpf)
 
+            # se o id retornado for 0, o cpf não está cadastrado
+            # ou ocorreu um erro na consulta
+
             while id_cliente == 0:
-                if fp.cpf_nao_encontrado_tentar_novamente():
+
+                # tenta encontrar o cliente novamente, caso seja erro de digitação
+                if fi.cpf_nao_encontrado_tentar_novamente():
                     cpf = fi.cpf_cliente()
                     id_cliente = Cliente.return_id(cpf)
-                else: 
-                    dados = fi.dados_cliente()
-                    if Cliente.create(*dados):
-                        fp.mensagem_sucesso()
-                    else:
-                        fp.mensagem_erro()
 
-                    cpf = dados[0]
-                    id_cliente = Cliente.return_id(cpf)
+                # se não for erro de digitação, encerra a compra nova, para verificar o erro
+                else: 
+                    fi.deu_ruim_sair_da_operacao()
+                    id_cliente = -1
+                    return
+
+        # cadastra o cliente        
         else:
             dados = fi.dados_cliente()
             if Cliente.create(*dados):
