@@ -24,7 +24,7 @@ CREATE TABLE Cliente (
 );
 
 INSERT INTO Cliente (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
-VALUES ('0', 'Sem cadastro', 0, 0, 'Nao informado')
+VALUES ('0', 'Sem cadastro', 0, 0, 'Nao informado');
 
 CREATE TABLE Vendedor(
     id INT NOT NULL AUTO_INCREMENT,
