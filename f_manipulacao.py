@@ -13,6 +13,60 @@ Cliente = cl.Table_Cliente(connection)
 Compra = cm.Table_Compra(connection)
 Compra_Produto = cp.Table_Compra_Produto(connection)
 Pagamento = pg.Table_Pagamento(connection)
+Vendedor = v.Table_Vendedor(connection)
+
+def buscar_compra():
+    escolha = fi.opcao_menu_compras_busca()
+
+    '''
+    Menu - Compras - Busca: 
+    1 - Por id
+    2 - Por cliente
+    3 - Por vendedor
+    4 - Por data
+    5 - Todas
+    0 - Voltar
+    '''
+
+    while escolha != 0:
+        if escolha == 1:
+            id_compra = fi.id_compra()
+            if not Compra.validate_id(id_compra):
+                fp.mensagem_erro_id_invalido()
+                return
+            else:
+                compra = Compra.read(id_compra)
+                fp.info_compra(*compra)
+                pagamento = Pagamento.read(id_compra)
+                fp.info_pagamento(*pagamento)
+        elif escolha == 2:
+            cpf = fi.cpf_cliente()
+            id_cliente = Cliente.return_id(cpf)
+            if not id_cliente:
+                fp.mensagem_erro_id_invalido()
+                return
+            else:
+                compras = Compra.read_all_from_cliente(id_cliente)
+                fp.info_compras(compras)
+        elif escolha == 3:
+            id_vendedor = fi.id_vendedor()
+            if not Vendedor.validate_id(id_vendedor):
+                fp.mensagem_erro_id_invalido()
+                return
+            else:
+                compras = Compra.read_all_from_vendedor(id_vendedor)
+                fp.info_compras(*compras)
+        elif escolha == 4:
+            data = fi.data()
+            compras = Compra.read_all_from_data(data)
+            if not compras:
+                fp.mensagem_erro()
+                return
+            fp.info_compras(*compras)
+        elif escolha == 5:
+            compras = Compra.read_all()
+            fp.info_compras(*compras)
+        escolha = fi.opcao_menu_compras_busca()
 
 def nova_compra():
 
@@ -91,8 +145,10 @@ def nova_compra():
     if not Pagamento.create(*dados_pagamento):
         fp.mensagem_erro_ao_cadastrar_pagamento()
         fi.deu_ruim_sair_da_operacao()
-    
-    fp.info_pagamento(id_compra, total, desconto)
+
+    info_pagamento = Pagamento.read(id_compra)
+
+    fp.info_pagamento(*info_pagamento)
 
     # Definindo a forma de pagamento e atualizando na tabela
     forma_pagamento = fi.forma_de_pagamento(id_compra)
