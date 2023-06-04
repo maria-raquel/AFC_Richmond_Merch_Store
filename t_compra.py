@@ -47,24 +47,6 @@ class Table_Compra:
             return self.cursor.fetchall()
         except:
             return 0
-    
-    def read_all_confirmada(self):
-        try:
-            self.cursor.execute('''
-                SELECT * FROM Compra WHERE status_da_compra = 'Confirmada';
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-    
-    def read_all_cancelada(self):
-        try:
-            self.cursor.execute('''
-                SELECT * FROM Compra WHERE status_da_compra = 'Cancelada';
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
 
     def read_all_from_cliente(self, id_cliente):
         try:
