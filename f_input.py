@@ -5,6 +5,11 @@ import t_cliente as cl
 connection = connect_to_DB.connect()
 Produto = pr.Table_Produto(connection)
 
+def deu_ruim_sair_da_operacao():
+    print("Encerrando a operação, averigue o que aconteceu.")
+    sair = input("Aperte enter para sair: ")
+    return
+
 # Retorna True ou False
 def cliente_vai_dar_dado():
     escolha = input("O cliente deseja informar dados? (s/n) ")
@@ -27,25 +32,19 @@ def cliente_tem_cadastro():
 
 def cpf_cliente():
     cpf = input("Informe o CPF do cliente: ")
-
-
     return cpf
-
 
 def cpf_nao_encontrado_tentar_novamente():
     print("Opa! Parece que esse cpf não está cadastrado no sistema.")
     print("Você deseja: ")
     print("1: Tentar digitar o cpf novamente? ")
-    print("2: Cadastrar o cliente? ")
-    escolha = input("Digite 1 ou 2: ")
+    print("0: Cancelar a operação? ")
+    escolha = int(input("Digite 1 ou 0: "))
 
-    while escolha != "1" and escolha != "2":
-        escolha = input("Opção inválida! Digite 1 ou 2: ")
-    
-    if escolha == "1":
-        return True
-    else:
-        return False
+    while escolha != 0 and escolha != 1:
+        escolha = int(input("Opção inválida! Digite 1 ou 0: "))
+
+    return escolha
 
 # Retorna os dados do cliente em uma tupla
 # Na ordem (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
