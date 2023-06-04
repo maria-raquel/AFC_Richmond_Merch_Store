@@ -33,7 +33,14 @@ class Table_Compra:
     def read(self, id):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Compra WHERE id = {id};
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra
+                WHERE id = {id};
                 ''')
             return self.cursor.fetchone()
         except:
@@ -42,7 +49,13 @@ class Table_Compra:
     def read_all(self):
         try:
             self.cursor.execute('''
-                SELECT * FROM Compra;
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra
                 ''')
             return self.cursor.fetchall()
         except:
@@ -51,7 +64,14 @@ class Table_Compra:
     def read_all_from_cliente(self, id_cliente):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Compra WHERE id_cliente = {id_cliente};
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra
+                WHERE id_cliente = {id_cliente};
                 ''')
             return self.cursor.fetchall()
         except:
@@ -60,7 +80,14 @@ class Table_Compra:
     def read_all_from_vendedor(self, id_vendedor):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Compra WHERE id_vendedor = {id_vendedor};
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra
+                WHERE id_vendedor = {id_vendedor};
                 ''')
             return self.cursor.fetchall()
         except:
@@ -69,7 +96,14 @@ class Table_Compra:
     def read_all_from_data(self, data_da_compra):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Compra WHERE data_da_compra LIKE '%{data_da_compra}%';
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra 
+                WHERE data_da_compra LIKE '%{data_da_compra}%';
                 ''')
             return self.cursor.fetchall()
         except:
