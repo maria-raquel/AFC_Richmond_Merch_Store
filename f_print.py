@@ -64,8 +64,10 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
     print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
 
 def info_compra_produtos(produtos):
-    # for id, nome, preco, etc que tenha no retorno in produtos:
-        # print a info
+    print("Produtos dessa compra: ")
+    print("id | nome | preço | quantidade")
+    for id_c, id_p, nome, preco, qtd in produtos:
+        print(f"{id_p} | {nome} | {preco} | {qtd}")
     print("----------------------------------------")
 
 def boas_vindas():
