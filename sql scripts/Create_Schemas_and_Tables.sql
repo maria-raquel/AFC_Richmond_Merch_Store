@@ -5,7 +5,7 @@ CREATE TABLE Produto (
     nome VARCHAR(255) NOT NULL,
     preco FLOAT NOT NULL,
     estoque INT NOT NULL DEFAULT 0,
-    categoria SET ('Vestuario', 'Outros'),
+    categoria SET ('Vestuário', 'Outros'),
     local_de_fabricacao VARCHAR(255),
     disponibilidade BOOLEAN DEFAULT TRUE,
 
@@ -30,7 +30,7 @@ CREATE TABLE Vendedor(
     id INT NOT NULL AUTO_INCREMENT,
     cpf VARCHAR(255) NOT NULL UNIQUE,
     nome VARCHAR(255) NOT NULL,
-    situacao SET ('Ativo', 'De ferias', 'Afastado', 'Ex-colaborador') DEFAULT 'Ativo',
+    situacao SET ('Ativo', 'De férias', 'Afastado', 'Ex-colaborador') DEFAULT 'Ativo',
 
     PRIMARY KEY (id)
 );
@@ -40,7 +40,7 @@ CREATE TABLE Compra(
     id_cliente INT NOT NULL,
     id_vendedor INT NOT NULL,
     data_da_compra DATE NOT NULL,
-    status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada')
+    status_da_compra SET ('Confirmada', 'Aguardando confirmação', 'Cancelada'),
 
     PRIMARY KEY (id),
     FOREIGN KEY (id_cliente) REFERENCES Cliente(id),
@@ -62,10 +62,10 @@ CREATE TABLE Pagamento(
     total FLOAT NOT NULL,
     desconto_aplicado FLOAT DEFAULT 0,
     total_pos_desconto float GENERATED ALWAYS AS (total - desconto_aplicado),
-    forma_de_pagamento SET ('Dinheiro', 'Cartao de Credito', 
-                            'Cartao de Debito', 'Pix', 'A definir'),
+    forma_de_pagamento SET ('Dinheiro', 'Cartão de Crédito', 
+                            'Cartão de Débito', 'Pix', 'A definir'),
     status_do_pagamento SET ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'),
 
     PRIMARY KEY (id_compra),
     FOREIGN KEY (id_compra) REFERENCES Compra(id)
-)
+);

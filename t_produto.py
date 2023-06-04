@@ -10,7 +10,7 @@ class Table_Produto:
                 nome VARCHAR(255) NOT NULL,
                 preco FLOAT NOT NULL,
                 estoque INT NOT NULL DEFAULT 0,
-                categoria SET ('Vestuario', 'Outros'),
+                categoria SET ('Vestuário', 'Outros'),
                 local_de_fabricacao VARCHAR(255),
                 disponibilidade BOOLEAN DEFAULT TRUE,
 

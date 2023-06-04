@@ -9,7 +9,7 @@ class Table_Vendedor:
                 id INT NOT NULL AUTO_INCREMENT,
                 cpf VARCHAR(255) NOT NULL UNIQUE,
                 nome VARCHAR(255) NOT NULL,
-                situacao SET ('Ativo', 'De ferias', 'Afastado', 'Ex-colaborador') DEFAULT 'Ativo',
+                situacao SET ('Ativo', 'De férias', 'Afastado', 'Ex-colaborador') DEFAULT 'Ativo',
 
                 PRIMARY KEY (id)
             );
