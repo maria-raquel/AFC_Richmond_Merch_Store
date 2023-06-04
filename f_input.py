@@ -1,10 +1,11 @@
 import connect_to_DB
+import f_print as fp
 import t_produto as pr
-import t_cliente as cl
 
 connection = connect_to_DB.connect()
 Produto = pr.Table_Produto(connection)
 
+# Pede uma ação para encerrar a operação
 def deu_ruim_sair_da_operacao():
     print("Encerrando a operação, averigue o que aconteceu.")
     sair = input("Aperte enter para sair: ")
@@ -34,6 +35,8 @@ def cpf_cliente():
     cpf = input("Informe o CPF do cliente: ")
     return cpf
 
+# Retorna True se o usuário deseja tentar novamente
+# e False se o usuário deseja cancelar a operação
 def cpf_nao_encontrado_tentar_novamente():
     print("Opa! Parece que esse cpf não está cadastrado no sistema.")
     print("Você deseja: ")
@@ -116,7 +119,11 @@ def escolher_produtos(id_compra):
                 else:
                     print("Id inválido! Digite novamente. ")
 
-            # imprimir info do produto aqui
+            dados_produto = Produto.read_by_id(id)
+            if not dados_produto:
+                fp.mensagem_erro_ao_recuperar_info_produto()
+            
+            fp.info_produto(*dados_produto)
 
             quantidade_invalida = True
 
