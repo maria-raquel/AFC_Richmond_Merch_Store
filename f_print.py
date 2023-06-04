@@ -1,3 +1,4 @@
+# imprime um pagamento a partir de uma tupla
 def info_pagamento(id_compra, total, desconto, total_pos_desconto, status_do_pagamento, forma_de_pagamento):
     print("----------------------------------------")
     print(f"Informações da compra {id_compra}:")
@@ -14,10 +15,11 @@ def info_pagamento(id_compra, total, desconto, total_pos_desconto, status_do_pag
     print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
     print("----------------------------------------")
 
+# imprime um produto a partir de uma tupla
 def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade):
     print("----------------------------------------")
 
-    # transforma categoria em string e remove as chaves e aspas
+    # transforma set em string e remove as chaves e aspas
     categoria = str(categoria)[2:-2]
 
     print(f"Produto {id}: {nome}")
@@ -27,12 +29,38 @@ def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, dispo
     if not disponibilidade:
         print("Este produto não está disponível no momento")
     print("----------------------------------------")
+
+# imprime várias produtos a partir de uma lista de tuplas
+def info_compras(compras):
+    print("----------------------------------------")
+    print("id | id do cliente | id do vendedor | data | status da compra")
+    for id, id_cliente, id_vendedor, data, status in compras:
+        # formata a data para dd/mm/aaaa
+        data = data.strftime("%d/%m/%Y")
+        status = str(status)[2:-2]
+        print(f"{id} | {id_cliente} | {id_vendedor} | {data} | {status}")
+    print("----------------------------------------")
+
+# imprime uma compra a partir de uma tupla
+def info_compra(id, id_cliente, id_vendedor, data, status):
+    print("----------------------------------------")
+    data = data.strftime("%d/%m/%Y")
+    status = str(status)[2:-2]
+    print(f"Compra {id}:")
+    print(f"id do cliente: {id_cliente}, id do vendedor: {id_vendedor}")
+    print(f"data: {data}, status: {status}")
+    print("----------------------------------------")
     
 def boas_vindas():
     print("----------------------------------------")
     print("--Bem vindo ao controle de estoque da---")
     print("----Loja oficial do A.F.C. Richmond-----")
     print("------------WE ARE RICHMOND-------------")
+    print("----------------------------------------")
+
+def mensagem_erro_id_invalido():
+    print("----------------------------------------")
+    print("Id inválido! Digite novamente. ")
     print("----------------------------------------")
 
 def mensagem_erro_ao_cadastrar_cliente():
@@ -85,6 +113,11 @@ def mensagem_sucesso():
     print("Operação realizada com sucesso!")
     print("----------------------------------------")
 
+def mensagem_erro():
+    print("----------------------------------------")
+    print("Eita, algo errado!")
+    print("----------------------------------------")
+
 def mensagem_sucesso_compra_nova():
     print("----------------------------------------")
     print("Compra cadastrada com sucesso!")
@@ -127,33 +160,6 @@ def despedida():
     print("--║╚═╝║║╚══╗║╚═╝║╔╣╠╗║╚══╗ ╚╗╔╝ ║╚══╗---")
     print("--╚═══╝╚═══╝╚═══╝╚══╝╚═══╝  ╚╝  ╚═══╝---")
     print("----------------------------------------")
-
-def menu_principal():
-    print("Menu: ")
-    print("1 - Compras")
-    print("2 - Produtos")
-    print("3 - Clientes")
-    print("4 - Vendedores")
-    print("5 - Relatórios")
-    print("0 - Sair")
-
-def menu_compra():
-    print("Menu - Compras: ")
-    print("1 - Realizar nova compra")
-    print("2 - Buscar compra já feita")
-    print("3 - Atualizar compra já feita")
-    print("4 - Cancelar compra já feita")
-    print("0 - Voltar")
-
-def submenu_compra_busca():
-    print("Menu - Compras - Busca: ")
-    print("1 - Por id")
-    print("2 - Por cliente")
-    print("3 - Por vendedor")
-    print("4 - Por data")
-    print("5 - Com pagamento pendente")
-    print("6 - Todas")
-    print("0 - Voltar")
 
 def menu_produto():
     print("Menu - Produtos: ")
