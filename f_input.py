@@ -156,8 +156,7 @@ def forma_de_pagamento(id_compra):
     formas = {1: 'Dinheiro',
               2: 'Cartão de crédito',
               3: 'Cartão de débito',
-              4: 'Boleto',
-              5: 'Pix'}
+              4: 'Pix'}
 
     print("Opções de pagamento: ")
     for opcao in formas:
@@ -168,7 +167,7 @@ def forma_de_pagamento(id_compra):
     except ValueError:
         escolha = 0
 
-    while escolha not in (1,2,3,4,5):
+    while escolha not in (1,2,3,4):
         escolha = int(input("Opção inválida, digite novamente: "))
 
     return formas[escolha]
