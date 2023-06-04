@@ -7,6 +7,20 @@ def info_pagamento(id_compra, total, desconto):
         print("Total com desconto: R$ %.2f" % (total - desconto))
         print(":)")
     print("----------------------------------------")
+
+def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade):
+    print("----------------------------------------")
+
+    # transforma categoria em string e remove as chaves e aspas
+    categoria = str(categoria)[2:-2]
+
+    print(f"Produto {id}: {nome}")
+    print("Preço: R$ %.2f" % preco)
+    print(f"Quantidade em estoque: {estoque}")
+    print(f"Categoria: {categoria}, Local de fabricação: {local_de_fabricacao}")
+    if not disponibilidade:
+        print("Este produto não está disponível no momento")
+    print("----------------------------------------")
     
 def boas_vindas():
     print("----------------------------------------")
@@ -53,6 +67,11 @@ def mensagem_erro_ao_cadastrar_pagamento():
 def mensagem_erro_atualizar_status_compra():
     print("----------------------------------------")
     print("Erro ao atualizar o status da compra!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_recuperar_info_produto():
+    print("----------------------------------------")
+    print("Erro ao recuperar informações do produto!")
     print("----------------------------------------")
 
 def mensagem_sucesso():
