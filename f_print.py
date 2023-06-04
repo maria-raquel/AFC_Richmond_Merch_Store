@@ -1,11 +1,17 @@
-def info_pagamento(id_compra, total, desconto):
+def info_pagamento(id_compra, total, desconto, total_pos_desconto, status_do_pagamento, forma_de_pagamento):
     print("----------------------------------------")
     print(f"Informações da compra {id_compra}:")
     print("Total: R$ %.2f" % total)
+
     if desconto:
-        print("Mas pera! Esse cliente tem direito a um desconto de R$ %.2f" % desconto)
-        print("Total com desconto: R$ %.2f" % (total - desconto))
-        print(":)")
+        print("Desconto: R$ %.2f" % desconto)
+        print("Total com desconto: R$ %.2f" % total_pos_desconto)
+
+    # transforma set em string e remove as chaves e aspas
+    status_do_pagamento = str(status_do_pagamento)[2:-2]
+    forma_de_pagamento = str(forma_de_pagamento)[2:-2]
+
+    print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
     print("----------------------------------------")
 
 def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade):
