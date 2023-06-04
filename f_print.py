@@ -15,9 +15,39 @@ def boas_vindas():
     print("------------WE ARE RICHMOND-------------")
     print("----------------------------------------")
 
-def mensagem_erro_ao_inserir_cliente():
+def mensagem_erro_ao_cadastrar_cliente():
     print("----------------------------------------")
     print("Algo deu errado ao inserir o cliente!")
+    print("----------------------------------------")
+
+def mensagem_sucesso_ao_cadastrar_cliente():
+    print("----------------------------------------")
+    print("Cliente cadastrado com sucesso!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_cadastrar_compra():
+    print("----------------------------------------")
+    print("Algo deu errado ao cadastrar a compra!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_recuperar_id_compra():
+    print("----------------------------------------")
+    print("Erro ao recuperar o id da compra!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_adicionar_produto():
+    print("----------------------------------------")
+    print("Erro ao adicionar produto!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_calcular_total():
+    print("----------------------------------------")
+    print("Erro ao calcular o total da compra!")
+    print("----------------------------------------")
+
+def mensagem_erro_ao_cadastrar_pagamento():
+    print("----------------------------------------")
+    print("Erro ao cadastrar o pagamento da compra!")
     print("----------------------------------------")
 
 def mensagem_sucesso():

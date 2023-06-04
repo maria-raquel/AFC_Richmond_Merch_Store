@@ -43,14 +43,16 @@ def nova_compra():
         else:
             dados = fi.dados_cliente()
             if Cliente.create(*dados):
-                fp.mensagem_sucesso()
+                fp.mensagem_sucesso_ao_cadastrar_cliente()
             else:
-                fp.mensagem_erro()
-                # COLOCAR A OPÇÃO SAIR DA COMPRA A CADA ERRO
-                # sair da compra e verifique o q aconteceu
+                fp.mensagem_erro_ao_cadastrar_cliente()
+                fi.deu_ruim_sair_da_operacao()
+                return
             
             cpf = dados[0]
             id_cliente = Cliente.return_id(cpf)
+
+    # se o cliente não quer informar seus dados, é a entrada anônima do banco
     else: 
         id_cliente = Cliente.return_id('0')
     
@@ -59,42 +61,51 @@ def nova_compra():
 
     # Inserindo na tabela Compra
     if not Compra.create(*dados):
-        fp.mensagem_erro()
+        fp.mensagem_erro_ao_cadastrar_compra()
+        fi.deu_ruim_sair_da_operacao()
     
     # Pegando o id da compra nova
     id_compra = Compra.return_id(*dados)
+    if not id_compra:
+        fp.mensagem_erro_ao_recuperar_id_compra()
+        fi.deu_ruim_sair_da_operacao()
 
     # Adicionando produtos à compra
     # Inserindo na tabela Compra_Produto
     produtos = fi.escolher_produtos(id_compra)
     for produto in produtos:
         if not Compra_Produto.create(*produto):
-            fp.mensagem_erro()
+            fp.mensagem_erro_ao_adicionar_produto()
+            fi.deu_ruim_sair_da_operacao()
     
     # Calcula o total e o desconto a serem aplicados
     total = Compra_Produto.return_total_compra(id_compra)
     try:
         desconto = Cliente.return_desconto(id_cliente) * total
     except:
-        fp.mensagem_erro()
-        desconto = 0
+        fp.mensagem_erro_ao_calcular_total()
+        fi.deu_ruim_sair_da_operacao()
     
     # Inserindo na tabela Pagamento
     dados_pagamento = (id_compra, total, desconto, 'A definir', 'Pendente')
     if not Pagamento.create(*dados_pagamento):
-        fp.mensagem_erro()
+        fp.mensagem_erro_ao_cadastrar_pagamento()
+        fi.deu_ruim_sair_da_operacao()
     
     fp.info_pagamento(id_compra, total, desconto)
 
     # Definindo a forma de pagamento e atualizando na tabela
     forma_pagamento = fi.forma_de_pagamento(id_compra)
     if not Pagamento.update(id_compra, 'forma_de_pagamento', forma_pagamento):
-        fp.mensagem_erro()
+        fp.mensagem_erro_ao_cadastrar_pagamento()
+        fi.deu_ruim_sair_da_operacao()
 
     # Definindo o status do pagamento e atualizando na tabela
     if fi.confirmação_do_pagamento():
         if not Pagamento.update(id_compra, 'status_do_pagamento', 'Confirmado'):
-            fp.mensagem_erro()
+            fp.mensagem_erro_ao_cadastrar_pagamento()
+            fi.deu_ruim_sair_da_operacao()
     else:
         if not Pagamento.update(id_compra, 'status_do_pagamento', 'Cancelado'):
-            fp.mensagem_erro()
+            fp.mensagem_erro_ao_cadastrar_pagamento()
+            fi.deu_ruim_sair_da_operacao()
