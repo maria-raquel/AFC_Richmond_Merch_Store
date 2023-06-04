@@ -36,9 +36,13 @@ def buscar_compra():
                 return
             else:
                 compra = Compra.read(id_compra)
+                produtos = Compra_Produto.read_all_from_compra(id_compra)
+                if not compra or not produtos:
+                    fp.mensagem_erro()
+                    # reinie o programa 
+                    return
                 fp.info_compra(*compra)
-                pagamento = Pagamento.read(id_compra)
-                fp.info_pagamento(*pagamento)
+                fp.info_compra_produto(*produtos)
         elif escolha == 2:
             cpf = fi.cpf_cliente()
             id_cliente = Cliente.return_id(cpf)
