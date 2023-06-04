@@ -31,7 +31,13 @@ class Table_Compra_Produto:
     def read(self, id_compra, id_produto):
         try:
             self.cursor.execute(f'''
-                SELECT quantidade FROM Produto_Compra WHERE id_compra = {id_compra} 
+                SELECT Produto_Compra.id_compra, 
+                Produto_Compra.id_produto,
+                Produto.nome, Produto.preco,
+                Produto_Compra.quantidade
+                FROM Produto INNER JOIN Produto_Compra
+                ON Produto.id = Produto_Compra.id_produto
+                WHERE id_compra = {id_compra} 
                 AND id_produto = {id_produto};
                 ''')
             return self.cursor.fetchone()[0]
@@ -41,7 +47,13 @@ class Table_Compra_Produto:
     def read_all_from_compra(self, id_compra):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Produto_Compra WHERE id_compra = {id_compra};
+                SELECT Produto_Compra.id_compra, 
+                Produto_Compra.id_produto,
+                Produto.nome, Produto.preco,
+                Produto_Compra.quantidade
+                FROM Produto INNER JOIN Produto_Compra
+                ON Produto.id = Produto_Compra.id_produto
+                WHERE id_compra = {id_compra};
                 ''')
             return self.cursor.fetchall()
         except:
