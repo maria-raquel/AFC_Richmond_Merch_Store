@@ -30,7 +30,7 @@ class Table_Vendedor:
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Vendedor WHERE id = {id};
+            SELECT id FROM Vendedor WHERE id = {id};
             ''')
             return self.cursor.fetchone()
         except:
@@ -84,6 +84,15 @@ class Table_Vendedor:
                 ''')
             self.connection.commit()
             return 1
+        except:
+            return 0
+        
+    def validate_id(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Vendedor WHERE id = {id};
+            ''')
+            return self.cursor.fetchone()[0]
         except:
             return 0
 
