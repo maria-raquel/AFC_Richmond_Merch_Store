@@ -50,9 +50,19 @@ def mensagem_erro_ao_cadastrar_pagamento():
     print("Erro ao cadastrar o pagamento da compra!")
     print("----------------------------------------")
 
+def mensagem_erro_atualizar_status_compra():
+    print("----------------------------------------")
+    print("Erro ao atualizar o status da compra!")
+    print("----------------------------------------")
+
 def mensagem_sucesso():
     print("----------------------------------------")
     print("Operação realizada com sucesso!")
+    print("----------------------------------------")
+
+def mensagem_sucesso_compra_nova():
+    print("----------------------------------------")
+    print("Compra cadastrada com sucesso!")
     print("----------------------------------------")
 
 def mensagem_1():
