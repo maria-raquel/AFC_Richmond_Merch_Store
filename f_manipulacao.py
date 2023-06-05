@@ -15,6 +15,13 @@ Compra_Produto = cp.Table_Compra_Produto(connection)
 Pagamento = pg.Table_Pagamento(connection)
 Vendedor = v.Table_Vendedor(connection)
 
+def atualizar_compra():
+    # pedir o id da compra,
+    # pedir a coluna a ser atualizada,
+    # botar um menuzão
+    # chamar os updates
+    pass
+
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
     while escolha != 0:

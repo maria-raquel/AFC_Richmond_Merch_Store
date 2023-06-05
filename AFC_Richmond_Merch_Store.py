@@ -3,33 +3,48 @@ import f_print as fp
 import f_input as fi
 
 fp.boas_vindas()
-fp.menu_principal()
 escolha = fi.opcao_menu_principal()
 
 while escolha != 0:
 
+    # Compras
     if escolha == 1:
         escolha_compras = fi.opcao_menu_compras()
+
+        # Compras - Nova compra
         if escolha_compras == 1:
             fm.nova_compra()
+
+        # Compra - Busca
         elif escolha_compras == 2:
-            # aqui
+            fm.buscar_compra()
+
+        # Compra - Atualizar
+        elif escolha_compras == 3:
             pass
 
+        # Compra - Cancelar
+        elif escolha_compras == 4:
+            pass
+
+        # Voltar
+        else:
+            pass
+
+    # Produtos
     elif escolha == 2:
-        # menu produtos
         pass
 
+    # Clientes
     elif escolha == 3:
-        # menu clientes
         pass
 
+    # Vendedores
     elif escolha == 4:
-        # menu vendedores
         pass
 
+    # Relatórios
     elif escolha == 5:
-        # menu relatórios
         pass
 
     else:
