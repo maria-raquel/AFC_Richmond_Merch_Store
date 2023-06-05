@@ -314,3 +314,12 @@ def update_compra():
     valor = input("Digite o novo valor: ")
 
     return tabela, coluna, valor
+
+def cancelar_pagamento():
+    print("Deseja cancelar ou reembolsar o pagamento? ")
+    escolha = input("Digite c para cancelar ou r para reembolsar: ")
+
+    while escolha not in ('c','r'):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha

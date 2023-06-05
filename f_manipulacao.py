@@ -129,6 +129,15 @@ def buscar_compra():
 
         escolha = fi.opcao_menu_compras_busca()
 
+def cancelar_compra():
+    id_compra = fi.id_compra()
+    if not Compra.validate_id(id_compra):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    fp.mensagem_sucesso()
+    pass
+
 def nova_compra():
 
     # Definindo o id do cliente
