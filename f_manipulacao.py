@@ -17,20 +17,12 @@ Vendedor = v.Table_Vendedor(connection)
 
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
-
-    '''
-    Menu - Compras - Busca: 
-    1 - Por id
-    2 - Por cliente
-    3 - Por vendedor
-    4 - Por data
-    5 - Todas
-    0 - Voltar
-    '''
-
     while escolha != 0:
 
+        # Por id
         if escolha == 1:
+            # Pede o id da compra, valida o id, 
+            # puxa os dados pelo id, imprime
             id_compra = fi.id_compra()
             if not Compra.validate_id(id_compra):
                 fp.mensagem_erro_id_invalido()
@@ -45,7 +37,10 @@ def buscar_compra():
                 fp.info_compra(*compra)
                 fp.info_compra_produtos(produtos)
 
+        # Por cliente
         elif escolha == 2:
+            # Pede o cpf do cliente, pega o id pelo cpf
+            # puxa os dados pelo id e imprime
             cpf = fi.cpf_cliente()
             id_cliente = Cliente.return_id(cpf)
             if not id_cliente:
@@ -59,7 +54,10 @@ def buscar_compra():
                     return
                 fp.info_compras(compras)
 
+        # Por vendedor
         elif escolha == 3:
+            # Pede o id do vendedor, valida o id,
+            # puxa os dados pelo id e imprime
             id_vendedor = fi.id_vendedor()
             if not Vendedor.validate_id(id_vendedor):
                 fp.mensagem_erro_id_invalido()
@@ -72,7 +70,10 @@ def buscar_compra():
                     return
                 fp.info_compras(compras)
 
+        # Por data
         elif escolha == 4:
+            # Pede a data, não valida mas não tem problema pois é str
+            # puxa os dados pela data e imprime
             data = fi.data()
             compras = Compra.read_all_from_data(data)
             if not compras:
@@ -81,7 +82,9 @@ def buscar_compra():
                 return
             fp.info_compras(compras)
 
+        # Todos
         elif escolha == 5:
+            # Puxa todos e imprime, sem segredo
             compras = Compra.read_all()
             if not compras:
                 fp.mensagem_erro_reinicie()
@@ -140,13 +143,15 @@ def nova_compra():
     if not Compra.create(*dados):
         fp.mensagem_erro_ao_cadastrar_compra()
         fi.deu_ruim_sair_da_operacao()
+        return
     
     # Pegando o id da compra nova
     id_compra = Compra.return_id(*dados)
     if not id_compra:
         fp.mensagem_erro_ao_recuperar_id_compra()
         fi.deu_ruim_sair_da_operacao()
-
+        return
+    
     # Adicionando produtos à compra
     # Inserindo na tabela Compra_Produto
     produtos = fi.escolher_produtos(id_compra)
@@ -154,6 +159,7 @@ def nova_compra():
         if not Compra_Produto.create(*produto):
             fp.mensagem_erro_ao_adicionar_produto()
             fi.deu_ruim_sair_da_operacao()
+            return
     
     # Calcula o total e o desconto a serem aplicados
     total = Compra_Produto.return_total_compra(id_compra)
@@ -162,12 +168,14 @@ def nova_compra():
     except:
         fp.mensagem_erro_ao_calcular_total()
         fi.deu_ruim_sair_da_operacao()
+        return
     
     # Inserindo na tabela Pagamento
     dados_pagamento = (id_compra, total, desconto, 'A definir', 'Pendente')
     if not Pagamento.create(*dados_pagamento):
         fp.mensagem_erro_ao_cadastrar_pagamento()
         fi.deu_ruim_sair_da_operacao()
+        return
 
     info_pagamento = Pagamento.read(id_compra)
 
@@ -178,19 +186,24 @@ def nova_compra():
     if not Pagamento.update(id_compra, 'forma_de_pagamento', forma_pagamento):
         fp.mensagem_erro_ao_cadastrar_pagamento()
         fi.deu_ruim_sair_da_operacao()
+        return
 
     # Definindo o status do pagamento e atualizando na tabela
     if fi.confirmação_do_pagamento():
         if not Pagamento.update(id_compra, 'status_do_pagamento', 'Confirmado'):
             fp.mensagem_erro_ao_cadastrar_pagamento()
             fi.deu_ruim_sair_da_operacao()
+            return
     else:
         if not Pagamento.update(id_compra, 'status_do_pagamento', 'Cancelado'):
             fp.mensagem_erro_ao_cadastrar_pagamento()
             fi.deu_ruim_sair_da_operacao()
+            return
     
     if not Compra.update(id_compra, 'status_da_compra', 'Confirmada'):
         fp.mensagem_erro_atualizar_status_compra()()
         fi.deu_ruim_sair_da_operacao()
+        return
     
     fp.mensagem_sucesso_compra_nova()
+    fp.mensagem_1()
