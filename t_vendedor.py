@@ -90,7 +90,7 @@ class Table_Vendedor:
     def validate_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Vendedor WHERE id = {id};
+            SELECT id FROM Vendedor WHERE id = {id};
             ''')
             return self.cursor.fetchone()[0]
         except:
