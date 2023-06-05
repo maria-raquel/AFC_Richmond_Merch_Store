@@ -2,10 +2,13 @@ import connect_to_DB
 import f_print as fp
 import t_produto as pr
 import t_compra as cm
+import t_vendedor as v
+from datetime import date
 
 connection = connect_to_DB.connect()
 Produto = pr.Table_Produto(connection)
 Compra = cm.Table_Compra(connection)
+Vendedor = v.Table_Vendedor(connection)
 
 # Pede uma ação para encerrar a operação
 def deu_ruim_sair_da_operacao():
@@ -84,13 +87,26 @@ def dados_cliente():
 # Na ordem: (id_cliente, id_vendedor, data, 'Aguardando confirmação')
 def dados_da_compra(id_cliente):
     print("Informe os dados da compra: ")
-    id_vendedor = int(input("ID do vendedor: "))
 
-    # validar id do vendedor aqui
+    id_invalido = True
 
-    data = input("Data da compra, formato aaaa-mm-dd: ")
+    while id_invalido:
+        try:
+            id_vendedor = int(input("ID do vendedor: "))
+        except ValueError:
+            print("Id inválido! Digite novamente.")
+            continue
 
-    # validar data aqui
+        if Vendedor.validate_id(id_vendedor):
+            id_invalido = False
+        
+        else:
+            print("Id inválido!")
+            iai = int(input("Digite 1 para tentar novamente ou 0 para sair. "))
+            if not iai:
+                return
+
+    data = date.today().strftime("%Y-%m-%d")
 
     return (id_cliente, id_vendedor, data, 'Aguardando confirmação')
 
