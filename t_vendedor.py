@@ -26,7 +26,17 @@ class Table_Vendedor:
             return 1
         except:
             return 0
-    
+        
+    def delete(self, id):
+        try: 
+            self.cursor.execute(f'''
+            UPDATE Vendedor SET situacao = 'Ex-colaborador' WHERE id = {id};
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+        
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
@@ -93,15 +103,5 @@ class Table_Vendedor:
             SELECT id FROM Vendedor WHERE id = {id};
             ''')
             return self.cursor.fetchone()[0]
-        except:
-            return 0
-
-    def delete(self, id):
-        try: 
-            self.cursor.execute(f'''
-            UPDATE Vendedor SET situacao = 'Ex-colaborador' WHERE id = {id};
-            ''')
-            self.connection.commit()
-            return 1
         except:
             return 0
