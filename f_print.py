@@ -12,7 +12,7 @@ def info_pagamento(id_compra, total, desconto, total_pos_desconto, status_do_pag
     status_do_pagamento = str(status_do_pagamento)[2:-2]
     forma_de_pagamento = str(forma_de_pagamento)[2:-2]
 
-    print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
+    print(f"Status do pagamento: {status_do_pagamento}; Forma de pagamento: {forma_de_pagamento}")
     print("----------------------------------------")
 
 # imprime um produto a partir de uma tupla
@@ -25,9 +25,9 @@ def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, dispo
     print(f"Produto {id}: {nome}")
     print("Preço: R$ %.2f" % preco)
     print(f"Quantidade em estoque: {estoque}")
-    print(f"Categoria: {categoria}, Local de fabricação: {local_de_fabricacao}")
+    print(f"Categoria: {categoria}; Local de fabricação: {local_de_fabricacao}")
     if not disponibilidade:
-        print("Este produto não está disponível no momento")
+        print("Este produto não está disponível no momento.")
     print("----------------------------------------")
 
 # imprime várias compras a partir de uma lista de tuplas
@@ -49,8 +49,8 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
     data = data.strftime("%d/%m/%Y")
     status_c = str(status_c)[2:-2]
     print(f"Compra {id}:")
-    print(f"id do cliente: {id_cliente}, id do vendedor: {id_vendedor}")
-    print(f"data: {data}, status da compra: {status_c}")
+    print(f"Id do cliente: {id_cliente}; Id do vendedor: {id_vendedor}")
+    print(f"Data: {data}; Status da compra: {status_c}")
     print("Total: R$ %.2f" % total)
 
     if desconto:
@@ -61,7 +61,7 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
     status_do_pagamento = str(status_do_pagamento)[2:-2]
     forma_de_pagamento = str(forma_de_pagamento)[2:-2]
 
-    print(f"Status do pagamento: {status_do_pagamento}, forma de pagamento: {forma_de_pagamento}")
+    print(f"Status do pagamento: {status_do_pagamento}; Forma de pagamento: {forma_de_pagamento}")
 
 def info_compra_produtos(produtos):
     print("Produtos dessa compra: ")
@@ -79,7 +79,7 @@ def boas_vindas():
 
 def mensagem_erro_id_invalido():
     print("----------------------------------------")
-    print("Id inválido! Digite novamente. ")
+    print("Id inválido! Tente novamente. ")
     print("----------------------------------------")
 
 def mensagem_erro_ao_cadastrar_cliente():
@@ -125,6 +125,11 @@ def mensagem_erro_atualizar_status_compra():
 def mensagem_erro_ao_recuperar_info_produto():
     print("----------------------------------------")
     print("Erro ao recuperar informações do produto!")
+    print("----------------------------------------")
+
+def mensagem_erro_reinicie():
+    print("----------------------------------------")
+    print("Eita, deu um ruim aqui que é melhor reiniciar o programa.")
     print("----------------------------------------")
 
 def mensagem_sucesso():
