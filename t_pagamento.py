@@ -80,3 +80,23 @@ class Table_Pagamento:
             return 1
         except:
             return 0
+        
+    def confirm_payment(self, id):
+        try:
+            self.cursor.execute(f'''
+            CALL Confirmacao({id});
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+    
+    def cancel_payment(self, id):
+        try:
+            self.cursor.execute(f'''
+            CALL Cancelamento({id});
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
