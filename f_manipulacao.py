@@ -29,6 +29,7 @@ def buscar_compra():
     '''
 
     while escolha != 0:
+
         if escolha == 1:
             id_compra = fi.id_compra()
             if not Compra.validate_id(id_compra):
@@ -38,11 +39,12 @@ def buscar_compra():
                 compra = Compra.read(id_compra)
                 produtos = Compra_Produto.read_all_from_compra(id_compra)
                 if not compra or not produtos:
-                    fp.mensagem_erro()
-                    # reinie o programa 
+                    fp.mensagem_erro_reinicie()
+                    fi.deu_ruim_sair_da_operacao()
                     return
                 fp.info_compra(*compra)
-                fp.info_compra_produto(*produtos)
+                fp.info_compra_produtos(produtos)
+
         elif escolha == 2:
             cpf = fi.cpf_cliente()
             id_cliente = Cliente.return_id(cpf)
@@ -51,7 +53,12 @@ def buscar_compra():
                 return
             else:
                 compras = Compra.read_all_from_cliente(id_cliente)
+                if not compras:
+                    fp.mensagem_erro_reinicie()
+                    fi.deu_ruim_sair_da_operacao()
+                    return
                 fp.info_compras(compras)
+
         elif escolha == 3:
             id_vendedor = fi.id_vendedor()
             if not Vendedor.validate_id(id_vendedor):
@@ -59,17 +66,29 @@ def buscar_compra():
                 return
             else:
                 compras = Compra.read_all_from_vendedor(id_vendedor)
-                fp.info_compras(*compras)
+                if not compras:
+                    fp.mensagem_erro_reinicie()
+                    fi.deu_ruim_sair_da_operacao()
+                    return
+                fp.info_compras(compras)
+
         elif escolha == 4:
             data = fi.data()
             compras = Compra.read_all_from_data(data)
             if not compras:
-                fp.mensagem_erro()
+                fp.mensagem_erro_reinicie()
+                fi.deu_ruim_sair_da_operacao()
                 return
-            fp.info_compras(*compras)
+            fp.info_compras(compras)
+
         elif escolha == 5:
             compras = Compra.read_all()
-            fp.info_compras(*compras)
+            if not compras:
+                fp.mensagem_erro_reinicie()
+                fi.deu_ruim_sair_da_operacao()
+                return
+            fp.info_compras(compras)
+
         escolha = fi.opcao_menu_compras_busca()
 
 def nova_compra():
