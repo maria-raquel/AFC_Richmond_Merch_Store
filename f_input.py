@@ -276,5 +276,8 @@ def id_vendedor():
 
 def data():
     id_invalido = True
-    data = input("Data da compra, formato aaaa-mm-dd: ")
-    return id
+    print("Digite a data da compra")
+    print("Formato: aaaa-mm-dd")
+    print("Ou pode ser só ano (aaaa), só mês (-mm-), ano e mes (aaaa-mm)")
+    data = input("Data da compra: ")
+    return data
