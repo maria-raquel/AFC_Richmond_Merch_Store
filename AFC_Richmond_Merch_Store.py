@@ -21,7 +21,7 @@ while escolha != 0:
 
         # Compra - Atualizar
         elif escolha_compras == 3:
-            pass
+            fm.atualizar_compra()
 
         # Compra - Cancelar
         elif escolha_compras == 4:

@@ -297,3 +297,20 @@ def data():
     print("Ou pode ser só ano (aaaa), só mês (-mm-), ano e mes (aaaa-mm)")
     data = input("Data da compra: ")
     return data
+
+def update_compra():
+    print("Que tipo de informação deseja atualizar? ")
+    tabela = input("Da compra, do pagamento ou dos produtos? ")
+
+    if tabela not in ('compra', 'pagamento', 'produtos'):
+        tabela = input("Opção inválida! Digite novamente. ")
+    
+    if tabela == 'produtos':
+        id = int(input("Digite o id do produto: "))
+        qtd = int(input("Digite a nova quantidade: "))
+        return tabela, id, qtd
+    
+    coluna = input("Digite o nome da coluna: ")
+    valor = input("Digite o novo valor: ")
+
+    return tabela, coluna, valor

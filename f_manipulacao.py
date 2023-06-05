@@ -16,11 +16,39 @@ Pagamento = pg.Table_Pagamento(connection)
 Vendedor = v.Table_Vendedor(connection)
 
 def atualizar_compra():
-    # pedir o id da compra,
-    # pedir a coluna a ser atualizada,
-    # botar um menuzão
-    # chamar os updates
-    pass
+    # pede o id da compra
+    id_compra = fi.id_compra()
+    if not Compra.validate_id(id_compra):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    compra = Compra.read(id_compra)
+    fp.info_compra(*compra)
+    produtos = Compra_Produto.read_all_from_compra(id_compra)
+    fp.info_compra_produtos(produtos)
+
+    tabela, coluna, valor = fi.update_compra()
+
+    deu_ruim = False
+
+    if tabela == 'compra':
+        if not Compra.update(id_compra, coluna, valor):
+            deu_ruim = True
+    elif tabela == 'pagamento':
+        if not Pagamento.update(id_compra, coluna, valor):
+            deu_ruim = True
+    elif tabela == 'produtos':
+        # nesse caso, 'coluna' será o id do produto e 'valor' será a quantidade
+        if not Compra_Produto.update(id_compra, coluna, valor):
+            deu_ruim = True
+    
+    if deu_ruim:
+        fp.mensagem_erro()
+        return
+    else:
+        fp.mensagem_sucesso()
+        fp.mensagem_2()
+        return
 
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
