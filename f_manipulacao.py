@@ -142,23 +142,33 @@ def cancelar_compra():
         fp.mensagem_erro_id_invalido()
         return
     
-    # mostra as informações da compra
+    # puxa as informações da compra
     compra = Compra.read(id_compra)
-    fp.info_compra(*compra)
     produtos = Compra_Produto.read_all_from_compra(id_compra)
+    status_do_pagamento = Pagamento.return_status_de_pagamento(id_compra)
+
+    if not compra or not produtos or not status_do_pagamento:
+        fp.mensagem_erro_ao_recuperar_info()
+        return
+
+    fp.info_compra(*compra)
     fp.info_compra_produtos(produtos)
 
-    # determina se o pagamento será reembolsado ou cancelado
-    reembolso = fi.vai_reembolsar_pagamento()
-
-    # cancela ou ou reembolsa o pagamento, a compra e dá alta no estoque
-    if not Pagamento.cancel_payment(id_compra):
-        fp.mensagem_erro()
-        return
-    if reembolso:
-        if not Pagamento.update(id_compra, 'status_do_pagamento', 'Reembolsado'):
-            fp.mensagem_erro()
+    # cancela o pagamento sem reembolsar ou retornar mercadoria
+    if status_do_pagamento == "{'Pendente'}":
+        if not Pagamento.cancel_payment(id_compra):
+            fp.mensagem_erro_atualizar_status_compra()
             return
+
+    # reembolsa o pagamento, a compra e dá alta no estoque
+    elif status_do_pagamento == "{'Confirmado'}":
+        if not Pagamento.refund_payment(id_compra):
+            fp.mensagem_erro_atualizar_status_compra()
+            return
+    
+    elif status_do_pagamento == "{'Cancelado'}" or status_do_pagamento == "{'Reembolsado'}":
+        fp. mensagem_compra_já_cancelada()
+        return
     
     fp.mensagem_sucesso()
     fp.mensagem_3()
