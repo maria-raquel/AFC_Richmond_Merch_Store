@@ -127,6 +127,11 @@ def mensagem_erro_ao_recuperar_info():
     print("Erro ao recuperar informações!")
     print("----------------------------------------")
 
+def mensagem_compra_já_cancelada():
+    print("----------------------------------------")
+    print("Esta compra já estava cancelada!")
+    print("----------------------------------------")
+
 def mensagem_erro_reinicie():
     print("----------------------------------------")
     print("Eita, deu um ruim aqui que é melhor reiniciar o programa.")
