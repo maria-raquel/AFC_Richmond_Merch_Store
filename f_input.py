@@ -36,6 +36,7 @@ def cliente_tem_cadastro():
     else:
         return False
 
+# Retorna o cpf do cliente em string
 def cpf_cliente():
     cpf = input("Informe o CPF do cliente: ")
     return cpf
@@ -112,7 +113,6 @@ def dados_da_compra(id_cliente):
 
 # Retorna os dados dos produtos escolhidos em uma lista de tuplas
 # Cada tupla está na ordem (id_compra, id_produdo, quantidade)
-
 def escolher_produtos(id_compra):
     produtos = []
     escolha = 's'
