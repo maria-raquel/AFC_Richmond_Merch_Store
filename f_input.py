@@ -331,10 +331,63 @@ def opcao_menu_produto():
     return escolha
 
 def info_produto_novo():
-    nome = input("Nome do produto: ")
-    preco = float(input("Preço do produto: "))
-    estoque = int(input("Quantidade em estoque: "))
-    categoria = input("Categoria do produto: ")
-    local_de_fabricacao = input("Local de fabricação do produto: ")
-    disponibilidade = input("Ele já está disponível para vendas? (s/n): ")
-    return nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade
+    nome_invalido = True
+    while nome_invalido:
+        nome = input("Nome do produto: ")
+        if nome == "":
+            print("Nome inválido! Digite novamente.")
+        else:
+            nome_invalido = False
+
+    preco_invalido = True
+    while preco_invalido:
+        try:
+            preco = float(input("Preço do produto: "))
+        except ValueError:
+            print("Preço inválido! Digite novamente.")
+
+        if preco <= 0:
+            print("Preço inválido! Digite novamente.")
+        else: 
+            preco_invalido = False
+
+    estoque_invalido = True
+    while estoque_invalido:
+        try:
+            estoque = int(input("Quantidade em estoque: "))
+        except ValueError:
+            print("Quantidade inválida! Digite novamente.")
+        
+        if estoque < 0:
+            print("Quantidade inválida! Digite novamente.")
+        else:
+            estoque_invalido = False
+    
+    categoria_invalida = True
+    while categoria_invalida:
+        categoria = input("Categoria do produto: ")
+        if categoria not in ("Vestuário", "Outros"):
+            print("Categoria inválida! Digite novamente.")
+        else:
+            categoria_invalida = False
+
+    local_invalido = True
+    while local_invalido:
+        local_de_fabricacao = input("Local de fabricação do produto: ")
+        if local_de_fabricacao == "":
+            print("Local inválido! Digite novamente.")
+        else:
+            local_invalido = False
+
+    disponibilidade_invalida = True
+    while disponibilidade_invalida:
+        disponibilidade = input("Ele já está disponível para vendas? (s/n): ")
+        if disponibilidade not in ("s", "n"):
+            print("Opção inválida! Digite novamente.")
+        else:
+            disponibilidade_invalida = False
+
+    if disponibilidade == "s":
+        return nome, preco, estoque, categoria, local_de_fabricacao, 1
+    else:
+        return nome, preco, estoque, categoria, local_de_fabricacao, 0
