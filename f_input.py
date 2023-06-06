@@ -139,7 +139,7 @@ def escolher_produtos(id_compra):
 
             dados_produto = Produto.read_by_id(id)
             if not dados_produto:
-                fp.mensagem_erro_ao_recuperar_info_produto()
+                fp.mensagem_erro_ao_recuperar_info()
             
             fp.info_produto(*dados_produto)
 

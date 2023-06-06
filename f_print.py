@@ -122,9 +122,9 @@ def mensagem_erro_atualizar_status_compra():
     print("Erro ao atualizar o status da compra!")
     print("----------------------------------------")
 
-def mensagem_erro_ao_recuperar_info_produto():
+def mensagem_erro_ao_recuperar_info():
     print("----------------------------------------")
-    print("Erro ao recuperar informações do produto!")
+    print("Erro ao recuperar informações!")
     print("----------------------------------------")
 
 def mensagem_erro_reinicie():
