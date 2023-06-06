@@ -84,7 +84,7 @@ class Table_Pagamento:
     def confirm_payment(self, id):
         try:
             self.cursor.execute(f'''
-            CALL Confirmacao({id});
+            CALL Confirmar_compra({id});
             ''')
             self.connection.commit()
             return 1
@@ -94,7 +94,7 @@ class Table_Pagamento:
     def cancel_payment(self, id):
         try:
             self.cursor.execute(f'''
-            CALL Cancelamento({id});
+            CALL Cancelar_compra({id});
             ''')
             self.connection.commit()
             return 1
