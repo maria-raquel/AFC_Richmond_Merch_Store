@@ -7,7 +7,7 @@ FROM Produto INNER JOIN Produto_Compra
 ON Produto.id = Produto_Compra.id_produto;
 
 
-
+-- Chamado ao confirmar uma compra nova
 DELIMITER $$
 CREATE PROCEDURE Confirmar_compra (IN id_da_compra INT)
 BEGIN
@@ -27,7 +27,8 @@ END $$
 DELIMITER ;
 
 
-
+-- Chamado ao cancelar um pagamento que não chegou a ser confirmado
+-- Ou seja, não ocorreu baixa de mercadoria
 DELIMITER $$
 CREATE PROCEDURE Cancelar_compra (IN id_da_compra INT)
 BEGIN
@@ -40,25 +41,25 @@ UPDATE Compra
 SET status_da_compra = "Cancelada"
 WHERE id = id_da_compra;
 
-UPDATE modificar_estoque SET estoque = estoque + quantidade
-WHERE id_compra = id_da_compra;
-
 END $$
 DELIMITER ;
 
 
-
+-- Chamado ao cancelar um pagamento que estava confirmado
 DELIMITER $$
-CREATE PROCEDURE Cancelar_compra_pendente (IN id_da_compra INT)
+CREATE PROCEDURE Reembolsar_compra (IN id_da_compra INT)
 BEGIN
 
 UPDATE Pagamento
-SET status_do_pagamento = "Cancelado"
+SET status_do_pagamento = "Reembolsado"
 WHERE id_compra = id_da_compra;
 
 UPDATE Compra 
 SET status_da_compra = "Cancelada"
 WHERE id = id_da_compra;
+
+UPDATE modificar_estoque SET estoque = estoque + quantidade
+WHERE id_compra = id_da_compra;
 
 END $$
 DELIMITER ;
