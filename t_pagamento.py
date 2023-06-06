@@ -100,3 +100,12 @@ class Table_Pagamento:
             return 1
         except:
             return 0
+        
+    def return_status_de_pagamento(self, id):
+        try:
+            self.cursor.execute(f'''
+                SELECT status_do_pagamento FROM Pagamento WHERE id_compra = {id};
+                ''')
+            return str(self.cursor.fetchone()[0])
+        except:
+            return 0
