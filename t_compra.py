@@ -18,7 +18,7 @@ class Table_Compra:
             );
         ''')
         self.connection.commit()
-    
+
     def create(self, id_cliente, id_vendedor, data_da_compra, status_da_compra):
         try:
             self.cursor.execute(f'''

@@ -15,7 +15,7 @@ class Table_Vendedor:
             );
         ''')
         self.connection.commit()
-
+        
     def create(self, cpf, nome, situacao):
         try:
             self.cursor.execute(f'''

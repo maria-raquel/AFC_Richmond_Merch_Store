@@ -101,6 +101,16 @@ class Table_Pagamento:
         except:
             return 0
         
+    def refund_payment(self, id):
+        try:
+            self.cursor.execute(f'''
+            CALL Reembolsar_compra({id});
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+        
     def return_status_de_pagamento(self, id):
         try:
             self.cursor.execute(f'''

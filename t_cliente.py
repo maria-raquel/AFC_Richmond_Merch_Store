@@ -17,7 +17,6 @@ class Table_Cliente:
             );
         ''')
         self.connection.commit()
-        self.connection.close()
     
     def create(self, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal):
         try:
@@ -26,7 +25,6 @@ class Table_Cliente:
                 VALUES ('{cpf}', '{nome}', {is_flamengo}, {assiste_one_piece}, '{cidade_natal}')
             ''')
             self.connection.commit()
-            self.connection.close()
             return 1
         except:
             return 0
@@ -117,7 +115,6 @@ class Table_Cliente:
                 UPDATE Cliente SET {coluna} = {valor} WHERE id = {id};
                 ''')
             self.connection.commit()
-            self.connection.close()
             return 1
         except:
             return 0
@@ -128,7 +125,6 @@ class Table_Cliente:
             DELETE FROM Cliente WHERE id = {id};
             ''')
             self.connection.commit()
-            self.connection.close()
             return 1
         except:
             return 0
