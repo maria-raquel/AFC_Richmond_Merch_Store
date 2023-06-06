@@ -5,35 +5,55 @@ import f_input as fi
 fp.boas_vindas()
 escolha = fi.opcao_menu_principal()
 
-while escolha != 0:
+while escolha:
 
     # Compras
     if escolha == 1:
         escolha_compras = fi.opcao_menu_compras()
 
-        # Compras - Nova compra
-        if escolha_compras == 1:
-            fm.nova_compra()
+        while escolha_compras:
 
-        # Compra - Busca
-        elif escolha_compras == 2:
-            fm.buscar_compra()
+            # Compras - Nova compra
+            if escolha_compras == 1:
+                fm.nova_compra()
 
-        # Compra - Atualizar
-        elif escolha_compras == 3:
-            fm.atualizar_compra()
+            # Compra - Busca
+            elif escolha_compras == 2:
+                fm.buscar_compra()
 
-        # Compra - Cancelar
-        elif escolha_compras == 4:
-            pass
+            # Compra - Atualizar
+            elif escolha_compras == 3:
+                fm.atualizar_compra()
 
-        # Voltar
-        else:
-            pass
+            # Compra - Cancelar
+            elif escolha_compras == 4:
+                fm.cancelar_compra()
+
+            escolha_compras = fi.opcao_menu_compras()
 
     # Produtos
     elif escolha == 2:
-        pass
+        escolha_produto = fi.opcao_menu_produto()
+
+        while escolha_produto:
+
+            # Produtos - Cadastrar
+            if escolha_produto == 1:
+                pass
+
+            # Produtos - Buscar
+            elif escolha_produto == 2:
+                pass
+
+            # Produtos - Atualizar
+            elif escolha_produto == 3:
+                pass
+
+            # Produtos - Remover
+            elif escolha_produto == 4:
+                pass
+
+            escolha_produto = fi.opcao_menu_produto()
 
     # Clientes
     elif escolha == 3:

@@ -22,15 +22,17 @@ def atualizar_compra():
         fp.mensagem_erro_id_invalido()
         return
     
+    # mostra as informações da compra
     compra = Compra.read(id_compra)
     fp.info_compra(*compra)
     produtos = Compra_Produto.read_all_from_compra(id_compra)
     fp.info_compra_produtos(produtos)
 
+    # pede ao usuário o que ele quer atualizar
     tabela, coluna, valor = fi.update_compra()
 
+    # chama o método para cada tabela
     deu_ruim = False
-
     if tabela == 'compra':
         if not Compra.update(id_compra, coluna, valor):
             deu_ruim = True
@@ -42,6 +44,7 @@ def atualizar_compra():
         if not Compra_Produto.update(id_compra, coluna, valor):
             deu_ruim = True
     
+    # imprime mensage de sucesso ou erro
     if deu_ruim:
         fp.mensagem_erro()
         return
@@ -129,14 +132,36 @@ def buscar_compra():
 
         escolha = fi.opcao_menu_compras_busca()
 
+def cadastrar_produto():
+    pass
+
 def cancelar_compra():
+    # pede e valida o id
     id_compra = fi.id_compra()
     if not Compra.validate_id(id_compra):
         fp.mensagem_erro_id_invalido()
         return
     
+    # mostra as informações da compra
+    compra = Compra.read(id_compra)
+    fp.info_compra(*compra)
+    produtos = Compra_Produto.read_all_from_compra(id_compra)
+    fp.info_compra_produtos(produtos)
+
+    # determina se o pagamento será reembolsado ou cancelado
+    reembolso = fi.vai_reembolsar_pagamento()
+
+    # cancela ou ou reembolsa o pagamento, a compra e dá alta no estoque
+    if not Pagamento.cancel_payment(id_compra):
+        fp.mensagem_erro()
+        return
+    if reembolso:
+        if not Pagamento.update(id_compra, 'status_do_pagamento', 'Reembolsado'):
+            fp.mensagem_erro()
+            return
+    
     fp.mensagem_sucesso()
-    pass
+    fp.mensagem_3()
 
 def nova_compra():
 
@@ -221,8 +246,8 @@ def nova_compra():
         fi.deu_ruim_sair_da_operacao()
         return
 
+    # Mostrando as informações do pagamento 
     info_pagamento = Pagamento.read(id_compra)
-
     fp.info_pagamento(*info_pagamento)
 
     # Definindo a forma de pagamento e atualizando na tabela

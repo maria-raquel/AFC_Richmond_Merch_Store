@@ -315,11 +315,37 @@ def update_compra():
 
     return tabela, coluna, valor
 
-def cancelar_pagamento():
+def vai_reembolsar_pagamento():
     print("Deseja cancelar ou reembolsar o pagamento? ")
     escolha = input("Digite c para cancelar ou r para reembolsar: ")
 
     while escolha not in ('c','r'):
         escolha = input("Opção inválida! Digite novamente: ")
 
+    if escolha == 'r':
+        return True
+    return False
+
+def opcao_menu_produto():
+    print("Menu - Produtos: ")
+    print("1 - Cadastrar novo produto")
+    print("2 - Buscar produto")
+    print("3 - Atualizar produto")
+    print("4 - Remover produto")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
     return escolha
+
+def info_produto_novo():
+    nome = input("Nome do produto: ")
+    preco = float(input("Preço do produto: "))
+    estoque = int(input("Quantidade em estoque: "))
+    categoria = input("Categoria do produto: ")
+    local_de_fabricacao = input("Local de fabricação do produto: ")
+    disponibilidade = input("Ele já está disponível para vendas? (s/n): ")
+    return nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade
