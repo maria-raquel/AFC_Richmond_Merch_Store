@@ -68,6 +68,47 @@ def atualizar_produto():
     fp.mensagem_sucesso()
     fp.mensagem_1()
 
+def buscar_cliente():
+    escolha = fi.opcao_menu_cliente_busca()
+
+    # Por id
+    if escolha == 1:
+        id = fi.id_cliente()
+        if not Cliente.validate_id(id):
+            fp.mensagem_erro_id_invalido()
+            return
+        info = Cliente.read_by_id(id)
+        if not info:
+            fp.mensagem_erro_ao_recuperar_info()
+            return
+        fp.info_cliente(*info)
+
+    # Por nome
+    elif escolha == 2:
+        nome = fi.nome()
+        clientes = Cliente.read_by_name(nome)
+        if clientes == 0:
+            fp.mensagem_erro_ao_recuperar_info()
+            return
+        fp.info_clientes(clientes)
+
+    # Por cpf
+    elif escolha == 3:
+        cpf = fi.cpf_cliente()
+        info = Cliente.read_by_cpf(cpf)
+        if not info:
+            fp.mensagem_erro_ao_recuperar_info()
+            return
+        fp.info_cliente(*info)
+
+    # Todos
+    elif escolha == 4:
+        clientes = Cliente.read_all()
+        if clientes == 0:
+            fp.mensagem_erro_ao_recuperar_info()
+            return
+        fp.info_clientes(clientes)
+
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
     while escolha != 0:
@@ -167,7 +208,7 @@ def buscar_produto():
         elif escolha == 2:
             nome = fi.nome_produto()
             info = Produto.read_by_name(nome)
-            if not info:
+            if info == 0:
                 fp.mensagem_erro_ao_recuperar_info()
                 return
             fp.info_produtos(info)
@@ -215,6 +256,15 @@ def buscar_produto():
             fp.info_produtos(produtos)
 
         escolha = fi.opcao_menu_produto_busca()
+
+def cadastrar_cliente():
+    dados = fi.dados_cliente()
+    if Cliente.create(*dados):
+        fp.mensagem_sucesso_ao_cadastrar_cliente()
+    else:
+        fp.mensagem_erro_ao_cadastrar_cliente()
+        fi.deu_ruim_sair_da_operacao()
+        return
 
 def cadastrar_produto():
     info = fi.info_produto_novo()

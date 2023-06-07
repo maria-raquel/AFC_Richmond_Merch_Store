@@ -128,3 +128,12 @@ class Table_Cliente:
             return 1
         except:
             return 0
+        
+    def validate_id(self, id):
+        try:
+            self.cursor.execute(f'''
+            SELECT id FROM Cliente WHERE id = {id};
+            ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0

@@ -82,6 +82,28 @@ def info_produtos(produtos):
         print(f"{id} | {n} | {p} | {e} | {c} | {l} | {d}")
     print("----------------------------------------")
 
+# Imprime um cliente a partir de uma tupla
+def info_cliente(id, cpf, nome, is_flamengo, assiste_one_piece, cidade):
+    print("----------------------------------------")
+    print(f"Cliente {id}:")
+    print(f"Nome: {nome}")
+    print(f"CPF: {cpf}")
+    print(f"Cidade natal: {cidade}")
+    if is_flamengo:
+        print("É flamenguista")
+    if assiste_one_piece:
+        print("Assiste One Piece")
+    print("----------------------------------------")
+
+# Imprime vários clientes a partir de uma lista de tuplas
+def info_clientes(clientes):
+    print("----------------------------------------")
+    print("id | nome | cpf | cidade | flamenguista | one piece ")
+
+    for id, cpf, nome, is_flamengo, assiste_one_piece, cidade in clientes:
+        print(f"{id} | {nome} | {cpf} | {cidade} | {is_flamengo} | {assiste_one_piece}")
+    print("----------------------------------------")
+
 def boas_vindas():
     print("----------------------------------------")
     print("--Bem vindo ao controle de estoque da---")
@@ -201,14 +223,6 @@ def despedida():
     print("--║╚═╝║║╚══╗║╚═╝║╔╣╠╗║╚══╗ ╚╗╔╝ ║╚══╗---")
     print("--╚═══╝╚═══╝╚═══╝╚══╝╚═══╝  ╚╝  ╚═══╝---")
     print("----------------------------------------")
-
-def submenu_cliente_busca():
-    print("Menu - Clientes - Busca: ")
-    print("1 - Por id")
-    print("2 - Por nome")
-    print("3 - Por CPF")
-    print("4 - Todos")
-    print("0 - Voltar")
 
 def submenu_vendedor_busca():
     print("Menu - Vendedores - Busca: ")

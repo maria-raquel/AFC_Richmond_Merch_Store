@@ -64,11 +64,11 @@ while escolha:
 
             # Clientes - Cadastrar
             if escolha_cliente == 1:
-                pass
+                fm.cadastrar_cliente()
 
             # Clientes - Buscar
             elif escolha_cliente == 2:
-                pass
+                fm.buscar_cliente()
 
             # Clientes - Atualizar
             elif escolha_cliente == 3:

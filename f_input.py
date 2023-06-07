@@ -540,6 +540,21 @@ def opcao_menu_produto_busca():
     print("6 - Todos")
     print("0 - Voltar")
 
+    escolha = int(input("Digite: "))
+    while escolha not in (0,1,2,3,4,5,6):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+def opcao_menu_cliente_busca():
+    print("----------------------------------------")
+    print("Menu - Clientes - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Por CPF")
+    print("4 - Todos")
+    print("0 - Voltar")
+
     try:
         escolha = int(input("Digite: "))
     except ValueError:
@@ -639,3 +654,9 @@ def opcao_menu_vendedor():
             print("Opção inválida! Digite novamente: ")
 
     return escolha
+
+def nome():
+    nome = input("Digite o nome: ")
+    while nome == "":
+        nome = input("Nome inválido! Digite novamente: ")
+    return nome
