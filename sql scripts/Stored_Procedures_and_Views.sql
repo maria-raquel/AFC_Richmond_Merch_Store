@@ -73,3 +73,16 @@ Pagamento.total AS total, Pagamento.desconto_aplicado AS desconto_aplicado,
 Pagamento.total_pos_desconto AS total_pos_desconto, Pagamento.forma_de_pagamento AS forma_de_pagamento, 
 Pagamento.status_do_pagamento AS status_do_pagamento 
 FROM Compra INNER JOIN Pagamento ON Compra.id = Pagamento.id_compra
+
+DELIMITER $$
+CREATE PROCEDURE Apagar_cliente (IN id_a_apagar INT)
+BEGIN
+
+UPDATE Compra
+SET id_cliente = (SELECT id FROM cliente WHERE cpf = '0')
+WHERE id_cliente = id_a_apagar;
+
+DELETE FROM Cliente WHERE id = id_a_apagar;
+
+END $$
+DELIMITER ;
