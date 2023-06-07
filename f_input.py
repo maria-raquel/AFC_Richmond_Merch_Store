@@ -324,20 +324,74 @@ def data():
 
 def update_compra():
     print("Que tipo de informação deseja atualizar? ")
-    tabela = input("Da compra, do pagamento ou dos produtos? ")
+    tabela = input("Da compra (c) ou do pagamento (p)? ")
 
-    if tabela not in ('compra', 'pagamento', 'produtos'):
-        tabela = input("Opção inválida! Digite novamente. ")
-    
-    if tabela == 'produtos':
-        id = int(input("Digite o id do produto: "))
-        qtd = int(input("Digite a nova quantidade: "))
-        return tabela, id, qtd
-    
-    coluna = input("Digite o nome da coluna: ")
-    valor = input("Digite o novo valor: ")
+    while tabela not in ('c', 'p'):
+        tabela = input("Opção inválida! Digite novamente: ")
 
-    return tabela, coluna, valor
+    if tabela == 'c':
+        colunas = {1: 'id_vendedor',
+            2: 'id_cliente',
+            3: 'status_da_compra',
+            4: 'data_da_compra'}
+        
+        for coluna in colunas:
+            print(f"{coluna}: {colunas[coluna]}")
+
+        c = -1
+        while c not in (1,2,3,4):
+            try:
+                c = int(input("Digite o número da coluna que deseja atualizar: "))
+            except ValueError:
+                print("Opção inválida! Digite novamente: ")
+
+        if c == 1 or c == 2:
+            while True:
+                try:
+                    valor = int(input("Digite o novo valor: "))
+                    return tabela, colunas[c], valor
+                except ValueError:
+                    print("Valor inválido! Digite novamente: ")
+        
+        if c == 3:
+            print("Opções: Confirmada, Aguardando confirmação, Cancelada")
+            valor = input("Digite o novo status: ")
+            while valor not in ('Confirmada', 'Aguardando confirmação', 'Cancelada'):
+                valor = input("Valor inválido! Digite novamente: ")
+            return tabela, colunas[c], valor
+
+        if c == 4:
+            print("Digite no formato aaaa-mm-dd")
+            valor = input("Digite a data: ")
+            return tabela, colunas[c], valor
+        
+    if tabela == 'p':
+        colunas = {1: 'forma_de_pagamento',
+                   2: 'status_do_pagamento'}
+
+        for coluna in colunas:
+            print(f"{coluna}: {colunas[coluna]}")
+        
+        c = -1
+        while c not in (1,2):
+            try:
+                c = int(input("Digite o número da coluna que deseja atualizar: "))
+            except ValueError:
+                print("Opção inválida! Digite novamente: ")
+        
+        if c == 1:
+            print("Opções: Dinheiro, Cartão de Crédito, Cartão de Débito, Pix, A definir")
+            valor = input("Digite o novo status: ")
+            while valor not in ('Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'Pix', 'A definir'):
+               valor = input("Forma inválida! Digite novamente: ")
+            return tabela, colunas[c], valor
+
+        if c == 2:
+            print("Opções: Confirmado, Pendente, Cancelado, Reembolsado")
+            valor = input("Digite o novo status: ")
+            while valor not in ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'):
+                valor = input("Status inválido! Digite novamente: ")
+            return tabela, colunas[c], valor
 
 def update_produto():
     colunas = {1: 'nome',
@@ -559,6 +613,26 @@ def opcao_menu_cliente():
         print("Opção inválida! Digite novamente: ")
 
     while escolha not in (0,1,2,3,4):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+def opcao_menu_vendedor():
+    print("Menu - Vendedores: ")
+    print("1 - Cadastrar novo vendedor")
+    print("2 - Buscar vendedor cadastrado")
+    print("3 - Atualizar vendedor cadastrado")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3):
         try:
             escolha = int(input("Opção inválida! Digite novamente: "))
         except ValueError:

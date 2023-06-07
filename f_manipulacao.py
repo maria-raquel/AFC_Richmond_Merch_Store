@@ -34,15 +34,11 @@ def atualizar_compra():
 
     # chama o método para cada tabela
     deu_ruim = False
-    if tabela == 'compra':
+    if tabela == 'c':
         if not Compra.update(id_compra, coluna, valor):
             deu_ruim = True
-    elif tabela == 'pagamento':
+    elif tabela == 'p':
         if not Pagamento.update(id_compra, coluna, valor):
-            deu_ruim = True
-    elif tabela == 'produtos':
-        # nesse caso, 'coluna' será o id do produto e 'valor' será a quantidade
-        if not Compra_Produto.update(id_compra, coluna, valor):
             deu_ruim = True
     
     # imprime mensage de sucesso ou erro

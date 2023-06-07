@@ -58,7 +58,7 @@ while escolha:
 
     # Clientes
     elif escolha == 3:
-        #escolha_cliente = fi.opcao_menu_cliente()
+        escolha_cliente = fi.opcao_menu_cliente()
 
         while escolha_cliente:
 
@@ -78,11 +78,11 @@ while escolha:
             elif escolha_cliente == 4:
                 pass
 
-            #escolha_cliente = fi.opcao_menu_cliente()
+            escolha_cliente = fi.opcao_menu_cliente()
 
     # Vendedores
     elif escolha == 4:
-        #escolha_vendedor = fi.opcao_menu_vendedor()
+        escolha_vendedor = fi.opcao_menu_vendedor()
         while escolha_vendedor:
 
             # Vendedores - Cadastrar
@@ -97,7 +97,7 @@ while escolha:
             elif escolha_vendedor == 3:
                 pass
 
-            #escolha_vendedor = fi.opcao_menu_vendedor()
+            escolha_vendedor = fi.opcao_menu_vendedor()
 
     # Relatórios
     elif escolha == 5:

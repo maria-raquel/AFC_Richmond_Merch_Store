@@ -202,43 +202,12 @@ def despedida():
     print("--╚═══╝╚═══╝╚═══╝╚══╝╚═══╝  ╚╝  ╚═══╝---")
     print("----------------------------------------")
 
-def menu_produto():
-    print("Menu - Produtos: ")
-    print("1 - Cadastrar novo produto")
-    print("2 - Buscar produto cadastrado")
-    print("3 - Atualizar produto cadastrado")
-    print("4 - Remover produto cadastrado")
-    print("0 - Voltar")
-
-def submenu_produto_busca():
-    print("Menu - Produtos - Busca: ")
-    print("1 - Por id")
-    print("2 - Por nome")
-    print("3 - Todos disponíveis")
-    print("4 - Todos")
-    print("0 - Voltar")
-
-def menu_cliente():
-    print("Menu - Clientes: ")
-    print("1 - Cadastrar novo cliente")
-    print("2 - Buscar cliente cadastrado")
-    print("3 - Atualizar cliente cadastrado")
-    print("4 - Remover cliente cadastrado")
-    print("0 - Voltar")
-
 def submenu_cliente_busca():
     print("Menu - Clientes - Busca: ")
     print("1 - Por id")
     print("2 - Por nome")
     print("3 - Por CPF")
     print("4 - Todos")
-    print("0 - Voltar")
-
-def menu_vendedor():
-    print("Menu - Vendedores: ")
-    print("1 - Cadastrar novo vendedor")
-    print("2 - Buscar vendedor cadastrado")
-    print("3 - Atualizar vendedor cadastrado")
     print("0 - Voltar")
 
 def submenu_vendedor_busca():
