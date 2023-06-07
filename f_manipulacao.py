@@ -54,6 +54,24 @@ def atualizar_compra():
         fp.mensagem_2()
         return
 
+def atualizar_produto():
+    id = fi.id_produto()
+    if not Produto.validate_id(id):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    produto = Produto.read_by_id(id)
+    fp.info_produto(*produto)
+
+    coluna, valor = fi.update_produto()
+
+    if not Produto.update(id, coluna, valor):
+        fp.mensagem_erro()
+        return
+    
+    fp.mensagem_sucesso()
+    fp.mensagem_1()
+
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
     while escolha != 0:

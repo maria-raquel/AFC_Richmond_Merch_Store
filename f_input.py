@@ -299,8 +299,10 @@ def id_produto():
     while id_invalido:
         try:
             id = int(input(f"Id do produto: "))
+            id_invalido = False
         except ValueError:
             print("Id inválido! Digite novamente. ")
+
 
     return id
 
@@ -336,6 +338,62 @@ def update_compra():
     valor = input("Digite o novo valor: ")
 
     return tabela, coluna, valor
+
+def update_produto():
+    colunas = {1: 'nome',
+               2: 'preco',
+               3: 'estoque',
+               4: 'categoria',
+               5: 'local_de_fabricacao'}
+    for coluna in colunas:
+        print(f"{coluna}: {colunas[coluna]}")
+    
+    c = -1
+    while c not in (1,2,3,4,5):
+        try:
+            c = int(input("Digite o número da coluna que deseja atualizar: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    if c == 1 or c == 5:
+        valor = input("Digite o novo valor: ")
+        while valor == "":
+            valor = input("Valor inválido! Digite novamente: ")
+        return colunas[c], valor
+    
+    if c == 2:
+        valor = -1
+        while valor <= 0:
+            try:
+                valor = float(input("Digite o novo valor: "))
+            except ValueError:
+                print("Valor inválido!")
+            if valor <= 0:
+                print("Valor inválido!")
+        return colunas[c], valor
+
+    if c == 3:
+        valor = -1
+        while valor < 0:
+            try:
+                valor = int(input("Digite o novo valor: "))
+            except ValueError:
+                print("Valor inválido!")
+            if valor < 0:
+                print("Valor inválido!")
+        return colunas[c], valor
+    
+    if c == 4:
+        valor = ''
+        while valor not in ('v', 'o'):
+            valor = input("Digite v para Vestuário e o para Outros: ")
+            if valor not in ('v', 'o'):
+                print("Valor inválido!")
+        if valor == 'v':
+            valor = 'Vestuário'
+        else:
+            valor = 'Outros'
+        return colunas[c], valor
 
 def opcao_menu_produto():
     print("----------------------------------------")

@@ -44,7 +44,7 @@ def info_compras(compras):
 
 # imprime uma compra a partir de uma tupla
 def info_compra(id, id_cliente, id_vendedor, data, status_c, 
-                total, desconto, total_pos_desconto, status_do_pagamento, forma_de_pagamento):
+                total, desconto, total_pos_desconto, forma_de_pagamento, status_do_pagamento):
     print("----------------------------------------")
     data = data.strftime("%d/%m/%Y")
     status_c = str(status_c)[2:-2]
