@@ -63,11 +63,23 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
 
     print(f"Status do pagamento: {status_do_pagamento}; Forma de pagamento: {forma_de_pagamento}")
 
+# Recebe uma lista de tuplas de produtos
+# Imprime informações dos produtos de uma compra
 def info_compra_produtos(produtos):
-    print("Produtos dessa compra: ")
+    print("Produtos: ")
     print("id | nome | preço | quantidade")
     for id_c, id_p, nome, preco, qtd in produtos:
         print(f"{id_p} | {nome} | {preco} | {qtd}")
+    print("----------------------------------------")
+
+# Recebe uma lista de tuplas de produtos
+# Inmprime informações de produtos
+def info_produtos(produtos):
+    print("Produtos: ")
+    print("id | nome | preço | estoque | categoria | local de fabricação | disponibilidade")
+    for id, n, p, e, c, l, d in produtos:
+        c = str(c)[2:-2]
+        print(f"{id} | {n} | {p} | {e} | {c} | {l} | {d}")
     print("----------------------------------------")
 
 def boas_vindas():

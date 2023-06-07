@@ -14,6 +14,7 @@ Compra = cm.Table_Compra(connection)
 Compra_Produto = cp.Table_Compra_Produto(connection)
 Pagamento = pg.Table_Pagamento(connection)
 Vendedor = v.Table_Vendedor(connection)
+Produto = p.Table_Produto(connection)
 
 def atualizar_compra():
     # pede o id da compra
@@ -132,8 +133,84 @@ def buscar_compra():
 
         escolha = fi.opcao_menu_compras_busca()
 
+def buscar_produto():
+    escolha = fi.opcao_menu_produto_busca()
+
+    while escolha != 0:
+        # Por id
+        if escolha == 1:
+            id = fi.id_produto()
+            if not Produto.validate_id(id):
+                fp.mensagem_erro_id_invalido()
+                return
+            info = Produto.read_by_id(id)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produto(*info)
+
+        # Por nome
+        elif escolha == 2:
+            nome = fi.nome_produto()
+            info = Produto.read_by_name(nome)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produtos(info)
+
+        # Por categoria
+        elif escolha == 3:
+            categoria = fi.categoria()
+            if categoria == 'v':
+                produtos = Produto.read_by_category('Vestuário')
+            elif categoria == 'o':
+                produtos = Produto.read_by_category('Outros')
+            if not produtos:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produtos(produtos)
+
+        # Por local de fabricação
+        elif escolha == 4:
+            local = fi.local_de_fabricacao()
+            info = Produto.read_by_local(local)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produtos(info)
+
+        # Por faixa de preço
+        elif escolha == 5:
+            faixa = fi.faixa_de_preco()
+            produtos = Produto.read_by_price(*faixa)
+            if not produtos:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produtos(produtos)
+
+        # Todos
+        elif escolha == 6:
+            if fi.apenas_disponiveis():
+                produtos = Produto.read_all()
+            else:
+                produtos = Produto.read_all_available()
+                
+            if not produtos:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_produtos(produtos)
+
+        escolha = fi.opcao_menu_produto_busca()
+
 def cadastrar_produto():
-    pass
+    info = fi.info_produto_novo()
+    if not Produto.create(*info):
+        fp.mensagem_erro_ao_adicionar_produto()
+        return
+
+    fp.mensagem_sucesso()
+    fp.mensagem_4()
+    return
 
 def cancelar_compra():
     # pede e valida o id

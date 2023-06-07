@@ -47,6 +47,43 @@ class Table_Produto:
             return self.cursor.fetchall()
         except:
             return 0
+    
+    def read_by_category(self, categoria):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto WHERE categoria = '{categoria}';
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+        
+    def read_by_local(self, local):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto WHERE local_de_fabricacao = '{local}';
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+    
+    def read_by_price(self, min, max):
+        if min != max:
+            try:
+                self.cursor.execute(f'''
+                SELECT * FROM Produto WHERE preco > {min} AND preco < {max};
+                ''')
+                return self.cursor.fetchall()
+            except:
+                return 0
+            
+        if min == max:
+            try:
+                self.cursor.execute(f'''
+                SELECT * FROM Produto WHERE CAST(preco AS DECIMAL(10,2)) = {min};
+                ''')
+                return self.cursor.fetchall()
+            except:
+                return 0
         
     def read_all_available(self):
         try:

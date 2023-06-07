@@ -208,6 +208,7 @@ def confirmação_do_pagamento():
                 return False
             
 def opcao_menu_principal():
+    print("----------------------------------------")
     print("Menu: ")
     print("1 - Compras")
     print("2 - Produtos")
@@ -215,6 +216,7 @@ def opcao_menu_principal():
     print("4 - Vendedores")
     print("5 - Relatórios")
     print("0 - Sair")
+    
 
     escolha = int(input("Digite: "))
 
@@ -224,6 +226,7 @@ def opcao_menu_principal():
     return escolha
 
 def opcao_menu_compras():
+    print("----------------------------------------")
     print("Menu - Compras: ")
     print("1 - Realizar nova compra")
     print("2 - Buscar compra já feita")
@@ -239,6 +242,7 @@ def opcao_menu_compras():
     return escolha
 
 def opcao_menu_compras_busca():
+    print("----------------------------------------")
     print("Menu - Compras - Busca: ")
     print("1 - Por id")
     print("2 - Por cliente")
@@ -290,6 +294,24 @@ def id_vendedor():
 
     return id
 
+def id_produto():
+    id_invalido = True
+    while id_invalido:
+        try:
+            id = int(input(f"Id do produto: "))
+        except ValueError:
+            print("Id inválido! Digite novamente. ")
+
+    return id
+
+def nome_produto():
+    nome = input(f"Nome do produto: ")
+    return nome
+
+def local_de_fabricacao():
+    local = input(f"Local de fabricação: ")
+    return local
+
 def data():
     id_invalido = True
     print("Digite a data da compra")
@@ -316,6 +338,7 @@ def update_compra():
     return tabela, coluna, valor
 
 def opcao_menu_produto():
+    print("----------------------------------------")
     print("Menu - Produtos: ")
     print("1 - Cadastrar novo produto")
     print("2 - Buscar produto")
@@ -388,6 +411,68 @@ def info_produto_novo():
             disponibilidade_invalida = False
 
     if disponibilidade == "s":
-        return nome, preco, estoque, categoria, local_de_fabricacao, 1
+        d = 1
     else:
-        return nome, preco, estoque, categoria, local_de_fabricacao, 0
+        d = 0
+
+    return (nome, preco, estoque, categoria, local_de_fabricacao, d)
+
+def opcao_menu_produto_busca():
+    print("----------------------------------------")
+    print("Menu - Produto - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Por categoria")
+    print("4 - Por local de fabricação")
+    print("5 - Por faixa de preço")
+    print("6 - Todos")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3,4,5,6):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+def categoria():
+    print("Vestuário ou Outros?")
+    categoria = input("Digite v ou o: ")
+    while categoria not in ("v", "o"):
+        categoria = input("Opção inválida! Digite novamente: ")
+    return categoria    
+
+def faixa_de_preco():
+    min_invalido = True
+    while min_invalido:
+        try:
+            min = float(input("Digite o valor mínimo: "))
+            min_invalido = False
+        except ValueError:
+            print("Valor inválido! Digite novamente: ")
+    
+    max_invalido = True
+    while max_invalido:
+        try:
+            max = float(input("Digite o valor máximo: "))
+            max_invalido = False
+        except ValueError:
+            print("Valor inválido! Digite novamente: ")
+    
+    return (min, max)
+
+def apenas_disponiveis():
+    print("Deseja ver apenas os disponíveis? (s/n)")
+    escolha = input("Digite s ou n: ")
+    while escolha not in ("s", "n"):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    if escolha == "s":
+        return True
+    return False

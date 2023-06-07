@@ -39,10 +39,11 @@ while escolha:
 
             # Produtos - Cadastrar
             if escolha_produto == 1:
-                pass
+                fm.cadastrar_produto()
 
             # Produtos - Buscar
             elif escolha_produto == 2:
+                fm.buscar_produto()
                 pass
 
             # Produtos - Atualizar
