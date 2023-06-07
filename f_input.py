@@ -544,3 +544,24 @@ def tem_certeza():
     if escolha == "s":
         return True
     return False
+
+def opcao_menu_cliente():
+    print("Menu - Clientes: ")
+    print("1 - Cadastrar novo cliente")
+    print("2 - Buscar cliente cadastrado")
+    print("3 - Atualizar cliente cadastrado")
+    print("4 - Remover cliente cadastrado")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3,4):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    return escolha
