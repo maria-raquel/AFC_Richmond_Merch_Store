@@ -48,7 +48,7 @@ while escolha:
 
             # Produtos - Atualizar
             elif escolha_produto == 3:
-                pass
+                fm.atualizar_produto()
 
             # Produtos - Remover
             elif escolha_produto == 4:
