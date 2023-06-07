@@ -322,6 +322,40 @@ def data():
     data = input("Data da compra: ")
     return data
 
+def update_cliente():
+
+    ''' cpf nome is_flamengo assiste_one_piece'''
+
+    colunas = {1: 'nome',
+               2: 'cpf',
+               3: 'is_flamengo',
+               4: 'assiste_one_piece',
+               5: 'cidade_natal'}
+    for coluna in colunas:
+        print(f"{coluna}: {colunas[coluna]}")
+    
+    c = -1
+    while c not in (1,2,3,4,5):
+        try:
+            c = int(input("Digite o número da coluna que deseja atualizar: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    if c == 1 or c == 2 or c == 5:
+        valor = input("Digite o novo valor: ")
+        while valor == "":
+            valor = input("Valor inválido! Digite novamente: ")
+        return colunas[c], valor
+
+    if c == 3 or c == 4:
+        valor = -1
+        while valor not in (0,1):
+            try:
+                valor = int(input("Digite o novo valor: "))
+            except ValueError:
+                print("Valor inválido!")
+        return colunas[c], valor
+
 def update_compra():
     print("Que tipo de informação deseja atualizar? ")
     tabela = input("Da compra (c) ou do pagamento (p)? ")

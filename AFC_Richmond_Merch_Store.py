@@ -72,7 +72,7 @@ while escolha:
 
             # Clientes - Atualizar
             elif escolha_cliente == 3:
-                pass
+                fm.atualizar_cliente()
             
             # Clientes - Remover
             elif escolha_cliente == 4:

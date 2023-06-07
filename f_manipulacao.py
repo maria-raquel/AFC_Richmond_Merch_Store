@@ -16,6 +16,24 @@ Pagamento = pg.Table_Pagamento(connection)
 Vendedor = v.Table_Vendedor(connection)
 Produto = p.Table_Produto(connection)
 
+def atualizar_cliente():
+    id = fi.id_cliente()
+    if not Cliente.validate_id(id):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    cliente = Cliente.read_by_id(id)
+    fp.info_cliente(*cliente)
+
+    coluna, valor = fi.update_cliente()
+
+    if not Cliente.update(id, coluna, valor):
+        fp.mensagem_erro()
+        return
+    
+    fp.mensagem_sucesso()
+    fp.mensagem_2()
+
 def atualizar_compra():
     # pede o id da compra
     id_compra = fi.id_compra()
