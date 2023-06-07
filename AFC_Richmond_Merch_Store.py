@@ -53,16 +53,51 @@ while escolha:
             # Produtos - Remover
             elif escolha_produto == 4:
                 fm.remover_produto()
-                
+
             escolha_produto = fi.opcao_menu_produto()
 
     # Clientes
     elif escolha == 3:
-        pass
+        #escolha_cliente = fi.opcao_menu_cliente()
+
+        while escolha_cliente:
+
+            # Clientes - Cadastrar
+            if escolha_cliente == 1:
+                pass
+
+            # Clientes - Buscar
+            elif escolha_cliente == 2:
+                pass
+
+            # Clientes - Atualizar
+            elif escolha_cliente == 3:
+                pass
+            
+            # Clientes - Remover
+            elif escolha_cliente == 4:
+                pass
+
+            #escolha_cliente = fi.opcao_menu_cliente()
 
     # Vendedores
     elif escolha == 4:
-        pass
+        #escolha_vendedor = fi.opcao_menu_vendedor()
+        while escolha_vendedor:
+
+            # Vendedores - Cadastrar
+            if escolha_vendedor == 1:
+                pass
+
+            # Vendedores - Buscar
+            elif escolha_vendedor == 2:
+                pass
+
+            # Vendedores - Atualizar
+            elif escolha_vendedor == 3:
+                pass
+
+            #escolha_vendedor = fi.opcao_menu_vendedor()
 
     # Relatórios
     elif escolha == 5:
