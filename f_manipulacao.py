@@ -249,6 +249,9 @@ def cancelar_compra():
     fp.info_compra(*compra)
     fp.info_compra_produtos(produtos)
 
+    if not fi.tem_certeza():
+        return
+
     # cancela o pagamento sem reembolsar ou retornar mercadoria
     if status_do_pagamento == "{'Pendente'}":
         if not Pagamento.cancel_payment(id_compra):
@@ -267,6 +270,22 @@ def cancelar_compra():
     
     fp.mensagem_sucesso()
     fp.mensagem_3()
+
+def remover_produto():
+    id = fi.id_produto()
+    if not Produto.validate_id(id):
+        fp.mensagem_erro_id_invalido()
+        return    
+
+    produto = Produto.read_by_id(id)
+    fp.info_produto(*produto)
+
+    if not fi.tem_certeza():
+        return
+    
+    if not Produto.delete(id):
+        fp.mensagem_erro()
+        return
 
 def nova_compra():
 

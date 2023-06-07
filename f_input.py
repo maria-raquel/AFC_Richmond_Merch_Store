@@ -534,3 +534,13 @@ def apenas_disponiveis():
     if escolha == "s":
         return True
     return False
+
+def tem_certeza():
+    print("Tem certeza que deseja realizar essa operação? (s/n)")
+    escolha = input("Digite s ou n: ")
+    while escolha not in ("s", "n"):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    if escolha == "s":
+        return True
+    return False

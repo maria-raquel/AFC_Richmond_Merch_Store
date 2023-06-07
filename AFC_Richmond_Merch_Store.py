@@ -52,8 +52,8 @@ while escolha:
 
             # Produtos - Remover
             elif escolha_produto == 4:
-                pass
-
+                fm.remover_produto()
+                
             escolha_produto = fi.opcao_menu_produto()
 
     # Clientes
