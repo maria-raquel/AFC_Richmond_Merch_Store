@@ -122,7 +122,7 @@ class Table_Cliente:
     def delete(self, id):
         try:
             self.cursor.execute(f'''
-            DELETE FROM Cliente WHERE id = {id};
+            CALL Apagar_cliente({id});
             ''')
             self.connection.commit()
             return 1

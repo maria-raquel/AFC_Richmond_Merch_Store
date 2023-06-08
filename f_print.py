@@ -106,7 +106,9 @@ def info_clientes(clientes):
 
 def boas_vindas():
     print("----------------------------------------")
-    print("--Bem vindo ao controle de estoque da---")
+    print("----------------------------------------")
+    print("---------Bem vindo ao sistema-----------")
+    print("-------de controle de vendas da---------")
     print("----Loja oficial do A.F.C. Richmond-----")
     print("------------WE ARE RICHMOND-------------")
     print("----------------------------------------")

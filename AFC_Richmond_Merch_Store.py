@@ -76,7 +76,7 @@ while escolha:
             
             # Clientes - Remover
             elif escolha_cliente == 4:
-                pass
+                fm.apagar_cliente()
 
             escolha_cliente = fi.opcao_menu_cliente()
 
