@@ -7,6 +7,7 @@ import t_vendedor as v
 import t_pagamento as pg
 import f_input as fi
 import f_print as fp
+import f_relatorio as fr
 
 connection = connect_to_DB.connect()
 Cliente = cl.Table_Cliente(connection)
@@ -121,7 +122,7 @@ def atualizar_vendedor():
         return
     
     fp.mensagem_sucesso()
-    fp.mensagem_2()
+    fp.mensagem_3()
 
 def buscar_cliente():
     escolha = fi.opcao_menu_cliente_busca()
@@ -414,6 +415,16 @@ def cancelar_compra():
     
     fp.mensagem_sucesso()
     fp.mensagem_3()
+
+def relatorio():
+    id = fi.id_vendedor()
+    mes, ano = fi.pedir_mes_ano()
+
+    if not Vendedor.validate_id(id):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    fr.relatorio_por_vendedor_por_mes(id, mes, ano)
 
 def remover_produto():
     id = fi.id_produto()

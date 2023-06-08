@@ -1,6 +1,7 @@
 import f_manipulacao as fm
 import f_print as fp
 import f_input as fi
+import f_relatorio as fr
 
 fp.boas_vindas()
 escolha = fi.opcao_menu_principal()
@@ -101,9 +102,8 @@ while escolha:
 
     # Relatórios
     elif escolha == 5:
-        pass
-
-    else:
-        fp.mensagem_erro()
+        fm.relatorio()
     
     escolha = fi.opcao_menu_principal()
+
+fp.despedida()

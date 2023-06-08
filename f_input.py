@@ -738,3 +738,11 @@ def info_novo_vendedor():
     cpf = pedir_cpf()
     return (cpf, nome, 'Ativo')
 
+def pedir_mes_ano():
+    mes = input("Digite o mês: ")
+    while mes not in ("01","02","03","04","05","06","07","08","09","10","11","12"):
+        mes = input("Mês inválido! Digite novamente: ")
+    ano = input("Digite o ano: ")
+    while ano not in ("2022", "2023"):
+        ano = input("Ano inválido! Digite novamente: ")
+    return (mes, ano)

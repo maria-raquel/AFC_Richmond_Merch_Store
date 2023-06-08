@@ -45,7 +45,7 @@ class Consulta_Relatorio:
         except:
             return None
         
-    def dia_maior_arrecadacao(self, id, ano, mes):
+    def top_produtos(self, id, ano, mes):
         try:
             self.cursor.execute(f'''
                 SELECT Produto.id, Produto.nome, SUM(Produto_Compra.quantidade)
@@ -59,6 +59,21 @@ class Consulta_Relatorio:
                 ORDER BY SUM(Produto_Compra.quantidade) DESC
                 LIMIT 3
             ''')
-            return self.cursor.fetchone()
+            return self.cursor.fetchall()
+        except:
+            return None
+        
+    def top_clientes(self, id, ano, mes):
+        try:
+            self.cursor.execute(f'''
+                SELECT Cliente.id, Cliente.nome, COUNT(Compra.id_cliente)
+                FROM (Compra INNER JOIN Cliente ON Compra.id_cliente = Cliente.id)
+                WHERE Compra.id_vendedor = {id}
+                AND data_da_compra LIKE "{ano}-{mes}%"
+                GROUP BY Compra.id_cliente
+                ORDER BY COUNT(Compra.id_cliente) DESC
+                LIMIT 3
+            ''')
+            return self.cursor.fetchall()
         except:
             return None
