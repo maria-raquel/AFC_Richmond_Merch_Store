@@ -1,3 +1,5 @@
+-- View usada para facilitar a alta e baixa de estoque
+-- Mostra a quantidade de um produto em uma compra e o estoque atual do produto
 CREATE VIEW Modificar_Estoque AS
 SELECT Produto_Compra.id_compra AS id_compra,
 Produto_Compra.id_produto AS id_produto,
@@ -65,7 +67,7 @@ END $$
 DELIMITER ;
 
 
-
+-- View usada para mostrar todas as informações de uma compra e seu pagamento
 CREATE VIEW compra_com_pagamento AS
 SELECT Compra.id AS id, Compra.id_cliente AS id_cliente, Compra.id_vendedor As id_vendedor, 
 Compra.data_da_compra AS data_da_compra, Compra.status_da_compra AS status_da_compra, 
@@ -74,6 +76,8 @@ Pagamento.total_pos_desconto AS total_pos_desconto, Pagamento.forma_de_pagamento
 Pagamento.status_do_pagamento AS status_do_pagamento 
 FROM Compra INNER JOIN Pagamento ON Compra.id = Pagamento.id_compra
 
+
+-- Chamado para apagar um cliente do sistema
 DELIMITER $$
 CREATE PROCEDURE Apagar_cliente (IN id_a_apagar INT)
 BEGIN
