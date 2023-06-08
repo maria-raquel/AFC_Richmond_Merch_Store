@@ -1,5 +1,3 @@
-import mysql as ms
-
 class Table_Produto:
     def __init__(self, connection):
         self.connection = connection
@@ -29,13 +27,59 @@ class Table_Produto:
             return 1
         except:
             return 0
-        
+
+    def delete(self, id):
+        try: 
+            self.cursor.execute(f'''
+            UPDATE Produto SET disponibilidade = 0 WHERE id = {id};
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+
+    def read_all(self):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto;
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+
+    def read_all_available(self):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto WHERE disponibilidade = 1;
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+
+    def read_by_category(self, categoria):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto WHERE categoria = '{categoria}';
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0   
+
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
             SELECT * FROM Produto WHERE id = {id};
             ''')
             return self.cursor.fetchone()
+        except:
+            return 0
+
+    def read_by_local(self, local):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Produto WHERE local_de_fabricacao = '{local}';
+            ''')
+            return self.cursor.fetchall()
         except:
             return 0
 
@@ -47,25 +91,7 @@ class Table_Produto:
             return self.cursor.fetchall()
         except:
             return 0
-    
-    def read_by_category(self, categoria):
-        try:
-            self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE categoria = '{categoria}';
-            ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-        
-    def read_by_local(self, local):
-        try:
-            self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE local_de_fabricacao = '{local}';
-            ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-    
+       
     def read_by_price(self, min, max):
         if min != max:
             try:
@@ -85,24 +111,6 @@ class Table_Produto:
             except:
                 return 0
         
-    def read_all_available(self):
-        try:
-            self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE disponibilidade = 1;
-            ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-        
-    def read_all(self):
-        try:
-            self.cursor.execute(f'''
-            SELECT * FROM Produto;
-            ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-    
     def return_estoque(self, id):
         try:
             self.cursor.execute(f'''
@@ -128,42 +136,12 @@ class Table_Produto:
             return 1
         except:
             return 0
-        
-    def remover_estoque(self, id, quantidade):
-        try:
-            self.cursor.execute(f'''
-            UPDATE Produto SET estoque = estoque - {quantidade} WHERE id = {id};
-            ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-    
-    def add_estoque(self, id, quantidade):
-        try:
-            self.cursor.execute(f'''
-            UPDATE Produto SET estoque = estoque + {quantidade} WHERE id = {id};
-            ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-        
+               
     def validate_id(self, id):
         try:
             self.cursor.execute(f'''
             SELECT id FROM Produto WHERE id = {id};
             ''')
             return self.cursor.fetchone()[0]
-        except:
-            return 0
-        
-    def delete(self, id):
-        try: 
-            self.cursor.execute(f'''
-            UPDATE Produto SET disponibilidade = 0 WHERE id = {id};
-            ''')
-            self.connection.commit()
-            return 1
         except:
             return 0

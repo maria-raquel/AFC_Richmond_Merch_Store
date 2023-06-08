@@ -3,32 +3,6 @@ class Consulta_Relatorio:
         self.connection = connection
         self.cursor = connection.cursor()
 
-        
-    def n_de_vendas(self, id, ano, mes):
-        try:
-            self.cursor.execute(f'''
-                SELECT COUNT(*)
-                FROM Compra
-                WHERE id_vendedor = {id}
-                AND data_da_compra LIKE "{ano}-{mes}%"
-            ''')
-            return self.cursor.fetchone()[0]
-        except:
-            return None
-        
-    def valor_total_vendido(self, id, ano, mes):
-        try:
-            self.cursor.execute(f'''
-                SELECT SUM(Pagamento.total_pos_desconto)
-                FROM Compra INNER JOIN Pagamento
-                ON Compra.id = Pagamento.id_compra
-                WHERE id_vendedor = {id}
-                AND data_da_compra LIKE "{ano}-{mes}%"
-            ''')
-            return self.cursor.fetchone()[0]
-        except:
-            return None
-        
     def dia_maior_arrecadacao(self, id, ano, mes):
         try:
             self.cursor.execute(f'''
@@ -42,6 +16,33 @@ class Consulta_Relatorio:
                 LIMIT 1
             ''')
             return self.cursor.fetchone()
+        except:
+            return None
+             
+    def n_de_vendas(self, id, ano, mes):
+        try:
+            self.cursor.execute(f'''
+                SELECT COUNT(*)
+                FROM Compra
+                WHERE id_vendedor = {id}
+                AND data_da_compra LIKE "{ano}-{mes}%"
+            ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return None
+                
+    def top_clientes(self, id, ano, mes):
+        try:
+            self.cursor.execute(f'''
+                SELECT Cliente.id, Cliente.nome, COUNT(Compra.id_cliente)
+                FROM (Compra INNER JOIN Cliente ON Compra.id_cliente = Cliente.id)
+                WHERE Compra.id_vendedor = {id}
+                AND data_da_compra LIKE "{ano}-{mes}%"
+                GROUP BY Compra.id_cliente
+                ORDER BY COUNT(Compra.id_cliente) DESC
+                LIMIT 3
+            ''')
+            return self.cursor.fetchall()
         except:
             return None
         
@@ -63,17 +64,15 @@ class Consulta_Relatorio:
         except:
             return None
         
-    def top_clientes(self, id, ano, mes):
+    def valor_total_vendido(self, id, ano, mes):
         try:
             self.cursor.execute(f'''
-                SELECT Cliente.id, Cliente.nome, COUNT(Compra.id_cliente)
-                FROM (Compra INNER JOIN Cliente ON Compra.id_cliente = Cliente.id)
-                WHERE Compra.id_vendedor = {id}
+                SELECT SUM(Pagamento.total_pos_desconto)
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra
+                WHERE id_vendedor = {id}
                 AND data_da_compra LIKE "{ano}-{mes}%"
-                GROUP BY Compra.id_cliente
-                ORDER BY COUNT(Compra.id_cliente) DESC
-                LIMIT 3
             ''')
-            return self.cursor.fetchall()
+            return self.cursor.fetchone()[0]
         except:
             return None

@@ -1,5 +1,3 @@
-import mysql as ms
-
 class Table_Compra_Produto:
     def __init__(self, connection):
         self.connection = connection
