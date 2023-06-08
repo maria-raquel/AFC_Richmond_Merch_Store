@@ -1,7 +1,0 @@
-pesquisar biblioteca e sql injection
-prepared statement 
-quebrar compra em compra e pagamento
-
-delete de cliente em uma transação só 
-update id cliente em suas compras passadas, delete
-begin/commit

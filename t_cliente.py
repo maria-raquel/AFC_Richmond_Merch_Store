@@ -29,6 +29,34 @@ class Table_Cliente:
         except:
             return 0
     
+    def delete(self, id):
+        try:
+            self.cursor.execute(f'''
+            CALL Apagar_cliente({id});
+            ''')
+            self.connection.commit()
+            return 1
+        except:
+            return 0
+
+    def read_all(self):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente;
+            ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+
+    def read_by_cpf(self, cpf):
+        try:
+            self.cursor.execute(f'''
+            SELECT * FROM Cliente WHERE cpf = '{cpf}';
+            ''')
+            return self.cursor.fetchone()
+        except:
+            return 0
+
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
@@ -44,24 +72,6 @@ class Table_Cliente:
             SELECT * FROM Cliente WHERE nome LIKE '%{name}%';
             ''')
             return self.cursor.fetchall()
-        except:
-            return 0
-        
-    def read_by_cpf(self, cpf):
-        try:
-            self.cursor.execute(f'''
-            SELECT * FROM Cliente WHERE cpf = '{cpf}';
-            ''')
-            return self.cursor.fetchone()
-        except:
-            return 0
-        
-    def return_id(self, cpf):
-        try:
-            self.cursor.execute(f'''
-            SELECT id FROM Cliente WHERE cpf = '{cpf}';
-            ''')
-            return self.cursor.fetchone()[0]
         except:
             return 0
         
@@ -94,16 +104,16 @@ class Table_Cliente:
             return None
         
         return (fla + op + de_sousa) * 10/100
-
-    def read_all(self):
+        
+    def return_id(self, cpf):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Cliente;
+            SELECT id FROM Cliente WHERE cpf = '{cpf}';
             ''')
-            return self.cursor.fetchall()
+            return self.cursor.fetchone()[0]
         except:
             return 0
-    
+      
     def update(self, id, coluna, valor):
         try:
             if type(valor) == str:
@@ -118,17 +128,7 @@ class Table_Cliente:
             return 1
         except:
             return 0
-        
-    def delete(self, id):
-        try:
-            self.cursor.execute(f'''
-            CALL Apagar_cliente({id});
-            ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-        
+               
     def validate_id(self, id):
         try:
             self.cursor.execute(f'''

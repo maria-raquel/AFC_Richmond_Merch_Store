@@ -18,7 +18,7 @@ Vendedor = v.Table_Vendedor(connection)
 Produto = p.Table_Produto(connection)
 
 def apagar_cliente():
-    id = fi.id_cliente()
+    id = fi.pedir_id()
     if not Cliente.validate_id(id):
         fp.mensagem_erro_id_invalido()
         return
@@ -37,7 +37,7 @@ def apagar_cliente():
     fp.mensagem_2()
 
 def atualizar_cliente():
-    id = fi.id_cliente()
+    id = fi.pedir_id()
     if not Cliente.validate_id(id):
         fp.mensagem_erro_id_invalido()
         return
@@ -56,7 +56,7 @@ def atualizar_cliente():
 
 def atualizar_compra():
     # pede o id da compra
-    id_compra = fi.id_compra()
+    id_compra = fi.pedir_id()
     if not Compra.validate_id(id_compra):
         fp.mensagem_erro_id_invalido()
         return
@@ -89,7 +89,7 @@ def atualizar_compra():
         return
 
 def atualizar_produto():
-    id = fi.id_produto()
+    id = fi.pedir_id()
     if not Produto.validate_id(id):
         fp.mensagem_erro_id_invalido()
         return
@@ -107,7 +107,7 @@ def atualizar_produto():
     fp.mensagem_1()
 
 def atualizar_vendedor():
-    id = fi.id_vendedor()
+    id = fi.pedir_id()
     if not Vendedor.validate_id(id):
         fp.mensagem_erro_id_invalido()
         return
@@ -129,7 +129,7 @@ def buscar_cliente():
 
     # Por id
     if escolha == 1:
-        id = fi.id_cliente()
+        id = fi.pedir_id()
         if not Cliente.validate_id(id):
             fp.mensagem_erro_id_invalido()
             return
@@ -171,9 +171,7 @@ def buscar_compra():
 
         # Por id
         if escolha == 1:
-            # Pede o id da compra, valida o id, 
-            # puxa os dados pelo id, imprime
-            id_compra = fi.id_compra()
+            id_compra = fi.pedir_id()
             if not Compra.validate_id(id_compra):
                 fp.mensagem_erro_id_invalido()
                 return
@@ -189,8 +187,6 @@ def buscar_compra():
 
         # Por cliente
         elif escolha == 2:
-            # Pede o cpf do cliente, pega o id pelo cpf
-            # puxa os dados pelo id e imprime
             cpf = fi.pedir_cpf()
             id_cliente = Cliente.return_id(cpf)
             if not id_cliente:
@@ -206,9 +202,7 @@ def buscar_compra():
 
         # Por vendedor
         elif escolha == 3:
-            # Pede o id do vendedor, valida o id,
-            # puxa os dados pelo id e imprime
-            id_vendedor = fi.id_vendedor()
+            id_vendedor = fi.pedir_id()
             if not Vendedor.validate_id(id_vendedor):
                 fp.mensagem_erro_id_invalido()
                 return
@@ -222,8 +216,6 @@ def buscar_compra():
 
         # Por data
         elif escolha == 4:
-            # Pede a data, não valida mas não tem problema pois é str
-            # puxa os dados pela data e imprime
             data = fi.data()
             compras = Compra.read_all_from_data(data)
             if not compras:
@@ -234,7 +226,6 @@ def buscar_compra():
 
         # Todos
         elif escolha == 5:
-            # Puxa todos e imprime, sem segredo
             compras = Compra.read_all()
             if not compras:
                 fp.mensagem_erro_reinicie()
@@ -250,7 +241,7 @@ def buscar_produto():
     while escolha != 0:
         # Por id
         if escolha == 1:
-            id = fi.id_produto()
+            id = fi.pedir_id()
             if not Produto.validate_id(id):
                 fp.mensagem_erro_id_invalido()
                 return
@@ -262,7 +253,7 @@ def buscar_produto():
 
         # Por nome
         elif escolha == 2:
-            nome = fi.nome_produto()
+            nome = fi.pedir_nome()
             info = Produto.read_by_name(nome)
             if info == 0:
                 fp.mensagem_erro_ao_recuperar_info()
@@ -319,7 +310,7 @@ def buscar_vendedor():
     while escolha != 0:
         # Por id
         if escolha == 1:
-            id = fi.id_vendedor()
+            id = fi.pedir_id()
             if not Vendedor.validate_id(id):
                 fp.mensagem_erro_id_invalido()
                 return
@@ -340,7 +331,10 @@ def buscar_vendedor():
 
         # Todos
         elif escolha == 3:
-            vendedores = Vendedor.read_all()
+            if fi.apenas_disponiveis():
+                vendedores = Vendedor.read_all_active()
+            else:
+                vendedores = Vendedor.read_all()
             if not vendedores:
                 fp.mensagem_erro_ao_recuperar_info()
                 return
@@ -351,33 +345,30 @@ def buscar_vendedor():
 def cadastrar_cliente():
     dados = fi.dados_cliente()
     if Cliente.create(*dados):
-        fp.mensagem_sucesso_ao_cadastrar_cliente()
+        fp.mensagem_sucesso()
+        fp.mensagem_4()
     else:
-        fp.mensagem_erro_ao_cadastrar_cliente()
-        fi.deu_ruim_sair_da_operacao()
-        return
+        fp.mensagem_erro()
 
 def cadastrar_produto():
     info = fi.info_produto_novo()
-    if not Produto.create(*info):
-        fp.mensagem_erro_ao_adicionar_produto()
-        return
-
-    fp.mensagem_sucesso()
-    fp.mensagem_4()
-    return
-
-def cadastrar_vendedor():
-    dados = fi.info_novo_vendedor()
-    if Vendedor.create(*dados):
+    if Produto.create(*info):
         fp.mensagem_sucesso()
+        fp.mensagem_4()
     else:
         fp.mensagem_erro()
-        return
+
+def cadastrar_vendedor():
+    dados = fi.info_vendedor_novo()
+    if Vendedor.create(*dados):
+        fp.mensagem_sucesso()
+        fp.mensagem_4()
+    else:
+        fp.mensagem_erro()
 
 def cancelar_compra():
     # pede e valida o id
-    id_compra = fi.id_compra()
+    id_compra = fi.pedir_id()
     if not Compra.validate_id(id_compra):
         fp.mensagem_erro_id_invalido()
         return
@@ -410,14 +401,14 @@ def cancelar_compra():
             return
     
     elif status_do_pagamento == "{'Cancelado'}" or status_do_pagamento == "{'Reembolsado'}":
-        fp. mensagem_compra_já_cancelada()
+        fp.mensagem_compra_já_cancelada()
         return
     
     fp.mensagem_sucesso()
     fp.mensagem_3()
 
 def relatorio():
-    id = fi.id_vendedor()
+    id = fi.pedir_id()
     mes, ano = fi.pedir_mes_ano()
 
     if not Vendedor.validate_id(id):
@@ -427,7 +418,7 @@ def relatorio():
     fr.relatorio_por_vendedor_por_mes(id, mes, ano)
 
 def remover_produto():
-    id = fi.id_produto()
+    id = fi.pedir_id()
     if not Produto.validate_id(id):
         fp.mensagem_erro_id_invalido()
         return    
@@ -471,7 +462,7 @@ def nova_compra():
         else:
             dados = fi.dados_cliente()
             if Cliente.create(*dados):
-                fp.mensagem_sucesso_ao_cadastrar_cliente()
+                fp.mensagem_sucesso()
             else:
                 fp.mensagem_erro_ao_cadastrar_cliente()
                 fi.deu_ruim_sair_da_operacao()
@@ -485,7 +476,7 @@ def nova_compra():
         id_cliente = Cliente.return_id('0')
     
     # Definindo os outros dados necessários para a compra    
-    dados = fi.dados_da_compra(id_cliente)
+    dados = fi.dados_compra(id_cliente)
 
     # Inserindo na tabela Compra
     if not Compra.create(*dados):

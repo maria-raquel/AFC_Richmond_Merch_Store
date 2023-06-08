@@ -1,7 +1,6 @@
+import f_input as fi
 import f_manipulacao as fm
 import f_print as fp
-import f_input as fi
-import f_relatorio as fr
 
 fp.boas_vindas()
 escolha = fi.opcao_menu_principal()

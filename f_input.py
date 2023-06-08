@@ -10,21 +10,24 @@ Produto = pr.Table_Produto(connection)
 Compra = cm.Table_Compra(connection)
 Vendedor = v.Table_Vendedor(connection)
 
-# Pede uma ação para encerrar a operação
-def deu_ruim_sair_da_operacao():
-    print("Encerrando a operação, averigue o que aconteceu.")
-    sair = input("Aperte enter para sair: ")
-    return
-
 # Retorna True ou False
-def cliente_vai_dar_dado():
-    escolha = input("O cliente deseja informar dados? (s/n) ")
-    while escolha != "s" and escolha != "n":
-        escolha = input("Opção inválida! (s/n) ")
+def apenas_disponiveis():
+    print("Deseja ver apenas os disponíveis? (s/n)")
+    escolha = input("Digite s ou n: ")
+    while escolha not in ("s", "n"):
+        escolha = input("Opção inválida! Digite novamente: ")
+
     if escolha == "s":
         return True
-    else:
-        return False
+    return False
+
+#Retorna v ou o
+def categoria():
+    print("Vestuário ou Outros?")
+    categoria = input("Digite v ou o: ")
+    while categoria not in ("v", "o"):
+        categoria = input("Opção inválida! Digite novamente: ")
+    return categoria   
 
 # Retorna True ou False
 def cliente_tem_cadastro():
@@ -36,10 +39,32 @@ def cliente_tem_cadastro():
     else:
         return False
 
-# Retorna o cpf em string
-def pedir_cpf():
-    cpf = input("Informe o CPF: ")
-    return cpf
+# Retorna True ou False
+def cliente_vai_dar_dado():
+    escolha = input("O cliente deseja informar dados? (s/n) ")
+    while escolha != "s" and escolha != "n":
+        escolha = input("Opção inválida! (s/n) ")
+    if escolha == "s":
+        return True
+    else:
+        return False
+
+def confirmação_do_pagamento():
+    print("Solicite o pagamento ao cliente")
+
+    pagamento = 1
+    while pagamento:
+        escolha = input("O pagamento foi confirmado? (s/n) ")
+        while escolha != "s" and escolha != "n":
+            escolha = input("Opção inválida! Digite s ou n: ")
+
+        if escolha == "s":
+            return True
+        else:
+            escolha = input("Deseja tentar novamente? (s/n) ")
+            if escolha == "n":
+                pagamento = 0
+                return False
 
 # Retorna True se o usuário deseja tentar novamente
 # e False se o usuário deseja cancelar a operação
@@ -86,7 +111,7 @@ def dados_cliente():
 
 # Retorna os dados da compra em uma tupla
 # Na ordem: (id_cliente, id_vendedor, data, 'Aguardando confirmação')
-def dados_da_compra(id_cliente):
+def dados_compra(id_cliente):
     print("Informe os dados da compra: ")
 
     id_invalido = True
@@ -110,6 +135,23 @@ def dados_da_compra(id_cliente):
     data = date.today().strftime("%Y-%m-%d")
 
     return (id_cliente, id_vendedor, data, 'Aguardando confirmação')
+
+# Retorna a data de uma compra, em string
+def data():
+    id_invalido = True
+    print("Digite a data da compra")
+    print("Formato: aaaa-mm-dd")
+    print("Ou pode ser só ano (aaaa), só mês (-mm-), ano e mes (aaaa-mm)")
+    data = input("Data da compra: ")
+    while data == "":
+        data = input("Data inválida! Digite novamente: ")
+    return data
+
+# Pede uma ação para encerrar a operação
+def deu_ruim_sair_da_operacao():
+    print("Encerrando a operação, averigue o que aconteceu.")
+    sair = input("Aperte enter para sair: ")
+    return
 
 # Retorna os dados dos produtos escolhidos em uma lista de tuplas
 # Cada tupla está na ordem (id_compra, id_produdo, quantidade)
@@ -169,6 +211,26 @@ def escolher_produtos(id_compra):
     
     return produtos
 
+# Retorna (min, max), float
+def faixa_de_preco():
+    min_invalido = True
+    while min_invalido:
+        try:
+            min = float(input("Digite o valor mínimo: "))
+            min_invalido = False
+        except ValueError:
+            print("Valor inválido! Digite novamente: ")
+    
+    max_invalido = True
+    while max_invalido:
+        try:
+            max = float(input("Digite o valor máximo: "))
+            max_invalido = False
+        except ValueError:
+            print("Valor inválido! Digite novamente: ")
+    
+    return (min, max)
+
 # Retorna a forma de pagamento escolhida, em string
 def forma_de_pagamento(id_compra):
     formas = {1: 'Dinheiro',
@@ -190,41 +252,129 @@ def forma_de_pagamento(id_compra):
 
     return formas[escolha]
 
-def confirmação_do_pagamento():
-    print("Solicite o pagamento ao cliente")
-
-    pagamento = 1
-    while pagamento:
-        escolha = input("O pagamento foi confirmado? (s/n) ")
-        while escolha != "s" and escolha != "n":
-            escolha = input("Opção inválida! Digite s ou n: ")
-
-        if escolha == "s":
-            return True
+# Retorna na ordem (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
+def info_produto_novo():
+    nome_invalido = True
+    while nome_invalido:
+        nome = input("Nome do produto: ")
+        if nome == "":
+            print("Nome inválido! Digite novamente.")
         else:
-            escolha = input("Deseja tentar novamente? (s/n) ")
-            if escolha == "n":
-                pagamento = 0
-                return False
-            
-def opcao_menu_principal():
-    print("----------------------------------------")
-    print("Menu: ")
-    print("1 - Compras")
-    print("2 - Produtos")
-    print("3 - Clientes")
-    print("4 - Vendedores")
-    print("5 - Relatórios")
-    print("0 - Sair")
-    
+            nome_invalido = False
 
-    escolha = int(input("Digite: "))
+    preco_invalido = True
+    while preco_invalido:
+        try:
+            preco = float(input("Preço do produto: "))
+        except ValueError:
+            print("Preço inválido! Digite novamente.")
 
-    while escolha not in (0,1,2,3,4,5):
-        escolha = int(input("Opção inválida! Digite novamente: "))
+        if preco <= 0:
+            print("Preço inválido! Digite novamente.")
+        else: 
+            preco_invalido = False
+
+    estoque_invalido = True
+    while estoque_invalido:
+        try:
+            estoque = int(input("Quantidade em estoque: "))
+        except ValueError:
+            print("Quantidade inválida! Digite novamente.")
+        
+        if estoque < 0:
+            print("Quantidade inválida! Digite novamente.")
+        else:
+            estoque_invalido = False
     
+    categoria_invalida = True
+    while categoria_invalida:
+        categoria = input("Categoria do produto: ")
+        if categoria not in ("Vestuário", "Outros"):
+            print("Categoria inválida! Digite novamente.")
+        else:
+            categoria_invalida = False
+
+    local_invalido = True
+    while local_invalido:
+        local_de_fabricacao = input("Local de fabricação do produto: ")
+        if local_de_fabricacao == "":
+            print("Local inválido! Digite novamente.")
+        else:
+            local_invalido = False
+
+    disponibilidade_invalida = True
+    while disponibilidade_invalida:
+        disponibilidade = input("Ele já está disponível para vendas? (s/n): ")
+        if disponibilidade not in ("s", "n"):
+            print("Opção inválida! Digite novamente.")
+        else:
+            disponibilidade_invalida = False
+
+    if disponibilidade == "s":
+        d = 1
+    else:
+        d = 0
+
+    return (nome, preco, estoque, categoria, local_de_fabricacao, d)
+
+# Retorna na ordem (cpf, nome, status)
+def info_vendedor_novo():
+    nome = pedir_nome()
+    cpf = pedir_cpf()
+    return (cpf, nome, 'Ativo')
+
+def local_de_fabricacao():
+    local = input(f"Local de fabricação: ")
+    while local == "":
+        local = input(f"Local inválido! Digite novamente: ")
+    return local
+
+# Retorna int
+def opcao_menu_cliente():
+    print("Menu - Clientes: ")
+    print("1 - Cadastrar novo cliente")
+    print("2 - Buscar cliente cadastrado")
+    print("3 - Atualizar cliente cadastrado")
+    print("4 - Remover cliente cadastrado")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3,4):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
     return escolha
 
+# Retorna int
+def opcao_menu_cliente_busca():
+    print("----------------------------------------")
+    print("Menu - Clientes - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Por CPF")
+    print("4 - Todos")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3,4,5,6):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+# Retorna int
 def opcao_menu_compras():
     print("----------------------------------------")
     print("Menu - Compras: ")
@@ -241,6 +391,7 @@ def opcao_menu_compras():
     
     return escolha
 
+# Retorna int
 def opcao_menu_compras_busca():
     print("----------------------------------------")
     print("Menu - Compras - Busca: ")
@@ -258,70 +409,144 @@ def opcao_menu_compras_busca():
     
     return escolha
 
-def id_compra():
+# Retorna int
+def opcao_menu_principal():
+    print("----------------------------------------")
+    print("Menu: ")
+    print("1 - Compras")
+    print("2 - Produtos")
+    print("3 - Clientes")
+    print("4 - Vendedores")
+    print("5 - Relatórios")
+    print("0 - Sair")
+
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4,5):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
+    return escolha
+
+# Retorna int
+def opcao_menu_produto():
+    print("----------------------------------------")
+    print("Menu - Produtos: ")
+    print("1 - Cadastrar novo produto")
+    print("2 - Buscar produto")
+    print("3 - Atualizar produto")
+    print("4 - Remover produto")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+
+    while escolha not in (0,1,2,3,4):
+        escolha = int(input("Opção inválida! Digite novamente: "))
+    
+    return escolha
+
+# Retorna int
+def opcao_menu_produto_busca():
+    print("----------------------------------------")
+    print("Menu - Produto - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Por categoria")
+    print("4 - Por local de fabricação")
+    print("5 - Por faixa de preço")
+    print("6 - Todos")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+    while escolha not in (0,1,2,3,4,5,6):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+# Retorna int
+def opcao_menu_vendedor():
+    print("Menu - Vendedores: ")
+    print("1 - Cadastrar novo vendedor")
+    print("2 - Buscar vendedor cadastrado")
+    print("3 - Atualizar vendedor cadastrado")
+    print("0 - Voltar")
+
+    try:
+        escolha = int(input("Digite: "))
+    except ValueError:
+        print("Opção inválida! Digite novamente: ")
+
+    while escolha not in (0,1,2,3):
+        try:
+            escolha = int(input("Opção inválida! Digite novamente: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+# Retorna int
+def opcao_menu_vendedor_busca():
+    print("----------------------------------------")
+    print("Menu - Vendedor - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Todos")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+    while escolha not in (0,1,2,3):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+# Retorna string
+def pedir_cpf():
+    cpf = input("Informe o CPF: ")
+    while cpf == "":
+        cpf = input("CPF inválido! Digite novamente: ")
+    return cpf
+
+# Retorna id, int
+def pedir_id():
     id_invalido = True
 
     while id_invalido:
         try:
-            id = int(input("Digite o id da compra: "))
+            id = int(input("Digite o id: "))
             id_invalido = False
         except ValueError:
             print("Id inválido! Digite novamente. ")
 
     return id
 
-def id_cliente():
-    id_invalido = True
+# Retorna tupla de string
+def pedir_mes_ano():
+    mes = input("Digite o mês: ")
+    while mes not in ("01","02","03","04","05","06","07","08","09","10","11","12"):
+        mes = input("Mês inválido! Digite novamente: ")
+    ano = input("Digite o ano: ")
+    while ano not in ("2022", "2023"):
+        ano = input("Ano inválido! Digite novamente: ")
+    return (mes, ano)
 
-    while id_invalido:
-        try:
-            id = int(input("Digite o id do cliente: "))
-            id_invalido = False
-        except ValueError:
-            print("Id inválido! Digite novamente. ")
-
-    return id
-
-def id_vendedor():
-    id_invalido = True
-
-    while id_invalido:
-        try:
-            id = int(input("Digite o id do vendedor: "))
-            id_invalido = False
-        except ValueError:
-            print("Id inválido! Digite novamente. ")
-
-    return id
-
-def id_produto():
-    id_invalido = True
-    while id_invalido:
-        try:
-            id = int(input(f"Id do produto: "))
-            id_invalido = False
-        except ValueError:
-            print("Id inválido! Digite novamente. ")
-
-
-    return id
-
-def nome_produto():
-    nome = input(f"Nome do produto: ")
+# Retorna string
+def pedir_nome():
+    nome = input("Digite o nome: ")
+    while nome == "":
+        nome = input("Nome inválido! Digite novamente: ")
     return nome
 
-def local_de_fabricacao():
-    local = input(f"Local de fabricação: ")
-    return local
+# Retorna True ou False
+def tem_certeza():
+    print("Tem certeza que deseja realizar essa operação? (s/n)")
+    escolha = input("Digite s ou n: ")
+    while escolha not in ("s", "n"):
+        escolha = input("Opção inválida! Digite novamente: ")
 
-def data():
-    id_invalido = True
-    print("Digite a data da compra")
-    print("Formato: aaaa-mm-dd")
-    print("Ou pode ser só ano (aaaa), só mês (-mm-), ano e mes (aaaa-mm)")
-    data = input("Data da compra: ")
-    return data
+    if escolha == "s":
+        return True
+    return False
 
+# Retorna coluna em string e o valor em seu devido tipo
 def update_cliente():
     colunas = {1: 'nome',
                2: 'cpf',
@@ -353,6 +578,7 @@ def update_cliente():
                 print("Valor inválido!")
         return colunas[c], valor
 
+# Retorna coluna em string e o valor em seu devido tipo
 def update_compra():
     print("Que tipo de informação deseja atualizar? ")
     tabela = input("Da compra (c) ou do pagamento (p)? ")
@@ -424,6 +650,7 @@ def update_compra():
                 valor = input("Status inválido! Digite novamente: ")
             return tabela, colunas[c], valor
 
+# Retorna coluna em string e o valor em seu devido tipo
 def update_produto():
     colunas = {1: 'nome',
                2: 'preco',
@@ -480,6 +707,7 @@ def update_produto():
             valor = 'Outros'
         return colunas[c], valor
 
+# Retorna coluna em string e o valor em seu devido tipo
 def update_vendedor():
     colunas = {1: 'nome',
                2: 'cpf',
@@ -506,243 +734,3 @@ def update_vendedor():
         while valor not in ('Ativo', 'De férias', 'Afastado', 'Ex-colaborador'):
             valor = input("Valor inválido! Digite novamente: ")
         return colunas[c], valor
-
-def opcao_menu_produto():
-    print("----------------------------------------")
-    print("Menu - Produtos: ")
-    print("1 - Cadastrar novo produto")
-    print("2 - Buscar produto")
-    print("3 - Atualizar produto")
-    print("4 - Remover produto")
-    print("0 - Voltar")
-
-    escolha = int(input("Digite: "))
-
-    while escolha not in (0,1,2,3,4):
-        escolha = int(input("Opção inválida! Digite novamente: "))
-    
-    return escolha
-
-def info_produto_novo():
-    nome_invalido = True
-    while nome_invalido:
-        nome = input("Nome do produto: ")
-        if nome == "":
-            print("Nome inválido! Digite novamente.")
-        else:
-            nome_invalido = False
-
-    preco_invalido = True
-    while preco_invalido:
-        try:
-            preco = float(input("Preço do produto: "))
-        except ValueError:
-            print("Preço inválido! Digite novamente.")
-
-        if preco <= 0:
-            print("Preço inválido! Digite novamente.")
-        else: 
-            preco_invalido = False
-
-    estoque_invalido = True
-    while estoque_invalido:
-        try:
-            estoque = int(input("Quantidade em estoque: "))
-        except ValueError:
-            print("Quantidade inválida! Digite novamente.")
-        
-        if estoque < 0:
-            print("Quantidade inválida! Digite novamente.")
-        else:
-            estoque_invalido = False
-    
-    categoria_invalida = True
-    while categoria_invalida:
-        categoria = input("Categoria do produto: ")
-        if categoria not in ("Vestuário", "Outros"):
-            print("Categoria inválida! Digite novamente.")
-        else:
-            categoria_invalida = False
-
-    local_invalido = True
-    while local_invalido:
-        local_de_fabricacao = input("Local de fabricação do produto: ")
-        if local_de_fabricacao == "":
-            print("Local inválido! Digite novamente.")
-        else:
-            local_invalido = False
-
-    disponibilidade_invalida = True
-    while disponibilidade_invalida:
-        disponibilidade = input("Ele já está disponível para vendas? (s/n): ")
-        if disponibilidade not in ("s", "n"):
-            print("Opção inválida! Digite novamente.")
-        else:
-            disponibilidade_invalida = False
-
-    if disponibilidade == "s":
-        d = 1
-    else:
-        d = 0
-
-    return (nome, preco, estoque, categoria, local_de_fabricacao, d)
-
-def opcao_menu_produto_busca():
-    print("----------------------------------------")
-    print("Menu - Produto - Busca: ")
-    print("1 - Por id")
-    print("2 - Por nome")
-    print("3 - Por categoria")
-    print("4 - Por local de fabricação")
-    print("5 - Por faixa de preço")
-    print("6 - Todos")
-    print("0 - Voltar")
-
-    escolha = int(input("Digite: "))
-    while escolha not in (0,1,2,3,4,5,6):
-        escolha = input("Opção inválida! Digite novamente: ")
-
-    return escolha
-
-def opcao_menu_vendedor_busca():
-    print("----------------------------------------")
-    print("Menu - Vendedor - Busca: ")
-    print("1 - Por id")
-    print("2 - Por nome")
-    print("3 - Todos")
-    print("0 - Voltar")
-
-    escolha = int(input("Digite: "))
-    while escolha not in (0,1,2,3):
-        escolha = input("Opção inválida! Digite novamente: ")
-
-    return escolha
-
-def opcao_menu_cliente_busca():
-    print("----------------------------------------")
-    print("Menu - Clientes - Busca: ")
-    print("1 - Por id")
-    print("2 - Por nome")
-    print("3 - Por CPF")
-    print("4 - Todos")
-    print("0 - Voltar")
-
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
-
-    while escolha not in (0,1,2,3,4,5,6):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
-
-    return escolha
-
-def categoria():
-    print("Vestuário ou Outros?")
-    categoria = input("Digite v ou o: ")
-    while categoria not in ("v", "o"):
-        categoria = input("Opção inválida! Digite novamente: ")
-    return categoria    
-
-def faixa_de_preco():
-    min_invalido = True
-    while min_invalido:
-        try:
-            min = float(input("Digite o valor mínimo: "))
-            min_invalido = False
-        except ValueError:
-            print("Valor inválido! Digite novamente: ")
-    
-    max_invalido = True
-    while max_invalido:
-        try:
-            max = float(input("Digite o valor máximo: "))
-            max_invalido = False
-        except ValueError:
-            print("Valor inválido! Digite novamente: ")
-    
-    return (min, max)
-
-def apenas_disponiveis():
-    print("Deseja ver apenas os disponíveis? (s/n)")
-    escolha = input("Digite s ou n: ")
-    while escolha not in ("s", "n"):
-        escolha = input("Opção inválida! Digite novamente: ")
-
-    if escolha == "s":
-        return True
-    return False
-
-def tem_certeza():
-    print("Tem certeza que deseja realizar essa operação? (s/n)")
-    escolha = input("Digite s ou n: ")
-    while escolha not in ("s", "n"):
-        escolha = input("Opção inválida! Digite novamente: ")
-
-    if escolha == "s":
-        return True
-    return False
-
-def opcao_menu_cliente():
-    print("Menu - Clientes: ")
-    print("1 - Cadastrar novo cliente")
-    print("2 - Buscar cliente cadastrado")
-    print("3 - Atualizar cliente cadastrado")
-    print("4 - Remover cliente cadastrado")
-    print("0 - Voltar")
-
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
-
-    while escolha not in (0,1,2,3,4):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
-
-    return escolha
-
-def opcao_menu_vendedor():
-    print("Menu - Vendedores: ")
-    print("1 - Cadastrar novo vendedor")
-    print("2 - Buscar vendedor cadastrado")
-    print("3 - Atualizar vendedor cadastrado")
-    print("0 - Voltar")
-
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
-
-    while escolha not in (0,1,2,3):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
-
-    return escolha
-
-def pedir_nome():
-    nome = input("Digite o nome: ")
-    while nome == "":
-        nome = input("Nome inválido! Digite novamente: ")
-    return nome
-
-def info_novo_vendedor():
-    nome = pedir_nome()
-    cpf = pedir_cpf()
-    return (cpf, nome, 'Ativo')
-
-def pedir_mes_ano():
-    mes = input("Digite o mês: ")
-    while mes not in ("01","02","03","04","05","06","07","08","09","10","11","12"):
-        mes = input("Mês inválido! Digite novamente: ")
-    ano = input("Digite o ano: ")
-    while ano not in ("2022", "2023"):
-        ano = input("Ano inválido! Digite novamente: ")
-    return (mes, ano)
