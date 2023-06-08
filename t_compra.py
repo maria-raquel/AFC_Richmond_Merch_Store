@@ -61,6 +61,22 @@ class Table_Compra:
         except:
             return 0
 
+    def read_all_from_data(self, data_da_compra):
+        try:
+            self.cursor.execute(f'''
+                SELECT Compra.id, Compra.id_cliente,
+                Compra.id_vendedor,Compra.data_da_compra,
+                Compra.status_da_compra, Pagamento.total,
+                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
+                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
+                FROM Compra INNER JOIN Pagamento
+                ON Compra.id = Pagamento.id_compra 
+                WHERE data_da_compra LIKE '%{data_da_compra}%';
+                ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
+
     def read_all_from_cliente(self, id_cliente):
         try:
             self.cursor.execute(f'''
@@ -93,22 +109,6 @@ class Table_Compra:
         except:
             return 0
         
-    def read_all_from_data(self, data_da_compra):
-        try:
-            self.cursor.execute(f'''
-                SELECT Compra.id, Compra.id_cliente,
-                Compra.id_vendedor,Compra.data_da_compra,
-                Compra.status_da_compra, Pagamento.total,
-                Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
-                Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
-                ON Compra.id = Pagamento.id_compra 
-                WHERE data_da_compra LIKE '%{data_da_compra}%';
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-        
     def return_id(self, id_cliente, id_vendedor, data_da_compra, status_da_compra):
         try:
             self.cursor.execute(f'''
@@ -131,16 +131,6 @@ class Table_Compra:
                     self.cursor.execute(f'''
                     UPDATE Compra SET {coluna} = {valor} WHERE id = {id};
                     ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-        
-    def delete(self, id):
-        try:
-            self.cursor.execute(f'''
-            UPDATE Compra SET status_da_compra = 'Cancelada' WHERE id = {id};
-            ''')
             self.connection.commit()
             return 1
         except:

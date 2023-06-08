@@ -70,34 +70,3 @@ class Table_Compra_Produto:
             return round(total, 2)
         except:
             return 0
-    
-    def update(self, id_compra, id_produto, quantidade):
-        try:
-            self.cursor.execute(f'''
-                UPDATE Produto_Compra SET quantidade = {quantidade} 
-                WHERE id_compra = {id_compra} AND id_produto = {id_produto};
-                ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-    
-    def delete(self, id_compra, id_produto):
-        try:
-            self.cursor.execute(f'''
-                DELETE FROM Produto_Compra WHERE id_compra = {id_compra} AND id_produto = {id_produto};
-                ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-    
-    def delete_all_from_compra(self, id_compra):
-        try:
-            self.cursor.execute(f'''
-                DELETE FROM Produto_Compra WHERE id_compra = {id_compra};
-                ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0

@@ -37,25 +37,7 @@ class Table_Pagamento:
             return self.cursor.fetchone()
         except:
             return 0
-    
-    def read_all(self):
-        try:
-            self.cursor.execute('''
-                SELECT * FROM Pagamento;
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-    
-    def read_all_confirmado(self):
-        try:
-            self.cursor.execute('''
-                SELECT * FROM Pagamento WHERE status_do_pagamento = 'Confirmado';
-                ''')
-            return self.cursor.fetchall()
-        except:
-            return 0
-    
+           
     def update(self, id, coluna, valor):
         try:
             if type(valor) == str:
@@ -70,17 +52,7 @@ class Table_Pagamento:
             return 1
         except:
             return 0
-        
-    def delete(self, id):
-        try:
-            self.cursor.execute(f'''
-            UPDATE Compra SET status_do_pagamento = 'Cancelado' WHERE id_compra = {id};
-            ''')
-            self.connection.commit()
-            return 1
-        except:
-            return 0
-        
+               
     def confirm_payment(self, id):
         try:
             self.cursor.execute(f'''
