@@ -39,8 +39,9 @@ class Table_Cliente:
 
     def read_all(self):
         try:
+            #(id, cpf, nome, is_flamengo, assiste_one_piece, cidade)
             self.cursor.execute(f'''
-            SELECT * FROM Cliente;
+            SELECT id, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal FROM Cliente;
             ''')
             return self.cursor.fetchall()
         except:
@@ -49,7 +50,7 @@ class Table_Cliente:
     def read_by_cpf(self, cpf):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Cliente WHERE cpf = '{cpf}';
+            SELECT id, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal FROM Cliente WHERE cpf = '{cpf}';
             ''')
             return self.cursor.fetchone()
         except:
@@ -58,7 +59,7 @@ class Table_Cliente:
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Cliente WHERE id = {id};
+            SELECT id, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal FROM Cliente WHERE id = {id};
             ''')
             return self.cursor.fetchone()
         except:
@@ -67,7 +68,7 @@ class Table_Cliente:
     def read_by_name(self, name):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Cliente WHERE nome LIKE '%{name}%';
+            SELECT id, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal FROM Cliente WHERE nome LIKE '%{name}%';
             ''')
             return self.cursor.fetchall()
         except:

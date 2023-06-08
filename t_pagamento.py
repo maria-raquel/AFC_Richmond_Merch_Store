@@ -32,7 +32,9 @@ class Table_Pagamento:
     def read(self, id_compra):
         try:
             self.cursor.execute(f'''
-                SELECT * FROM Pagamento WHERE id_compra = {id_compra};
+                SELECT id_compra, total, desconto_aplicado, total_pos_desconto
+                status_do_pagamento, forma_de_pagamento
+                FROM Pagamento WHERE id_compra = {id_compra};
                 ''')
             return self.cursor.fetchone()
         except:

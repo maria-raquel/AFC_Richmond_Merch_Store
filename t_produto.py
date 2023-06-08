@@ -41,7 +41,8 @@ class Table_Produto:
     def read_all(self):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto;
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto;
             ''')
             return self.cursor.fetchall()
         except:
@@ -50,7 +51,8 @@ class Table_Produto:
     def read_all_available(self):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE disponibilidade = 1;
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto WHERE disponibilidade = 1;
             ''')
             return self.cursor.fetchall()
         except:
@@ -59,7 +61,8 @@ class Table_Produto:
     def read_by_category(self, categoria):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE categoria = '{categoria}';
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto WHERE categoria = '{categoria}';
             ''')
             return self.cursor.fetchall()
         except:
@@ -68,7 +71,8 @@ class Table_Produto:
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE id = {id};
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto WHERE id = {id};
             ''')
             return self.cursor.fetchone()
         except:
@@ -77,7 +81,8 @@ class Table_Produto:
     def read_by_local(self, local):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE local_de_fabricacao = '{local}';
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto WHERE local_de_fabricacao = '{local}';
             ''')
             return self.cursor.fetchall()
         except:
@@ -86,7 +91,8 @@ class Table_Produto:
     def read_by_name(self, name):
         try:
             self.cursor.execute(f'''
-            SELECT * FROM Produto WHERE nome LIKE '%{name}%';
+            SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+            disponibilidade FROM Produto WHERE nome LIKE '%{name}%';
             ''')
             return self.cursor.fetchall()
         except:
@@ -96,7 +102,8 @@ class Table_Produto:
         if min != max:
             try:
                 self.cursor.execute(f'''
-                SELECT * FROM Produto WHERE preco > {min} AND preco < {max};
+                SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+                disponibilidade FROM Produto WHERE preco > {min} AND preco < {max};
                 ''')
                 return self.cursor.fetchall()
             except:
@@ -105,7 +112,8 @@ class Table_Produto:
         if min == max:
             try:
                 self.cursor.execute(f'''
-                SELECT * FROM Produto WHERE CAST(preco AS DECIMAL(10,2)) = {min};
+                SELECT id, nome, preco, estoque, categoria, local_de_fabricacao, 
+                disponibilidade FROM Produto WHERE CAST(preco AS DECIMAL(10,2)) = {min};
                 ''')
                 return self.cursor.fetchall()
             except:

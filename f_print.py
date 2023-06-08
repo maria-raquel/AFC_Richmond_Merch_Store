@@ -148,8 +148,6 @@ def info_vendedores(vendedores):
         print(f"{id} | {n} | {c} | {s} ")
     print("----------------------------------------")
 
-
-
 def mensagem_erro():
     print("----------------------------------------")
     print("Eita, algo errado!")
