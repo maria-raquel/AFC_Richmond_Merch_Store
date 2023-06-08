@@ -75,6 +75,7 @@ def info_compra_produtos(produtos):
 # Recebe uma lista de tuplas de produtos
 # Inmprime informações de produtos
 def info_produtos(produtos):
+    print("----------------------------------------")
     print("Produtos: ")
     print("id | nome | preço | estoque | categoria | local de fabricação | disponibilidade")
     for id, n, p, e, c, l, d in produtos:
@@ -102,6 +103,25 @@ def info_clientes(clientes):
 
     for id, cpf, nome, is_flamengo, assiste_one_piece, cidade in clientes:
         print(f"{id} | {nome} | {cpf} | {cidade} | {is_flamengo} | {assiste_one_piece}")
+    print("----------------------------------------")
+
+def info_vendedor(id, cpf, nome, situacao):
+    print("----------------------------------------")
+    print(f"Vendedor {id}:")
+    print(f"Nome: {nome}")
+    print(f"CPF: {cpf}")
+    situacao = str(situacao)[2:-2]
+    print(f"Situação: {situacao}")
+    print("----------------------------------------")
+
+# Imprime vários clientes a partir de uma lista de tuplas
+def info_vendedores(vendedores):
+    print("----------------------------------------")
+    print("Vendedores: ")
+    print("id | nome | cpf | situação")
+    for id, c, n, s in vendedores:
+        s = str(s)[2:-2]
+        print(f"{id} | {n} | {c} | {s} ")
     print("----------------------------------------")
 
 def boas_vindas():

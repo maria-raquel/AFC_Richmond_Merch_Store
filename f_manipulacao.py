@@ -105,6 +105,24 @@ def atualizar_produto():
     fp.mensagem_sucesso()
     fp.mensagem_1()
 
+def atualizar_vendedor():
+    id = fi.id_vendedor()
+    if not Vendedor.validate_id(id):
+        fp.mensagem_erro_id_invalido()
+        return
+    
+    info = Vendedor.read_by_id(id)
+    fp.info_vendedor(*info)
+
+    coluna, valor = fi.update_vendedor()
+
+    if not Vendedor.update(id, coluna, valor):
+        fp.mensagem_erro()
+        return
+    
+    fp.mensagem_sucesso()
+    fp.mensagem_2()
+
 def buscar_cliente():
     escolha = fi.opcao_menu_cliente_busca()
 
@@ -131,7 +149,7 @@ def buscar_cliente():
 
     # Por cpf
     elif escolha == 3:
-        cpf = fi.cpf_cliente()
+        cpf = fi.pedir_cpf()
         info = Cliente.read_by_cpf(cpf)
         if not info:
             fp.mensagem_erro_ao_recuperar_info()
@@ -172,7 +190,7 @@ def buscar_compra():
         elif escolha == 2:
             # Pede o cpf do cliente, pega o id pelo cpf
             # puxa os dados pelo id e imprime
-            cpf = fi.cpf_cliente()
+            cpf = fi.pedir_cpf()
             id_cliente = Cliente.return_id(cpf)
             if not id_cliente:
                 fp.mensagem_erro_id_invalido()
@@ -294,6 +312,41 @@ def buscar_produto():
 
         escolha = fi.opcao_menu_produto_busca()
 
+def buscar_vendedor():
+    escolha = fi.opcao_menu_vendedor_busca()
+
+    while escolha != 0:
+        # Por id
+        if escolha == 1:
+            id = fi.id_vendedor()
+            if not Vendedor.validate_id(id):
+                fp.mensagem_erro_id_invalido()
+                return
+            info = Vendedor.read_by_id(id)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_vendedor(*info)
+
+        # Por nome
+        elif escolha == 2:
+            nome = fi.pedir_nome()
+            vendedores = Vendedor.read_by_name(nome)
+            if vendedores == 0:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_vendedores(vendedores)
+
+        # Todos
+        elif escolha == 3:
+            vendedores = Vendedor.read_all()
+            if not vendedores:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_vendedores(vendedores)
+        
+        escolha = fi.opcao_menu_vendedor_busca()
+
 def cadastrar_cliente():
     dados = fi.dados_cliente()
     if Cliente.create(*dados):
@@ -312,6 +365,14 @@ def cadastrar_produto():
     fp.mensagem_sucesso()
     fp.mensagem_4()
     return
+
+def cadastrar_vendedor():
+    dados = fi.info_novo_vendedor()
+    if Vendedor.create(*dados):
+        fp.mensagem_sucesso()
+    else:
+        fp.mensagem_erro()
+        return
 
 def cancelar_compra():
     # pede e valida o id
@@ -376,7 +437,7 @@ def nova_compra():
     # O cliente pode já ter cadastro, se cadastrar, ou não informar dados
     if fi.cliente_vai_dar_dado():
         if fi.cliente_tem_cadastro():
-            cpf = fi.cpf_cliente()
+            cpf = fi.pedir_cpf()
             id_cliente = Cliente.return_id(cpf)
 
             # se o id retornado for 0, o cpf não está cadastrado
@@ -386,7 +447,7 @@ def nova_compra():
 
                 # tenta encontrar o cliente novamente, caso seja erro de digitação
                 if fi.cpf_nao_encontrado_tentar_novamente():
-                    cpf = fi.cpf_cliente()
+                    cpf = fi.pedir_cpf()
                     id_cliente = Cliente.return_id(cpf)
 
                 # se não for erro de digitação, encerra a compra nova, para verificar o erro

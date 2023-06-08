@@ -87,15 +87,15 @@ while escolha:
 
             # Vendedores - Cadastrar
             if escolha_vendedor == 1:
-                pass
+                fm.cadastrar_vendedor()
 
             # Vendedores - Buscar
             elif escolha_vendedor == 2:
-                pass
+                fm.buscar_vendedor()
 
             # Vendedores - Atualizar
             elif escolha_vendedor == 3:
-                pass
+                fm.atualizar_vendedor()
 
             escolha_vendedor = fi.opcao_menu_vendedor()
 

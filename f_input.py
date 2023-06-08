@@ -36,9 +36,9 @@ def cliente_tem_cadastro():
     else:
         return False
 
-# Retorna o cpf do cliente em string
-def cpf_cliente():
-    cpf = input("Informe o CPF do cliente: ")
+# Retorna o cpf em string
+def pedir_cpf():
+    cpf = input("Informe o CPF: ")
     return cpf
 
 # Retorna True se o usuário deseja tentar novamente
@@ -323,9 +323,6 @@ def data():
     return data
 
 def update_cliente():
-
-    ''' cpf nome is_flamengo assiste_one_piece'''
-
     colunas = {1: 'nome',
                2: 'cpf',
                3: 'is_flamengo',
@@ -483,6 +480,33 @@ def update_produto():
             valor = 'Outros'
         return colunas[c], valor
 
+def update_vendedor():
+    colunas = {1: 'nome',
+               2: 'cpf',
+               3: 'situacao'}
+    for coluna in colunas:
+        print(f"{coluna}: {colunas[coluna]}")
+
+    c = -1
+    while c not in (1,2,3,4,5):
+        try:
+            c = int(input("Digite o número da coluna que deseja atualizar: "))
+        except ValueError:
+            print("Opção inválida! Digite novamente: ")
+
+    if c == 1 or c == 2:
+        valor = input("Digite o novo valor: ")
+        while valor == "":
+            valor = input("Valor inválido! Digite novamente: ")
+        return colunas[c], valor
+
+    if c == 3:
+        print("Opções: Ativo, De férias, Afastado, Ex-colaborador")
+        valor = input("Digite o novo status: ")
+        while valor not in ('Ativo', 'De férias', 'Afastado', 'Ex-colaborador'):
+            valor = input("Valor inválido! Digite novamente: ")
+        return colunas[c], valor
+
 def opcao_menu_produto():
     print("----------------------------------------")
     print("Menu - Produtos: ")
@@ -576,6 +600,20 @@ def opcao_menu_produto_busca():
 
     escolha = int(input("Digite: "))
     while escolha not in (0,1,2,3,4,5,6):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha
+
+def opcao_menu_vendedor_busca():
+    print("----------------------------------------")
+    print("Menu - Vendedor - Busca: ")
+    print("1 - Por id")
+    print("2 - Por nome")
+    print("3 - Todos")
+    print("0 - Voltar")
+
+    escolha = int(input("Digite: "))
+    while escolha not in (0,1,2,3):
         escolha = input("Opção inválida! Digite novamente: ")
 
     return escolha
@@ -689,8 +727,14 @@ def opcao_menu_vendedor():
 
     return escolha
 
-def nome():
+def pedir_nome():
     nome = input("Digite o nome: ")
     while nome == "":
         nome = input("Nome inválido! Digite novamente: ")
     return nome
+
+def info_novo_vendedor():
+    nome = pedir_nome()
+    cpf = pedir_cpf()
+    return (cpf, nome, 'Ativo')
+
