@@ -40,7 +40,7 @@ class Table_Vendedor:
     def read_by_id(self, id):
         try:
             self.cursor.execute(f'''
-            SELECT id FROM Vendedor WHERE id = {id};
+            SELECT * FROM Vendedor WHERE id = {id};
             ''')
             return self.cursor.fetchone()
         except:
