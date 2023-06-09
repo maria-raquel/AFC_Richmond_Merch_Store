@@ -48,3 +48,24 @@ def relatorio_por_vendedor_por_mes(id, mes, ano):
     for cliente in info5:
         print(f"{cliente[0]} | {cliente[1]} | {cliente[2]}")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+    a = f"{meses[mes]} de {ano}\n"
+    fp.info_vendedor(*vendedor)
+    print(f"Total de vendas realizadas: {info1}")
+    print("Total arrecadado: R$ %.2f" % info2)
+    media = info2/info1 if info1 else 0
+    print("Média de arrecadação por venda: R$ %.2f" % media)
+    data = info3[0].strftime("%d/%m/%Y")
+    print(f"Dia de maior arrecadação: {data}, R$ %.2f" % info3[1])
+    print("----------------------------------------")
+    print("Top 3 produtos mais vendidos:")
+    print("ID | Nome | Quantidade")
+    for produto in info4:
+        print(f"{produto[0]} | {produto[1]} | {produto[2]}")
+    print("----------------------------------------")
+    print("Top 3 clientes deste vendedor:")
+    print("ID | Nome | Compras feitas")
+    for cliente in info5:
+        print(f"{cliente[0]} | {cliente[1]} | {cliente[2]}")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
