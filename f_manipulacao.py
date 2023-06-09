@@ -418,7 +418,9 @@ def relatorio():
         fp.mensagem_erro_id_invalido()
         return
     
-    fr.relatorio_por_vendedor_por_mes(id, mes, ano)
+    info = fr.consultas(id, mes, ano)
+    fr.relatorio_terminal(*info)
+    fr.relatorio_png(*info)
 
 def remover_produto():
     id = fi.pedir_id()
