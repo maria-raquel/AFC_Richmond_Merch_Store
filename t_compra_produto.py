@@ -68,3 +68,14 @@ class Table_Compra_Produto:
             return round(total, 2)
         except:
             return 0
+        
+    def return_produtos_precos(self, id_compra):
+        try:
+            self.cursor.execute(f'''
+                SELECT id_produto, quantidade, nome, preco 
+                FROM produto_compra INNER JOIN produto ON id_produto = produto.id
+                WHERE id_compra = {id_compra};
+                ''')
+            return self.cursor.fetchall()
+        except:
+            return 0
