@@ -142,7 +142,7 @@ def buscar_cliente():
 
         # Por nome
         elif escolha == '2':
-            nome = fi.nome()
+            nome = fi.pedir_nome()
             clientes = Cliente.read_by_name(nome)
             if clientes == 0:
                 fp.mensagem_erro_ao_recuperar_info()
