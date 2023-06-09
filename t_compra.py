@@ -118,7 +118,16 @@ class Table_Compra:
             return self.cursor.fetchone()[0]
         except:
             return 0
-                
+
+    def return_id_cliente(self, id):
+        try:
+            self.cursor.execute(f'''
+                SELECT id_cliente FROM Compra WHERE id = {id};
+                ''')
+            return self.cursor.fetchone()[0]
+        except:
+            return 0
+
     def update(self, id, coluna, valor):
         try:
             if type(valor) == str:
