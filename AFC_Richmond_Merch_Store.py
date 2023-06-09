@@ -5,7 +5,7 @@ import f_print as fp
 fp.boas_vindas()
 escolha = fi.opcao_menu_principal()
 
-while escolha:
+while escolha != '0':
 
     # Compras
     if escolha == '1':

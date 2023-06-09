@@ -70,10 +70,14 @@ def cpf_nao_encontrado_tentar_novamente():
     print("Opa! Parece que esse cpf não está cadastrado no sistema.")
     print("Você deseja tentar novamente? (s/n) ")
    
+    escolha = input("Digite s ou n: ")
     while escolha != 's' and escolha != 'n':
-        escolha = input("Opção inválida! Digite 1 ou 0: ")
+        escolha = input("Opção inválida! Digite s ou n: ")
 
-    return escolha
+    if escolha == 's':
+        return True
+    else:
+        return False
 
 # Retorna os dados do cliente em uma tupla
 # Na ordem (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
@@ -198,8 +202,8 @@ def escolher_produtos(id_compra):
 
             if qtd != 0:
                 produtos.append((id_compra, id, qtd))
-                i = i+1
-                escolha = input("Deseja incluir mais produtos? (s/n) ")
+            i = i+1
+            escolha = input("Deseja incluir mais produtos? (s/n) ")
     
     return produtos
 
@@ -351,9 +355,9 @@ def opcao_menu_compras():
     print("----------------------------------------")
     print("Menu - Compras: ")
     print("1 - Realizar nova compra")
-    print("2 - Buscar compra já feita")
-    print("3 - Atualizar compra já feita")
-    print("4 - Cancelar compra já feita")
+    print("2 - Buscar compra")
+    print("3 - Atualizar compra")
+    print("4 - Cancelar compra")
     print("0 - Voltar")
 
     escolha = input("Digite: ")
@@ -438,8 +442,8 @@ def opcao_menu_produto_busca():
 def opcao_menu_vendedor():
     print("Menu - Vendedores: ")
     print("1 - Cadastrar novo vendedor")
-    print("2 - Buscar vendedor cadastrado")
-    print("3 - Atualizar vendedor cadastrado")
+    print("2 - Buscar vendedor")
+    print("3 - Atualizar vendedor")
     print("0 - Voltar")
 
     escolha = input("Digite: ")

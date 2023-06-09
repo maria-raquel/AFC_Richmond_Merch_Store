@@ -497,6 +497,12 @@ def nova_compra():
     # Adicionando produtos à compra
     # Inserindo na tabela Compra_Produto
     produtos = fi.escolher_produtos(id_compra)
+    if produtos == []:
+        if not Pagamento.cancel_payment(id_compra):
+            fp.mensagem_erro_ao_cancelar_compra()
+            return
+        fp.mensagem_compra_cancelada()
+        return
     for produto in produtos:
         if not Compra_Produto.create(*produto):
             fp.mensagem_erro_ao_adicionar_produto()
@@ -538,7 +544,7 @@ def nova_compra():
             return
     else:
         if not Pagamento.cancel_payment(id_compra):
-            fp.mensagem_erro_ao_cadastrar_pagamento()
+            fp.mensagem_erro_ao_cancelar_compra()
             fi.deu_ruim_sair_da_operacao()
             return
     
