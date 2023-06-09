@@ -35,7 +35,7 @@ def info_cliente(id, cpf, nome, is_flamengo, assiste_one_piece, cidade):
 
 # Imprime vários clientes a partir de uma lista de tuplas
 def info_clientes(clientes):
-    print("----------------------------------------")
+    print("--------------- Clientes ---------------")
     print("id | nome | cpf | cidade | flamenguista | one piece ")
 
     for id, cpf, nome, is_flamengo, assiste_one_piece, cidade in clientes:
@@ -65,7 +65,7 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
 
 # imprime várias compras a partir de uma lista de tuplas
 def info_compras(compras):
-    print("----------------------------------------")
+    print("--------------- Compras ----------------")
     print("id | id do cliente | id do vendedor | data | total | status da compra")
 
     for id, id_cliente, id_vendedor, data, status_c, total, desconto, total_pd, forma, status_p in compras:
@@ -120,7 +120,7 @@ def info_produto(id, nome, preco, estoque, categoria, local_de_fabricacao, dispo
 # Recebe uma lista de tuplas de produtos
 # Inmprime informações de produtos
 def info_produtos(produtos):
-    print("----------------------------------------")
+    print("-------------- Produtos ----------------")
     print("Produtos: ")
     print("id | nome | preço | estoque | categoria | local de fabricação | disponibilidade")
     for id, n, p, e, c, l, d in produtos:
@@ -140,7 +140,7 @@ def info_vendedor(id, cpf, nome, situacao):
 
 # Imprime vários vendedores a partir de uma lista de tuplas
 def info_vendedores(vendedores):
-    print("----------------------------------------")
+    print("------------- Vendedores ---------------")
     print("Vendedores: ")
     print("id | nome | cpf | situação")
     for id, c, n, s in vendedores:
