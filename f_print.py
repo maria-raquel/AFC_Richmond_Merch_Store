@@ -148,6 +148,16 @@ def info_vendedores(vendedores):
         print(f"{id} | {n} | {c} | {s} ")
     print("----------------------------------------")
 
+def mensagem_compra_cancelada():
+    print("----------------------------------------")
+    print("Compra cancelada!")
+    print("----------------------------------------")
+
+def mensagem_compra_já_cancelada():
+    print("----------------------------------------")
+    print("Esta compra já estava cancelada!")
+    print("----------------------------------------")
+
 def mensagem_erro():
     print("----------------------------------------")
     print("Eita, algo errado!")
@@ -183,6 +193,11 @@ def mensagem_erro_ao_calcular_total():
     print("Erro ao calcular o total da compra!")
     print("----------------------------------------")
 
+def mensagem_erro_ao_cancelar_compra():
+    print("----------------------------------------")
+    print("Erro ao cancelar a compra!")
+    print("----------------------------------------")
+
 def mensagem_erro_ao_recuperar_id_compra():
     print("----------------------------------------")
     print("Erro ao recuperar o id da compra!")
@@ -191,11 +206,6 @@ def mensagem_erro_ao_recuperar_id_compra():
 def mensagem_erro_ao_recuperar_info():
     print("----------------------------------------")
     print("Erro ao recuperar informações!")
-    print("----------------------------------------")
-
-def mensagem_compra_já_cancelada():
-    print("----------------------------------------")
-    print("Esta compra já estava cancelada!")
     print("----------------------------------------")
 
 def mensagem_erro_id_invalido():
