@@ -1,6 +1,9 @@
+import connect_to_DB as cdb
 import f_input as fi
 import f_manipulacao as fm
 import f_print as fp
+
+connection = cdb.connect()
 
 fp.boas_vindas()
 escolha = fi.opcao_menu_principal()
@@ -103,3 +106,4 @@ while escolha != '0':
     escolha = fi.opcao_menu_principal()
 
 fp.despedida()
+connection.close()
