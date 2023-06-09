@@ -34,7 +34,7 @@ def apagar_cliente():
         return
     
     fp.mensagem_sucesso()
-    fp.mensagem_2()
+    fp.mensagem_1()
 
 def atualizar_cliente():
     id = fi.pedir_id()
@@ -85,7 +85,7 @@ def atualizar_compra():
         return
     else:
         fp.mensagem_sucesso()
-        fp.mensagem_2()
+        fp.mensagem_3()
         return
 
 def atualizar_produto():
@@ -104,7 +104,7 @@ def atualizar_produto():
         return
     
     fp.mensagem_sucesso()
-    fp.mensagem_1()
+    fp.mensagem_4()
 
 def atualizar_vendedor():
     id = fi.pedir_id()
@@ -122,7 +122,7 @@ def atualizar_vendedor():
         return
     
     fp.mensagem_sucesso()
-    fp.mensagem_3()
+    fp.mensagem_5()
 
 def buscar_cliente():
     escolha = fi.opcao_menu_cliente_busca()
@@ -349,7 +349,7 @@ def cadastrar_cliente():
     dados = fi.dados_cliente()
     if Cliente.create(*dados):
         fp.mensagem_sucesso()
-        fp.mensagem_4()
+        fp.mensagem_1()
     else:
         fp.mensagem_erro()
 
@@ -357,7 +357,7 @@ def cadastrar_produto():
     info = fi.info_produto_novo()
     if Produto.create(*info):
         fp.mensagem_sucesso()
-        fp.mensagem_4()
+        fp.mensagem_2()
     else:
         fp.mensagem_erro()
 
@@ -365,7 +365,7 @@ def cadastrar_vendedor():
     dados = fi.info_vendedor_novo()
     if Vendedor.create(*dados):
         fp.mensagem_sucesso()
-        fp.mensagem_4()
+        fp.mensagem_3()
     else:
         fp.mensagem_erro()
 
@@ -408,7 +408,7 @@ def cancelar_compra():
         return
     
     fp.mensagem_sucesso()
-    fp.mensagem_3()
+    fp.mensagem_4()
 
 def relatorio():
     id = fi.pedir_id()
@@ -437,6 +437,9 @@ def remover_produto():
     if not Produto.delete(id):
         fp.mensagem_erro()
         return
+    
+    fp.mensagem_sucesso()
+    fp.mensagem_5()
 
 def nova_compra():
 
