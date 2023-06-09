@@ -126,51 +126,54 @@ def atualizar_vendedor():
 
 def buscar_cliente():
     escolha = fi.opcao_menu_cliente_busca()
+    while escolha != '0':
 
-    # Por id
-    if escolha == 1:
-        id = fi.pedir_id()
-        if not Cliente.validate_id(id):
-            fp.mensagem_erro_id_invalido()
-            return
-        info = Cliente.read_by_id(id)
-        if not info:
-            fp.mensagem_erro_ao_recuperar_info()
-            return
-        fp.info_cliente(*info)
+        # Por id
+        if escolha == '1':
+            id = fi.pedir_id()
+            if not Cliente.validate_id(id):
+                fp.mensagem_erro_id_invalido()
+                return
+            info = Cliente.read_by_id(id)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_cliente(*info)
 
-    # Por nome
-    elif escolha == 2:
-        nome = fi.nome()
-        clientes = Cliente.read_by_name(nome)
-        if clientes == 0:
-            fp.mensagem_erro_ao_recuperar_info()
-            return
-        fp.info_clientes(clientes)
+        # Por nome
+        elif escolha == '2':
+            nome = fi.nome()
+            clientes = Cliente.read_by_name(nome)
+            if clientes == 0:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_clientes(clientes)
 
-    # Por cpf
-    elif escolha == 3:
-        cpf = fi.pedir_cpf()
-        info = Cliente.read_by_cpf(cpf)
-        if not info:
-            fp.mensagem_erro_ao_recuperar_info()
-            return
-        fp.info_cliente(*info)
+        # Por cpf
+        elif escolha == '3':
+            cpf = fi.pedir_cpf()
+            info = Cliente.read_by_cpf(cpf)
+            if not info:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_cliente(*info)
 
-    # Todos
-    elif escolha == 4:
-        clientes = Cliente.read_all()
-        if clientes == 0:
-            fp.mensagem_erro_ao_recuperar_info()
-            return
-        fp.info_clientes(clientes)
+        # Todos
+        elif escolha == '4':
+            clientes = Cliente.read_all()
+            if clientes == 0:
+                fp.mensagem_erro_ao_recuperar_info()
+                return
+            fp.info_clientes(clientes)
+        
+        escolha = fi.opcao_menu_cliente_busca()
 
 def buscar_compra():
     escolha = fi.opcao_menu_compras_busca()
-    while escolha != 0:
+    while escolha != '0':
 
         # Por id
-        if escolha == 1:
+        if escolha == '1':
             id_compra = fi.pedir_id()
             if not Compra.validate_id(id_compra):
                 fp.mensagem_erro_id_invalido()
@@ -186,7 +189,7 @@ def buscar_compra():
                 fp.info_compra_produtos(produtos)
 
         # Por cliente
-        elif escolha == 2:
+        elif escolha == '2':
             cpf = fi.pedir_cpf()
             id_cliente = Cliente.return_id(cpf)
             if not id_cliente:
@@ -201,7 +204,7 @@ def buscar_compra():
                 fp.info_compras(compras)
 
         # Por vendedor
-        elif escolha == 3:
+        elif escolha == '3':
             id_vendedor = fi.pedir_id()
             if not Vendedor.validate_id(id_vendedor):
                 fp.mensagem_erro_id_invalido()
@@ -215,7 +218,7 @@ def buscar_compra():
                 fp.info_compras(compras)
 
         # Por data
-        elif escolha == 4:
+        elif escolha == '4':
             data = fi.data()
             compras = Compra.read_all_from_data(data)
             if not compras:
@@ -225,7 +228,7 @@ def buscar_compra():
             fp.info_compras(compras)
 
         # Todos
-        elif escolha == 5:
+        elif escolha == '5':
             compras = Compra.read_all()
             if not compras:
                 fp.mensagem_erro_reinicie()
@@ -238,9 +241,9 @@ def buscar_compra():
 def buscar_produto():
     escolha = fi.opcao_menu_produto_busca()
 
-    while escolha != 0:
+    while escolha != '0':
         # Por id
-        if escolha == 1:
+        if escolha == '1':
             id = fi.pedir_id()
             if not Produto.validate_id(id):
                 fp.mensagem_erro_id_invalido()
@@ -252,7 +255,7 @@ def buscar_produto():
             fp.info_produto(*info)
 
         # Por nome
-        elif escolha == 2:
+        elif escolha == '2':
             nome = fi.pedir_nome()
             info = Produto.read_by_name(nome)
             if info == 0:
@@ -261,7 +264,7 @@ def buscar_produto():
             fp.info_produtos(info)
 
         # Por categoria
-        elif escolha == 3:
+        elif escolha == '3':
             categoria = fi.categoria()
             if categoria == 'v':
                 produtos = Produto.read_by_category('Vestuário')
@@ -273,7 +276,7 @@ def buscar_produto():
             fp.info_produtos(produtos)
 
         # Por local de fabricação
-        elif escolha == 4:
+        elif escolha == '4':
             local = fi.local_de_fabricacao()
             info = Produto.read_by_local(local)
             if not info:
@@ -282,7 +285,7 @@ def buscar_produto():
             fp.info_produtos(info)
 
         # Por faixa de preço
-        elif escolha == 5:
+        elif escolha == '5':
             faixa = fi.faixa_de_preco()
             produtos = Produto.read_by_price(*faixa)
             if not produtos:
@@ -291,7 +294,7 @@ def buscar_produto():
             fp.info_produtos(produtos)
 
         # Todos
-        elif escolha == 6:
+        elif escolha == '6':
             if fi.apenas_disponiveis():
                 produtos = Produto.read_all()
             else:
@@ -307,9 +310,9 @@ def buscar_produto():
 def buscar_vendedor():
     escolha = fi.opcao_menu_vendedor_busca()
 
-    while escolha != 0:
+    while escolha != '0':
         # Por id
-        if escolha == 1:
+        if escolha == '1':
             id = fi.pedir_id()
             if not Vendedor.validate_id(id):
                 fp.mensagem_erro_id_invalido()
@@ -321,7 +324,7 @@ def buscar_vendedor():
             fp.info_vendedor(*info)
 
         # Por nome
-        elif escolha == 2:
+        elif escolha == '2':
             nome = fi.pedir_nome()
             vendedores = Vendedor.read_by_name(nome)
             if vendedores == 0:
@@ -330,7 +333,7 @@ def buscar_vendedor():
             fp.info_vendedores(vendedores)
 
         # Todos
-        elif escolha == 3:
+        elif escolha == '3':
             if fi.apenas_disponiveis():
                 vendedores = Vendedor.read_all_active()
             else:

@@ -52,8 +52,7 @@ def cliente_vai_dar_dado():
 def confirmação_do_pagamento():
     print("Solicite o pagamento ao cliente")
 
-    pagamento = 1
-    while pagamento:
+    while True:
         escolha = input("O pagamento foi confirmado? (s/n) ")
         while escolha != "s" and escolha != "n":
             escolha = input("Opção inválida! Digite s ou n: ")
@@ -63,20 +62,16 @@ def confirmação_do_pagamento():
         else:
             escolha = input("Deseja tentar novamente? (s/n) ")
             if escolha == "n":
-                pagamento = 0
                 return False
 
 # Retorna True se o usuário deseja tentar novamente
 # e False se o usuário deseja cancelar a operação
 def cpf_nao_encontrado_tentar_novamente():
     print("Opa! Parece que esse cpf não está cadastrado no sistema.")
-    print("Você deseja: ")
-    print("1: Tentar digitar o cpf novamente? ")
-    print("0: Cancelar a operação? ")
-    escolha = int(input("Digite 1 ou 0: "))
-
-    while escolha != 0 and escolha != 1:
-        escolha = int(input("Opção inválida! Digite 1 ou 0: "))
+    print("Você deseja tentar novamente? (s/n) ")
+   
+    while escolha != 's' and escolha != 'n':
+        escolha = input("Opção inválida! Digite 1 ou 0: ")
 
     return escolha
 
@@ -84,8 +79,8 @@ def cpf_nao_encontrado_tentar_novamente():
 # Na ordem (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
 def dados_cliente():
     print("Informe os dados do cliente: ")
-    nome = input("Nome: ")
-    cpf = input("CPF: ")
+    nome = pedir_nome()
+    cpf = pedir_cpf()
 
     aux = input("É flamenguista? (s/n) ")
     while aux != "s" and aux != "n":
@@ -117,11 +112,8 @@ def dados_compra(id_cliente):
     id_invalido = True
 
     while id_invalido:
-        try:
-            id_vendedor = int(input("ID do vendedor: "))
-        except ValueError:
-            print("Id inválido! Digite novamente.")
-            continue
+        print("Id do vendedor ")
+        id_vendedor = pedir_id()
 
         if Vendedor.validate_id(id_vendedor):
             id_invalido = False
@@ -233,34 +225,25 @@ def faixa_de_preco():
 
 # Retorna a forma de pagamento escolhida, em string
 def forma_de_pagamento(id_compra):
-    formas = {1: 'Dinheiro',
-              2: 'Cartão de crédito',
-              3: 'Cartão de débito',
-              4: 'Pix'}
+    formas = {'1': 'Dinheiro',
+              '2': 'Cartão de crédito',
+              '3': 'Cartão de débito',
+              '4': 'Pix'}
 
     print("Opções de pagamento: ")
     for opcao in formas:
         print(f"{opcao}: {formas[opcao]}")
 
-    try:
-        escolha = int(input("Digite a opção escolhida: "))
-    except ValueError:
-        escolha = 0
+    escolha = input("Digite a opção escolhida: ")
 
-    while escolha not in (1,2,3,4):
-        escolha = int(input("Opção inválida, digite novamente: "))
+    while escolha not in ('1','2','3','4'):
+        escolha = input("Opção inválida, digite novamente: ")
 
     return formas[escolha]
 
 # Retorna na ordem (nome, preco, estoque, categoria, local_de_fabricacao, disponibilidade)
 def info_produto_novo():
-    nome_invalido = True
-    while nome_invalido:
-        nome = input("Nome do produto: ")
-        if nome == "":
-            print("Nome inválido! Digite novamente.")
-        else:
-            nome_invalido = False
+    nome = pedir_nome()
 
     preco_invalido = True
     while preco_invalido:
@@ -268,6 +251,7 @@ def info_produto_novo():
             preco = float(input("Preço do produto: "))
         except ValueError:
             print("Preço inválido! Digite novamente.")
+            continue
 
         if preco <= 0:
             print("Preço inválido! Digite novamente.")
@@ -280,6 +264,7 @@ def info_produto_novo():
             estoque = int(input("Quantidade em estoque: "))
         except ValueError:
             print("Quantidade inválida! Digite novamente.")
+            continue
         
         if estoque < 0:
             print("Quantidade inválida! Digite novamente.")
@@ -329,29 +314,23 @@ def local_de_fabricacao():
         local = input(f"Local inválido! Digite novamente: ")
     return local
 
-# Retorna int
+# Retorna str
 def opcao_menu_cliente():
     print("Menu - Clientes: ")
     print("1 - Cadastrar novo cliente")
-    print("2 - Buscar cliente cadastrado")
-    print("3 - Atualizar cliente cadastrado")
-    print("4 - Remover cliente cadastrado")
+    print("2 - Buscar cliente")
+    print("3 - Atualizar cliente")
+    print("4 - Remover cliente")
     print("0 - Voltar")
 
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
+    escolha = input("Digite: ")
 
-    while escolha not in (0,1,2,3,4):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
+    while escolha not in ('0','1','2','3','4'):
+        escolha = input("Opção inválida! Digite novamente: ")
 
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_cliente_busca():
     print("----------------------------------------")
     print("Menu - Clientes - Busca: ")
@@ -361,20 +340,13 @@ def opcao_menu_cliente_busca():
     print("4 - Todos")
     print("0 - Voltar")
 
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
-
-    while escolha not in (0,1,2,3,4,5,6):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
+    escolha = input("Digite: ")
+    while escolha not in ('0','1','2','3','4','5','6'):
+        escolha = input("Opção inválida! Digite novamente: ")
 
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_compras():
     print("----------------------------------------")
     print("Menu - Compras: ")
@@ -384,14 +356,14 @@ def opcao_menu_compras():
     print("4 - Cancelar compra já feita")
     print("0 - Voltar")
 
-    escolha = int(input("Digite: "))
+    escolha = input("Digite: ")
 
-    while escolha not in (0,1,2,3,4):
-        escolha = int(input("Opção inválida! Digite novamente: "))
+    while escolha not in ('0','1','2','3','4'):
+        escolha = input("Opção inválida! Digite novamente: ")
     
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_compras_busca():
     print("----------------------------------------")
     print("Menu - Compras - Busca: ")
@@ -402,14 +374,14 @@ def opcao_menu_compras_busca():
     print("5 - Todas")
     print("0 - Voltar")
     
-    escolha = int(input("Digite: "))
+    escolha = input("Digite: ")
 
-    while escolha not in (0,1,2,3,4,5):
-        escolha = int(input("Opção inválida! Digite novamente: "))
+    while escolha not in ('0','1','2','3','4','5'):
+        escolha = input("Opção inválida! Digite novamente: ")
     
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_principal():
     print("----------------------------------------")
     print("Menu: ")
@@ -420,14 +392,14 @@ def opcao_menu_principal():
     print("5 - Relatórios")
     print("0 - Sair")
 
-    escolha = int(input("Digite: "))
+    escolha = input("Digite: ")
 
-    while escolha not in (0,1,2,3,4,5):
-        escolha = int(input("Opção inválida! Digite novamente: "))
+    while escolha not in ('0','1','2','3','4','5'):
+        escolha = input("Opção inválida! Digite novamente: ")
     
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_produto():
     print("----------------------------------------")
     print("Menu - Produtos: ")
@@ -437,14 +409,14 @@ def opcao_menu_produto():
     print("4 - Remover produto")
     print("0 - Voltar")
 
-    escolha = int(input("Digite: "))
+    escolha = input("Digite: ")
 
-    while escolha not in (0,1,2,3,4):
-        escolha = int(input("Opção inválida! Digite novamente: "))
+    while escolha not in ('0','1','2','3','4'):
+        escolha = input("Opção inválida! Digite novamente: ")
     
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_produto_busca():
     print("----------------------------------------")
     print("Menu - Produto - Busca: ")
@@ -456,13 +428,13 @@ def opcao_menu_produto_busca():
     print("6 - Todos")
     print("0 - Voltar")
 
-    escolha = int(input("Digite: "))
-    while escolha not in (0,1,2,3,4,5,6):
+    escolha = input("Digite: ")
+    while escolha not in ('0','1','2','3','4','5','6'):
         escolha = input("Opção inválida! Digite novamente: ")
 
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_vendedor():
     print("Menu - Vendedores: ")
     print("1 - Cadastrar novo vendedor")
@@ -470,20 +442,14 @@ def opcao_menu_vendedor():
     print("3 - Atualizar vendedor cadastrado")
     print("0 - Voltar")
 
-    try:
-        escolha = int(input("Digite: "))
-    except ValueError:
-        print("Opção inválida! Digite novamente: ")
-
-    while escolha not in (0,1,2,3):
-        try:
-            escolha = int(input("Opção inválida! Digite novamente: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
-
+    escolha = input("Digite: ")
+    
+    while escolha not in ('0','1','2','3'):
+        escolha = input("Opção inválida! Digite novamente: ")
+        
     return escolha
 
-# Retorna int
+# Retorna str
 def opcao_menu_vendedor_busca():
     print("----------------------------------------")
     print("Menu - Vendedor - Busca: ")
@@ -492,8 +458,8 @@ def opcao_menu_vendedor_busca():
     print("3 - Todos")
     print("0 - Voltar")
 
-    escolha = int(input("Digite: "))
-    while escolha not in (0,1,2,3):
+    escolha = input("Digite: ")
+    while escolha not in ('0','1','2','3'):
         escolha = input("Opção inválida! Digite novamente: ")
 
     return escolha
@@ -548,28 +514,25 @@ def tem_certeza():
 
 # Retorna coluna em string e o valor em seu devido tipo
 def update_cliente():
-    colunas = {1: 'nome',
-               2: 'cpf',
-               3: 'is_flamengo',
-               4: 'assiste_one_piece',
-               5: 'cidade_natal'}
+    colunas = {'1': 'nome',
+               '2': 'cpf',
+               '3': 'is_flamengo',
+               '4': 'assiste_one_piece',
+               '5': 'cidade_natal'}
     for coluna in colunas:
         print(f"{coluna}: {colunas[coluna]}")
     
-    c = -1
-    while c not in (1,2,3,4,5):
-        try:
-            c = int(input("Digite o número da coluna que deseja atualizar: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
+    c = input("Digite o número da coluna que deseja atualizar: ")
+    while c not in ('1','2','3','4','5'):
+        c = input("Opção inválida, digite novamente: ")
 
-    if c == 1 or c == 2 or c == 5:
+    if c == '1' or c == '2' or c == '5':
         valor = input("Digite o novo valor: ")
         while valor == "":
             valor = input("Valor inválido! Digite novamente: ")
         return colunas[c], valor
 
-    if c == 3 or c == 4:
+    if c == '3' or c == '4':
         valor = -1
         while valor not in (0,1):
             try:
@@ -587,63 +550,59 @@ def update_compra():
         tabela = input("Opção inválida! Digite novamente: ")
 
     if tabela == 'c':
-        colunas = {1: 'id_vendedor',
-            2: 'id_cliente',
-            3: 'status_da_compra',
-            4: 'data_da_compra'}
+        colunas = {'1': 'id_vendedor',
+                   '2': 'id_cliente',
+                   '3': 'status_da_compra',
+                   '4': 'data_da_compra'}
         
         for coluna in colunas:
             print(f"{coluna}: {colunas[coluna]}")
 
-        c = -1
-        while c not in (1,2,3,4):
-            try:
-                c = int(input("Digite o número da coluna que deseja atualizar: "))
-            except ValueError:
-                print("Opção inválida! Digite novamente: ")
+        c = input("Digite o número da coluna que deseja atualizar: ")
+        while c not in ('1','2','3','4'):
+            c = input("Opção inválida, digite novamente: ")
 
-        if c == 1 or c == 2:
+        if c == '1' or c == '2':
             while True:
                 try:
                     valor = int(input("Digite o novo valor: "))
                     return tabela, colunas[c], valor
                 except ValueError:
-                    print("Valor inválido! Digite novamente: ")
+                    print("Valor inválido! Digite novament. ")
         
-        if c == 3:
+        if c == '3':
             print("Opções: Confirmada, Aguardando confirmação, Cancelada")
             valor = input("Digite o novo status: ")
             while valor not in ('Confirmada', 'Aguardando confirmação', 'Cancelada'):
                 valor = input("Valor inválido! Digite novamente: ")
             return tabela, colunas[c], valor
 
-        if c == 4:
+        if c == '4':
             print("Digite no formato aaaa-mm-dd")
             valor = input("Digite a data: ")
+            while valor == "":
+                valor = input("Data inválida! Digite novamente: ")
             return tabela, colunas[c], valor
         
     if tabela == 'p':
-        colunas = {1: 'forma_de_pagamento',
-                   2: 'status_do_pagamento'}
+        colunas = {'1': 'forma_de_pagamento',
+                   '2': 'status_do_pagamento'}
 
         for coluna in colunas:
             print(f"{coluna}: {colunas[coluna]}")
         
-        c = -1
-        while c not in (1,2):
-            try:
-                c = int(input("Digite o número da coluna que deseja atualizar: "))
-            except ValueError:
-                print("Opção inválida! Digite novamente: ")
-        
-        if c == 1:
+        c = input("Digite o número da coluna que deseja atualizar: ")
+        while c not in ('1','2'):
+            c = input("Digite o número da coluna que deseja atualizar: ")
+
+        if c == '1':
             print("Opções: Dinheiro, Cartão de Crédito, Cartão de Débito, Pix, A definir")
             valor = input("Digite o novo status: ")
             while valor not in ('Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'Pix', 'A definir'):
                valor = input("Forma inválida! Digite novamente: ")
             return tabela, colunas[c], valor
 
-        if c == 2:
+        if c == '2':
             print("Opções: Confirmado, Pendente, Cancelado, Reembolsado")
             valor = input("Digite o novo status: ")
             while valor not in ('Confirmado', 'Pendente', 'Cancelado', 'Reembolsado'):
@@ -652,55 +611,52 @@ def update_compra():
 
 # Retorna coluna em string e o valor em seu devido tipo
 def update_produto():
-    colunas = {1: 'nome',
-               2: 'preco',
-               3: 'estoque',
-               4: 'categoria',
-               5: 'local_de_fabricacao'}
+    colunas = {'1': 'nome',
+               '2': 'preco',
+               '3': 'estoque',
+               '4': 'categoria',
+               '5': 'local_de_fabricacao'}
     for coluna in colunas:
         print(f"{coluna}: {colunas[coluna]}")
     
-    c = -1
-    while c not in (1,2,3,4,5):
-        try:
-            c = int(input("Digite o número da coluna que deseja atualizar: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
+    c = input("Digite o número da coluna que deseja atualizar: ")
+    while c not in ('1','2','3','4','5'):
+        c = input("Digite o número da coluna que deseja atualizar: ")
 
-    if c == 1 or c == 5:
+    if c == '1' or c == '5':
         valor = input("Digite o novo valor: ")
         while valor == "":
             valor = input("Valor inválido! Digite novamente: ")
         return colunas[c], valor
     
-    if c == 2:
-        valor = -1
-        while valor <= 0:
+    if c == '2':
+        valor_invalido = True
+        while valor_invalido:
             try:
                 valor = float(input("Digite o novo valor: "))
+                valor_invalido = False
             except ValueError:
                 print("Valor inválido!")
             if valor <= 0:
                 print("Valor inválido!")
         return colunas[c], valor
 
-    if c == 3:
-        valor = -1
-        while valor < 0:
+    if c == '3':
+        valor_invalido = True
+        while valor_invalido:
             try:
                 valor = int(input("Digite o novo valor: "))
+                valor_invalido = False
             except ValueError:
                 print("Valor inválido!")
             if valor < 0:
                 print("Valor inválido!")
         return colunas[c], valor
     
-    if c == 4:
-        valor = ''
+    if c == '4':
+        valor = input("Digite v para Vestuário e o para Outros: ")
         while valor not in ('v', 'o'):
-            valor = input("Digite v para Vestuário e o para Outros: ")
-            if valor not in ('v', 'o'):
-                print("Valor inválido!")
+            valor = input("Valor inválido! Digite novamente: ")
         if valor == 'v':
             valor = 'Vestuário'
         else:
@@ -709,26 +665,23 @@ def update_produto():
 
 # Retorna coluna em string e o valor em seu devido tipo
 def update_vendedor():
-    colunas = {1: 'nome',
-               2: 'cpf',
-               3: 'situacao'}
+    colunas = {'1': 'nome',
+               '2': 'cpf',
+               '3': 'situacao'}
     for coluna in colunas:
         print(f"{coluna}: {colunas[coluna]}")
 
-    c = -1
-    while c not in (1,2,3,4,5):
-        try:
-            c = int(input("Digite o número da coluna que deseja atualizar: "))
-        except ValueError:
-            print("Opção inválida! Digite novamente: ")
+    c = input("Digite o número da coluna que deseja atualizar: ")
+    while c not in ('1','2','3','4','5'):
+        c = input("Digite o número da coluna que deseja atualizar: ")
 
-    if c == 1 or c == 2:
+    if c == '1' or c == '2':
         valor = input("Digite o novo valor: ")
         while valor == "":
             valor = input("Valor inválido! Digite novamente: ")
         return colunas[c], valor
 
-    if c == 3:
+    if c == '3':
         print("Opções: Ativo, De férias, Afastado, Ex-colaborador")
         valor = input("Digite o novo status: ")
         while valor not in ('Ativo', 'De férias', 'Afastado', 'Ex-colaborador'):
