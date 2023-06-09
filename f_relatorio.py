@@ -1,5 +1,8 @@
 import connect_to_DB
 import f_print as fp
+import t_cliente as cl
+import t_compra as cm
+import t_compra_produto as cp
 import t_relatorio as r
 import t_vendedor as v
 from PIL import Image, ImageDraw, ImageFont
@@ -7,6 +10,9 @@ from PIL import Image, ImageDraw, ImageFont
 connection = connect_to_DB.connect()
 Vendedor = v.Table_Vendedor(connection)
 Consulta = r.Consulta_Relatorio(connection)
+Compra = cm.Table_Compra(connection)
+Compra_Produto = cp.Table_Compra_Produto(connection)
+Cliente = cl.Table_Cliente(connection)
 
 meses = {'01': 'Janeiro', '02': 'Fevereiro', '03': 'Março', '04': 'Abril',
              '05': 'Maio', '06': 'Junho', '07': 'Julho', '08': 'Agosto',
@@ -126,3 +132,78 @@ def relatorio_png(vendedor, mes, ano, info1, info2, info3, info4, info5):
 
     # Salva a imagem
     image.save("relatorio_files/relatorio.png")
+
+def recibo(id_compra):
+    compra = Compra.read(id_compra)
+    id_cliente = Compra.return_id_cliente(id_compra)
+    cliente = Cliente.read_by_id(id_cliente)
+    produtos = Compra_Produto.return_produtos_precos(id_compra)
+
+    if not compra or not cliente or not produtos:
+        return
+
+    id, id_cliente, id_vendedor, data, status_c, total, desconto, total_pos_desconto, forma_de_pagamento, status_do_pagamento = compra
+    id_cliente, cpf, nome, is_flamengo, assiste_one_piece, cidade_natal = cliente
+
+    # Carrega a imagem base
+    image = Image.open("relatorio_files/recibo_branco.png")
+    draw = ImageDraw.Draw(image)
+
+    # Define propriedades do texto
+    font = ImageFont.truetype("relatorio_files/Gupter-Regular.ttf", 80)
+    text_color = (0, 0, 0)
+
+    # Define posição inicial do texto
+    x = 100
+    y = 600
+    line_height = 90
+
+    draw.text((x, y), f"Compra {id}:", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), f"Nome do cliente: {nome}; CPF: {cpf}", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), f"Id do vendedor: {id_vendedor}", font=font, fill=text_color)
+    y += line_height
+
+    status_c = str(status_c)[2:-2]
+
+    draw.text((x, y), f"Data: {data}; Status da compra: {status_c}", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), f"Total: R$ %.2f" % total, font=font, fill=text_color)
+    y += line_height
+
+    if desconto:
+        draw.text((x, y), "Desconto: R$ %.2f" % desconto, font=font, fill=text_color)
+        y += line_height
+
+        draw.text((x, y), "Total com desconto: R$ %.2f" % total_pos_desconto, font=font, fill=text_color)
+        y += line_height
+
+    status_do_pagamento = str(status_do_pagamento)[2:-2]
+    forma_de_pagamento = str(forma_de_pagamento)[2:-2]
+
+    draw.text((x, y), f"Status do pagamento: {status_do_pagamento}", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), f"Forma de pagamento: {forma_de_pagamento}", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), "----------------------------------------", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), "Produtos comprados:", font=font, fill=text_color)
+    y += line_height
+
+    draw.text((x, y), "Id | Produto | Quantidade | Preço", font=font, fill=text_color)
+    y += line_height
+
+    for produto in produtos:
+        id_produto, quantidade, nome, preco = produto
+        draw.text((x, y), f"{id_produto} | {nome} | {quantidade} | R$ %.2f" % preco, font=font, fill=text_color)
+        y += line_height
+    
+    # Salva a imagem
+    image.save("relatorio_files/recibo.png")

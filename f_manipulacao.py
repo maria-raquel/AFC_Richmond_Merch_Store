@@ -553,5 +553,6 @@ def nova_compra():
             fi.deu_ruim_sair_da_operacao()
             return
     
+    fr.recibo(id_compra)
     fp.mensagem_sucesso_compra_nova()
     fp.mensagem_1()
