@@ -51,6 +51,11 @@ def info_compra(id, id_cliente, id_vendedor, data, status_c,
     print(f"Compra {id}:")
     print(f"Id do cliente: {id_cliente}; Id do vendedor: {id_vendedor}")
     print(f"Data: {data}; Status da compra: {status_c}")
+
+    if total == None:
+        print("Sem informações de pagamento")
+        return
+
     print("Total: R$ %.2f" % total)
 
     if desconto:
@@ -72,6 +77,8 @@ def info_compras(compras):
         # formata a data para dd/mm/aaaa
         data = data.strftime("%d/%m/%Y")
         status_c = str(status_c)[2:-2]
+        if total_pd != None:
+            total_pd = "Total: R$ %.2f" % total
         print(f"{id} | {id_cliente} | {id_vendedor} | {data} | {total_pd} | {status_c}")
     print("----------------------------------------")
 
@@ -79,6 +86,11 @@ def info_compras(compras):
 # Imprime informações dos produtos de uma compra
 # Chamado apos info_compra
 def info_compra_produtos(produtos):
+    if produtos == []:
+        print("Sem produtos adicionados a essa compra")
+        print("----------------------------------------")
+        return
+
     print("Produtos: ")
     print("id | nome | preço | quantidade")
     for id_c, id_p, nome, preco, qtd in produtos:

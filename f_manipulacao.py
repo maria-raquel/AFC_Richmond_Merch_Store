@@ -181,11 +181,18 @@ def buscar_compra():
             else:
                 compra = Compra.read(id_compra)
                 produtos = Compra_Produto.read_all_from_compra(id_compra)
-                if not compra or not produtos:
+                if not compra:
                     fp.mensagem_erro_reinicie()
                     fi.deu_ruim_sair_da_operacao()
                     return
                 fp.info_compra(*compra)
+                if produtos == []:
+                    fp.info_compra_produtos(produtos)
+                    return
+                if not produtos:
+                    fp.mensagem_erro_reinicie()
+                    fi.deu_ruim_sair_da_operacao()
+                    return
                 fp.info_compra_produtos(produtos)
 
         # Por cliente

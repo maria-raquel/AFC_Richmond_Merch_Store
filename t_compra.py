@@ -36,7 +36,7 @@ class Table_Compra:
                 Compra.status_da_compra, Pagamento.total,
                 Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
                 Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
+                FROM Compra LEFT JOIN Pagamento
                 ON Compra.id = Pagamento.id_compra
                 WHERE id = {id};
                 ''')
@@ -52,7 +52,7 @@ class Table_Compra:
                 Compra.status_da_compra, Pagamento.total,
                 Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
                 Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
+                FROM Compra LEFT JOIN Pagamento
                 ON Compra.id = Pagamento.id_compra
                 ''')
             return self.cursor.fetchall()
@@ -67,7 +67,7 @@ class Table_Compra:
                 Compra.status_da_compra, Pagamento.total,
                 Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
                 Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
+                FROM Compra LEFT JOIN Pagamento
                 ON Compra.id = Pagamento.id_compra 
                 WHERE data_da_compra LIKE '%{data_da_compra}%';
                 ''')
@@ -83,7 +83,7 @@ class Table_Compra:
                 Compra.status_da_compra, Pagamento.total,
                 Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
                 Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
+                FROM Compra LEFT JOIN Pagamento
                 ON Compra.id = Pagamento.id_compra
                 WHERE id_cliente = {id_cliente};
                 ''')
@@ -99,7 +99,7 @@ class Table_Compra:
                 Compra.status_da_compra, Pagamento.total,
                 Pagamento.desconto_aplicado, Pagamento.total_pos_desconto,
                 Pagamento.forma_de_pagamento, Pagamento.status_do_pagamento
-                FROM Compra INNER JOIN Pagamento
+                FROM Compra LEFT JOIN Pagamento
                 ON Compra.id = Pagamento.id_compra
                 WHERE id_vendedor = {id_vendedor};
                 ''')

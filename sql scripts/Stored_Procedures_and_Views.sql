@@ -74,7 +74,7 @@ Compra.data_da_compra AS data_da_compra, Compra.status_da_compra AS status_da_co
 Pagamento.total AS total, Pagamento.desconto_aplicado AS desconto_aplicado, 
 Pagamento.total_pos_desconto AS total_pos_desconto, Pagamento.forma_de_pagamento AS forma_de_pagamento, 
 Pagamento.status_do_pagamento AS status_do_pagamento 
-FROM Compra INNER JOIN Pagamento ON Compra.id = Pagamento.id_compra
+FROM Compra LEFT JOIN Pagamento ON Compra.id = Pagamento.id_compra
 
 
 -- Chamado para apagar um cliente do sistema
