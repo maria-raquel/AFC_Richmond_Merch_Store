@@ -23,6 +23,7 @@ CREATE TABLE Cliente (
     PRIMARY KEY (id)
 );
 
+-- Insere cliente sem cadastro
 INSERT INTO Cliente (cpf, nome, is_flamengo, assiste_one_piece, cidade_natal)
 VALUES ('0', 'Sem cadastro', 0, 0, 'Nao informado');
 
