@@ -230,6 +230,11 @@ def mensagem_erro_reinicie():
     print("Eita, deu um ruim aqui que é melhor reiniciar o programa.")
     print("----------------------------------------")
 
+def mensagem_recibo_gerado():
+    print("----------------------------------------")
+    print("Recibo gerado!")
+    print("----------------------------------------")
+
 def mensagem_sucesso():
     print("----------------------------------------")
     print("Operação realizada com sucesso!")

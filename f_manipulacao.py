@@ -418,16 +418,25 @@ def cancelar_compra():
     fp.mensagem_4()
 
 def relatorio():
-    id = fi.pedir_id()
-    mes, ano = fi.pedir_mes_ano()
+    escolha = fi.opcao_menu_relatorio()
+    if escolha == '1':
+        id = fi.pedir_id()
+        mes, ano = fi.pedir_mes_ano()
 
-    if not Vendedor.validate_id(id):
-        fp.mensagem_erro_id_invalido()
-        return
+        if not Vendedor.validate_id(id):
+            fp.mensagem_erro_id_invalido()
+            return
+        
+        info = fr.consultas(id, mes, ano)
+        fr.relatorio_terminal(*info)
+        fr.relatorio_png(*info)
     
-    info = fr.consultas(id, mes, ano)
-    fr.relatorio_terminal(*info)
-    fr.relatorio_png(*info)
+    elif escolha == '2':
+        id = fi.pedir_id()
+        if not Compra.validate_id(id):
+            fp.mensagem_erro_id_invalido()
+            return
+        fr.recibo(id)
 
 def remover_produto():
     id = fi.pedir_id()

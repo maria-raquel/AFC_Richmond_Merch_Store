@@ -207,3 +207,5 @@ def recibo(id_compra):
     
     # Salva a imagem
     image.save("relatorio_files/recibo.png")
+
+    fp.mensagem_recibo_gerado()

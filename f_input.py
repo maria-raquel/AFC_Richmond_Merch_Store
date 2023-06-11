@@ -438,6 +438,18 @@ def opcao_menu_produto_busca():
 
     return escolha
 
+def opcao_menu_relatorio():
+    print("----------------------------------------")
+    print("Menu - Relatórios: ")
+    print("1 - Relatório de vendas mensais por vendedor")
+    print("2 - Segunda via de um recibo")
+
+    escolha = input("Digite: ")
+    while escolha not in ('1','2'):
+        escolha = input("Opção inválida! Digite novamente: ")
+
+    return escolha
+
 # Retorna str
 def opcao_menu_vendedor():
     print("Menu - Vendedores: ")
